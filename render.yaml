@@ -8,7 +8,7 @@ services:
     plan: free
     region: frankfurt
     buildCommand: pip install -r requirements-deploy.txt
-    startCommand: python scripts/windows/migrate.py && cd artifacts/api-server && uvicorn main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips='*'
+    startCommand: bash deploy/start.sh
     healthCheckPath: /api/healthz
     autoDeploy: true
     envVars:
