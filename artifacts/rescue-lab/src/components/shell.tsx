@@ -1,20 +1,20 @@
 import { type ReactNode, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { useHealthCheck, getHealthCheckQueryKey, useGetSummary } from '@workspace/api-client-react';
-import { Box, History, Sigma, Columns2, LineChart, BrainCircuit, Database, Network, Languages, LogIn, UserRound, ShieldCheck } from 'lucide-react';
+import { Home, Stethoscope, Cpu, FlaskConical, ShieldCheck as Shield, BarChart3, BookOpenCheck, Presentation, Languages, LogIn, UserRound, ShieldCheck } from 'lucide-react';
+import { Logo as BrandLogo } from '@/components/brand';
 import { cn } from '@/lib/utils';
 import { useI18n, type MessageKey } from '@/lib/i18n';
 import { apiJson, useAuth } from '@/lib/auth';
 
-const NAV: { href: string; label: MessageKey; icon: typeof Box; id: string }[] = [
-  { href: '/', label: 'nav.lab', icon: Box, id: 'lab' },
-  { href: '/vascular', label: 'nav.vascular', icon: Network, id: 'vascular' },
-  { href: '/research-ai', label: 'nav.ai', icon: BrainCircuit, id: 'ai' },
-  { href: '/evidence', label: 'nav.evidence', icon: Database, id: 'evidence' },
-  { href: '/analysis', label: 'nav.analysis', icon: LineChart, id: 'analysis' },
-  { href: '/compare', label: 'nav.compare', icon: Columns2, id: 'compare' },
-  { href: '/runs', label: 'nav.runs', icon: History, id: 'runs' },
-  { href: '/model', label: 'nav.model', icon: Sigma, id: 'model' },
+const NAV: { href: string; label: MessageKey; icon: typeof Home; id: string; match?: string[] }[] = [
+  { href: '/', label: 'nav2.home', icon: Home, id: 'home' },
+  { href: '/problem', label: 'nav2.problem', icon: Stethoscope, id: 'problem', match: ['/vascular'] },
+  { href: '/invention', label: 'nav2.invention', icon: Cpu, id: 'invention', match: ['/model'] },
+  { href: '/lab', label: 'nav2.simulation', icon: FlaskConical, id: 'lab' },
+  { href: '/validation', label: 'nav2.validation', icon: Shield, id: 'validation' },
+  { href: '/results', label: 'nav2.results', icon: BarChart3, id: 'results', match: ['/analysis', '/runs', '/compare'] },
+  { href: '/evidence', label: 'nav2.evidence', icon: BookOpenCheck, id: 'evidence' },
 ];
 
 function LanguageSwitch() {
@@ -70,9 +70,9 @@ function Health() {
   const ok = h.data && /ok|healthy|up/i.test(h.data.status);
   const state = h.isLoading ? t('health.checking') : ok ? t('health.online') : t('health.offline');
   return (
-    <span data-testid="status-health" className="flex items-center gap-2 stamp text-[10px] text-sidebar-foreground/80">
-      <span className={cn('relative h-2 w-2 rounded-full', h.isLoading ? 'bg-amber-400' : ok ? 'bg-[#3fc1c9]' : 'bg-[#ef6a4c]')}>
-        {ok && <span className="absolute inset-0 rounded-full bg-[#3fc1c9] animate-ping opacity-60" />}
+    <span data-testid="status-health" className="hidden lg:flex items-center gap-2 text-[11px] text-[#3B5268]">
+      <span className={cn('relative h-2 w-2 rounded-full', h.isLoading ? 'bg-amber-400' : ok ? 'bg-[#24B6B7]' : 'bg-[#C2410C]')}>
+        {ok && <span className="absolute inset-0 rounded-full bg-[#24B6B7] animate-ping opacity-50" />}
       </span>
       {state}
     </span>
@@ -93,42 +93,36 @@ export function Shell({ children }: { children: ReactNode }) {
   const [loc] = useLocation();
   const { t } = useI18n();
   const summary = useGetSummary();
-  const wide = loc === '/' || loc.startsWith('/compare') || loc.startsWith('/vascular');
+  const wide = loc === '/' || ['/lab', '/compare', '/vascular', '/problem', '/invention', '/validation', '/results', '/evidence', '/judge'].some((p) => loc.startsWith(p));
   return (
     <div className="min-h-[100dvh] flex flex-col">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-background focus:p-2">{t('nav.lab')}</a>
-      <div className="bg-[#2a1210] text-[#f3c9b9] border-b border-[#5a2a20] text-[10px] stamp text-center py-1 px-3" data-testid="banner-ruo">
-        {t('banner.ruo')}
+      <div className="bg-[#F1F8F9] text-[#10243A] border-b border-[#E2EAF0] text-[11px] text-center py-1 px-3" data-testid="banner-ruo">
+        {t('site.disclaimer')}
       </div>
-      <header className="bg-sidebar/95 backdrop-blur text-sidebar-foreground border-b border-sidebar-border">
-        <div className={cn('mx-auto px-4 md:px-5 flex flex-wrap items-center gap-x-6 gap-y-2 py-2', wide ? 'max-w-none' : 'max-w-[1500px]')}>
-          <Link href="/" className="flex items-center gap-3" data-testid="link-home">
-            <Logo />
-            <div className="leading-tight">
-              <div className="font-bold tracking-tight text-[15px]" dir="ltr">{t('app.name')}</div>
-              <div className="stamp text-[9px] text-sidebar-foreground/50">{t('app.tagline')}</div>
-            </div>
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-[#E2EAF0]">
+        <div className="mx-auto max-w-none px-4 md:px-5 flex flex-wrap items-center gap-x-5 gap-y-2 py-2.5">
+          <Link href="/" className="flex items-center" data-testid="link-home" aria-label={t('nav2.home')}>
+            <BrandLogo size={34} className="hidden sm:inline-flex" />
+            <BrandLogo size={30} compact className="sm:hidden" />
           </Link>
-          <nav className="flex gap-0.5 order-3 md:order-none w-full md:w-auto overflow-x-auto">
+          <nav className="flex gap-0.5 order-3 xl:order-none w-full xl:w-auto overflow-x-auto" aria-label="Main">
             {NAV.map((n) => {
-              const active = n.href === '/' ? loc === '/' : loc.startsWith(n.href);
+              const active = n.href === '/' ? loc === '/' : loc.startsWith(n.href) || (n.match ?? []).some((m) => loc.startsWith(m));
               return (
-                <Link key={n.href} href={n.href} data-testid={`link-nav-${n.id}`}
-                  className={cn('flex items-center gap-2 px-3 py-1.5 text-[13px] rounded-md whitespace-nowrap transition-colors',
-                    active ? 'bg-sidebar-accent text-sidebar-foreground shadow-[inset_0_-2px_0_#3fc1c9]' : 'text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent/60')}>
+                <Link key={n.href} href={n.href} data-testid={`link-nav-${n.id}`} aria-current={active ? 'page' : undefined}
+                  className={cn('flex items-center gap-1.5 px-3 py-1.5 text-[13px] rounded-full whitespace-nowrap transition-colors',
+                    active ? 'bg-[#E6F4F5] text-[#087F8C] font-semibold' : 'text-[#3B5268] hover:text-[#10243A] hover:bg-[#F1F5F8]')}>
                   <n.icon className="h-4 w-4" />{t(n.label)}
                 </Link>
               );
             })}
           </nav>
-          <div className="ms-auto flex items-center gap-4">
-            {summary.data && (
-              <div className="hidden xl:flex gap-4 font-num text-[11px] text-sidebar-foreground/60" data-testid="text-summary">
-                <span>{t('summary.runs')} <b className="text-sidebar-foreground">{summary.data.total_runs}</b></span>
-                <span>{t('summary.chips')} <b className="text-sidebar-foreground">{summary.data.virtual_chips}</b></span>
-                <span>{t('summary.model')} <b className="text-sidebar-foreground" dir="ltr">v{summary.data.model_version}</b></span>
-              </div>
-            )}
+          <div className="ms-auto flex items-center gap-3">
+            <Link href="/judge" data-testid="button-judge-mode"
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#10243A] px-3.5 py-1.5 text-[12.5px] font-semibold text-white hover:bg-[#16314f]">
+              <Presentation className="h-4 w-4" />{t('nav2.judge')}
+            </Link>
             <Health />
             <LanguageSwitch />
             <AccountMenu />

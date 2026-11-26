@@ -352,6 +352,53 @@ def vascular_solve(data: VascularSolveInput):
         slots.release()
 
 
+# ---------------------------------------------------------------- Scientific Validation Lab
+_validation_cache: dict = {}
+_validation_lock = threading.Lock()
+
+
+@app.get("/api/validation/run", operation_id="runValidationSuite")
+def validation_run(fresh: bool = Query(False, description="Re-execute instead of returning the cached run for this engine version")):
+    """Executes the verification + synthetic-benchmark suite (≈10 s). Results are cached per engine version."""
+    from validation.suite import run_suite, SUITE_VERSION
+    key = (MODEL_VERSION, SUITE_VERSION)
+    with _validation_lock:
+        if fresh or key not in _validation_cache:
+            _validation_cache[key] = run_suite()
+        return _validation_cache[key]
+
+
+SENSITIVITY_PARAMS = {
+    "equalization_s": (0, 15), "regulated_wait_s": (0, 15), "offset_pct": (-100, 100), "dead_volume_ul": (0.02, 2),
+    "narrowing_pct": (0, 60), "occlusion_pct": (0, 80), "altered_viscosity_ratio": (1, 4), "radius_um": (10, 60),
+}
+
+
+@app.get("/api/sensitivity", operation_id="runSensitivity")
+def sensitivity(parameter: str = Query(...), points: int = Query(7, ge=3, le=11)):
+    """One-at-a-time parameter sweep around the reference configuration, computed by the real engine."""
+    if parameter not in SENSITIVITY_PARAMS:
+        raise HTTPException(422, f"Unsupported parameter. Choose one of: {', '.join(SENSITIVITY_PARAMS)}")
+    lo, hi = SENSITIVITY_PARAMS[parameter]
+    values = [lo + (hi - lo) * i / (points - 1) for i in range(points)]
+    if not slots.acquire(blocking=False):
+        raise HTTPException(429, "Two calculations are already running. Please try again shortly.")
+    try:
+        rows = []
+        for v in values:
+            cfg = ExperimentInput(**{parameter: v, "radius_cv_pct": 0, "replicates": 3})
+            r = simulate(cfg)
+            m = {x["method"]: x for x in r["metrics"]}
+            rows.append({"value": v, "baseline_flow_ul_min": r["baseline_flow_ul_min"],
+                         "peak": {k: m[k]["peak_deviation_pct"] for k in m}, "carryover": {k: m[k]["carryover_pct"] for k in m},
+                         "pressure_goal_met": {k: m[k]["pressure_target_met"] for k in m},
+                         "contrasts": {c["name"]: c["value"] for c in r["contrasts"]}})
+        return {"parameter": parameter, "range": [lo, hi], "model_version": MODEL_VERSION,
+                "note": "Reference configuration with chip variability set to 0 so that only the swept parameter changes.", "rows": rows}
+    finally:
+        slots.release()
+
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     uvicorn.run(app,host="0.0.0.0",port=int(os.environ["PORT"]),log_level="info")

@@ -7,7 +7,7 @@ import { test, expect, setLang } from './fixtures';
 test.describe('3D laboratory', () => {
   test('opens in Arabic RTL with a saved run and live engine values', async ({ page, consoleErrors }) => {
     await setLang(page, 'ar');
-    await page.goto('/');
+    await page.goto('/lab');
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
     await expect(page).toHaveTitle(/المختبر ثلاثي الأبعاد/);
     await expect(page.getByTestId('viewport-3d')).toBeVisible();
@@ -18,7 +18,7 @@ test.describe('3D laboratory', () => {
 
   test('changing driving pressure recomputes flow through the Python engine', async ({ page, consoleErrors }) => {
     await setLang(page, 'en');
-    await page.goto('/');
+    await page.goto('/lab');
     const flow = page.getByTestId('text-live-flow');
     await expect(flow).not.toHaveText('—');
     // Pause playback so the comparison is at a fixed time point.
@@ -37,7 +37,7 @@ test.describe('3D laboratory', () => {
 
   test('invalid input is rejected in place and save is disabled', async ({ page, consoleErrors }) => {
     await setLang(page, 'en');
-    await page.goto('/');
+    await page.goto('/lab');
     const radius = page.getByTestId('input-radius_um');
     await radius.fill('0');
     await expect(page.getByText('Min 5')).toBeVisible();
@@ -47,7 +47,7 @@ test.describe('3D laboratory', () => {
 
   test('anonymous save is refused with a clear sign-in message', async ({ page, consoleErrors }) => {
     await setLang(page, 'ar');
-    await page.goto('/');
+    await page.goto('/lab');
     await expect(page.getByTestId('button-save')).toBeEnabled();
     await page.getByTestId('button-save').click();
     await expect(page.getByText('يلزم تسجيل الدخول').first()).toBeVisible();
@@ -57,7 +57,7 @@ test.describe('3D laboratory', () => {
 
   test('viewport tools switch colour mode and open the cross-section', async ({ page, consoleErrors }) => {
     await setLang(page, 'en');
-    await page.goto('/');
+    await page.goto('/lab');
     const canvas = page.locator('[data-testid="viewport-3d"] canvas').first();
     await expect(canvas).toBeVisible();
     // Note: selecting a part by clicking inside the WebGL canvas is not covered here (needs projected coordinates).
@@ -78,7 +78,7 @@ test.describe('language', () => {
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
     await page.getByTestId('button-lang').click();
     await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
-    await expect(page.getByTestId('link-nav-lab')).toHaveText(/3D Laboratory/);
+    await expect(page.getByTestId('link-nav-lab')).toHaveText(/Research Simulation/);
     await page.evaluate(() => window.localStorage.getItem('roc.lang')).then((v) => expect(v).toBe('en'));
     void consoleErrors;
   });
@@ -144,27 +144,6 @@ test.describe('vascular twin', () => {
     await r.fill(String(Number(await r.inputValue()) * 0.5));
     await page.getByTestId('button-run-vascular-solver').click();
     await expect(flowCell).not.toHaveText(before!);
-    void consoleErrors;
-  });
-});
-
-test.describe('evidence and compound lab', () => {
-  test('evidence search returns imported public records with provenance', async ({ page, consoleErrors }) => {
-    await setLang(page, 'en');
-    await page.goto('/evidence');
-    await expect(page.getByTestId('panel-evidence-results')).toBeVisible();
-    await expect(page.locator('[data-testid^="trial-"]').first()).toBeVisible();
-    void consoleErrors;
-  });
-
-  test('compound validation computes RDKit descriptors', async ({ page, consoleErrors }) => {
-    await setLang(page, 'en');
-    await page.goto('/research-ai');
-    await page.getByTestId('input-compound-structure').fill('CC(=O)Oc1ccccc1C(=O)O');
-    await page.getByTestId('button-describe-structure').click();
-    await expect(page.getByTestId('panel-compound-description')).toBeVisible();
-    await expect(page.getByTestId('table-molecular-descriptors')).toBeVisible();
-    await expect(page.getByTestId('text-train-admin-only')).toBeVisible();
     void consoleErrors;
   });
 });

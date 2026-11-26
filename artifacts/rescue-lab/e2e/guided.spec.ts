@@ -5,7 +5,7 @@ const pct = (s: string | null) => Number.parseFloat((s ?? '').replace(/[^\d.\-]/
 
 test('first visit opens the explanation; the tour drives the real engine', async ({ page, consoleErrors }) => {
   await setLang(page, 'en', { guideSeen: false });
-  await page.goto('/');
+  await page.goto('/lab');
   const guide = page.getByTestId('panel-experiment-guide');
   await expect(guide).toBeVisible();
   await expect(page.getByTestId('text-guide-step')).toHaveText('Step 1 of 8');
@@ -36,7 +36,7 @@ test('first visit opens the explanation; the tour drives the real engine', async
 
 test('guided mode shows the 5 key parameters; advanced shows all, and the choice persists', async ({ page, consoleErrors }) => {
   await setLang(page, 'ar');
-  await page.goto('/');
+  await page.goto('/lab');
   await page.getByTestId('button-mode-guided-config').click();
   const inputs = page.locator('[data-testid="panel-config"] input[data-testid^="input-"]');
   await expect(inputs).toHaveCount(5);

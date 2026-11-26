@@ -33,7 +33,7 @@ export function LabScene(p: SceneProps) {
 
   return (
     <>
-      <color attach="background" args={['#071116']} />
+      <color attach="background" args={['#10243A']} />
       <fog attach="fog" args={['#071116', 30, 90]} />
       <ambientLight intensity={0.45} />
       <hemisphereLight args={['#bfe9ee', '#0b1d24', 0.55]} />

@@ -345,7 +345,7 @@ function NetworkScene({ network, result, selectedId, onSelect, metric, cells, ca
 
   return (
     <>
-      <color attach="background" args={['#08151b']} />
+      <color attach="background" args={['#10243A']} />
       <fog attach="fog" args={['#08151b', 18, 34]} />
       <ambientLight intensity={0.76} />
       <hemisphereLight args={['#b7d9d8', '#0b242a', 0.64]} />
@@ -575,7 +575,7 @@ export function AnatomicalVascularView({ network, result, selectedId, onSelect, 
   }, [network.segments, result]);
 
   return (
-    <div className="anatomical-vascular-view" ref={rootRef} data-testid="anatomical-vascular-view">
+    <div className="anatomical-vascular-view theme-instrument" ref={rootRef} data-testid="anatomical-vascular-view">
       <div className="anatomical-viewport">
         {!hasWebgl || contextLost ? (
           <Fallback

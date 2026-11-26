@@ -149,8 +149,9 @@ import { vascular } from './messages/vascular';
 import { research } from './messages/research';
 import { evidence } from './messages/evidence';
 import { guide } from './messages/guide';
-const MODULES = [lab, fields, pages, analysis, vascular, research, evidence, guide] as const;
-type ModuleKeys = keyof (typeof lab)['en'] | keyof (typeof fields)['en'] | keyof (typeof pages)['en'] | keyof (typeof analysis)['en'] | keyof (typeof vascular)['en'] | keyof (typeof research)['en'] | keyof (typeof evidence)['en'] | keyof (typeof guide)['en'];
+import { site } from './messages/site';
+const MODULES = [lab, fields, pages, analysis, vascular, research, evidence, guide, site] as const;
+type ModuleKeys = keyof (typeof lab)['en'] | keyof (typeof fields)['en'] | keyof (typeof pages)['en'] | keyof (typeof analysis)['en'] | keyof (typeof vascular)['en'] | keyof (typeof research)['en'] | keyof (typeof evidence)['en'] | keyof (typeof guide)['en'] | keyof (typeof site)['en'];
 export type MessageKey = CoreKey | ModuleKeys;
 
 export const messages: Record<Lang, Record<string, string>> = {

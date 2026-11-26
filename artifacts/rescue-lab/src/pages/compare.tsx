@@ -98,7 +98,7 @@ export default function Compare() {
           const smp = sampleAt(x.mf, snap.t);
           return (
             <div key={x.key} className="space-y-2" data-testid={`panel-compare-${x.key}`}>
-              <div className="relative h-[46dvh] min-h-[320px] rounded-lg overflow-hidden border border-[hsl(190_40%_30%/.35)] bg-[#071116]">
+              <div className="relative h-[46dvh] min-h-[320px] rounded-lg overflow-hidden border border-[hsl(190_40%_30%/.35)] bg-[#10243A] theme-instrument">
                 {x.err ? <div className="p-4"><ErrorBox msg={humanError(x.err)} /></div>
                   : x.loading || !x.vis ? <Skeleton className="absolute inset-0 rounded-none bg-secondary/40" />
                   : <ViewportCanvas vis={x.vis} mf={x.mf} pb={pb} scale={scale} mode={mode} opacity={0.85} crossOn={false} crossPos={0.5} showLabels={false} showTracers

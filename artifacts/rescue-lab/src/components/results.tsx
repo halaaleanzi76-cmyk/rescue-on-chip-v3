@@ -55,7 +55,7 @@ export function RunHeader({ run }: { run: SimulationRun }) {
             <d.icon className="h-3.5 w-3.5" />{d.label}
           </a>
         ))}
-        <Link href={`/?run=${run.id}`} data-testid="link-open-3d" className="inline-flex items-center gap-1.5 border border-primary/50 text-primary px-2.5 py-1.5 text-xs rounded-sm hover:bg-primary/10">{t('rs.open3d')}</Link>
+        <Link href={`/lab?run=${run.id}`} data-testid="link-open-3d" className="inline-flex items-center gap-1.5 border border-primary/50 text-primary px-2.5 py-1.5 text-xs rounded-sm hover:bg-primary/10">{t('rs.open3d')}</Link>
         <span className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground px-1">
           <Printer className="h-3.5 w-3.5" />{t('rs.pdfHint')}
         </span>

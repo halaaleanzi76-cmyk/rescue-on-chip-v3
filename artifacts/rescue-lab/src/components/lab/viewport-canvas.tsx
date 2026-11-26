@@ -12,7 +12,7 @@ function webglAvailable() {
 
 export function WebGLFallback({ reason, onRetry }: { reason: string; onRetry?: () => void }) {
   return (
-    <div className="absolute inset-0 grid place-items-center lab-grid-bg bg-[#071116] p-6" data-testid="status-webgl-fallback">
+    <div className="absolute inset-0 grid place-items-center lab-grid-bg bg-[#10243A] theme-instrument p-6" data-testid="status-webgl-fallback">
       <div className="max-w-md text-center">
         <MonitorX className="h-8 w-8 mx-auto text-[#e8b04a]" />
         <h3 className="mt-3 font-semibold">3D viewport unavailable</h3>

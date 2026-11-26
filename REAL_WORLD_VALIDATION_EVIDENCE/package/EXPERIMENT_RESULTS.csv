@@ -1,0 +1,77 @@
+experiment,scenario,quantity,unit,value,model_version,note
+A_2x2_crossover,"reference config (seed 42, n=6/arm, radius CV 3%)",mean flow F0V0 (Reference fluid / Healthy vessel),uL/min,11.80118261464741,bench-1.0.2,"95% CI [10.0318, 13.5705]"
+A_2x2_crossover,"reference config (seed 42, n=6/arm, radius CV 3%)",mean flow F0V1 (Reference fluid / Injured vessel),uL/min,4.32744429335733,bench-1.0.2,"95% CI [3.9708, 4.68409]"
+A_2x2_crossover,"reference config (seed 42, n=6/arm, radius CV 3%)",mean flow F1V0 (Altered fluid / Healthy vessel),uL/min,6.8610855189538364,bench-1.0.2,"95% CI [6.16564, 7.55653]"
+A_2x2_crossover,"reference config (seed 42, n=6/arm, radius CV 3%)",mean flow F1V1 (Altered fluid / Injured vessel),uL/min,2.4264033585826934,bench-1.0.2,"95% CI [2.20168, 2.65113]"
+A_2x2_crossover,reference config,Perfusate main effect,uL/min,-3.420569015234105,bench-1.0.2,descriptive contrast of simulated virtual chips
+A_2x2_crossover,reference config,Vessel main effect,uL/min,-5.95421024083061,bench-1.0.2,descriptive contrast of simulated virtual chips
+A_2x2_crossover,reference config,Interaction (difference-in-differences),uL/min,3.0390561609189355,bench-1.0.2,descriptive contrast of simulated virtual chips
+B_switching_ABC,"reference (B wait 0 s, C equalization 5 s)",peak inlet deviation stop_flow,%,100.0,bench-1.0.2,goal <=5% (provisional) NOT MET
+B_switching_ABC,"reference (B wait 0 s, C equalization 5 s)",carryover at run end stop_flow,%,4.230675561391055e-23,bench-1.0.2,goal <=5% (provisional) MET
+B_switching_ABC,"reference (B wait 0 s, C equalization 5 s)",flow interruption stop_flow,s,1.5,bench-1.0.2,
+B_switching_ABC,"reference (B wait 0 s, C equalization 5 s)",peak inlet deviation pressure_controlled,%,25.0,bench-1.0.2,goal <=5% (provisional) NOT MET
+B_switching_ABC,"reference (B wait 0 s, C equalization 5 s)",carryover at run end pressure_controlled,%,7.694637693568929e-24,bench-1.0.2,goal <=5% (provisional) MET
+B_switching_ABC,"reference (B wait 0 s, C equalization 5 s)",flow interruption pressure_controlled,s,0,bench-1.0.2,
+B_switching_ABC,"reference (B wait 0 s, C equalization 5 s)",peak inlet deviation equalized,%,2.0521249655974794,bench-1.0.2,goal <=5% (provisional) MET
+B_switching_ABC,"reference (B wait 0 s, C equalization 5 s)",carryover at run end equalized,%,1.2962088926761291e-23,bench-1.0.2,goal <=5% (provisional) MET
+B_switching_ABC,"reference (B wait 0 s, C equalization 5 s)",flow interruption equalized,s,0,bench-1.0.2,
+B_switching_ABC,strong comparator B (wait 15 s),peak inlet deviation stop_flow,%,100.0,bench-1.0.2,goal <=5% (provisional) NOT MET
+B_switching_ABC,strong comparator B (wait 15 s),carryover at run end stop_flow,%,4.230675561391055e-23,bench-1.0.2,goal <=5% (provisional) MET
+B_switching_ABC,strong comparator B (wait 15 s),flow interruption stop_flow,s,1.5,bench-1.0.2,
+B_switching_ABC,strong comparator B (wait 15 s),peak inlet deviation pressure_controlled,%,0.013827109253705672,bench-1.0.2,goal <=5% (provisional) MET
+B_switching_ABC,strong comparator B (wait 15 s),carryover at run end pressure_controlled,%,1.3576637525955198e-23,bench-1.0.2,goal <=5% (provisional) MET
+B_switching_ABC,strong comparator B (wait 15 s),flow interruption pressure_controlled,s,0,bench-1.0.2,
+B_switching_ABC,strong comparator B (wait 15 s),peak inlet deviation equalized,%,2.0521249655974794,bench-1.0.2,goal <=5% (provisional) MET
+B_switching_ABC,strong comparator B (wait 15 s),carryover at run end equalized,%,1.2962088926761291e-23,bench-1.0.2,goal <=5% (provisional) MET
+B_switching_ABC,strong comparator B (wait 15 s),flow interruption equalized,s,0,bench-1.0.2,
+B_switching_ABC,no equalization time (C wait 0 s),peak inlet deviation stop_flow,%,100.0,bench-1.0.2,goal <=5% (provisional) NOT MET
+B_switching_ABC,no equalization time (C wait 0 s),carryover at run end stop_flow,%,4.230675561391055e-23,bench-1.0.2,goal <=5% (provisional) MET
+B_switching_ABC,no equalization time (C wait 0 s),flow interruption stop_flow,s,1.5,bench-1.0.2,
+B_switching_ABC,no equalization time (C wait 0 s),peak inlet deviation pressure_controlled,%,25.0,bench-1.0.2,goal <=5% (provisional) NOT MET
+B_switching_ABC,no equalization time (C wait 0 s),carryover at run end pressure_controlled,%,7.694637693568929e-24,bench-1.0.2,goal <=5% (provisional) MET
+B_switching_ABC,no equalization time (C wait 0 s),flow interruption pressure_controlled,s,0,bench-1.0.2,
+B_switching_ABC,no equalization time (C wait 0 s),peak inlet deviation equalized,%,25.0,bench-1.0.2,goal <=5% (provisional) NOT MET
+B_switching_ABC,no equalization time (C wait 0 s),carryover at run end equalized,%,7.694637693568929e-24,bench-1.0.2,goal <=5% (provisional) MET
+B_switching_ABC,no equalization time (C wait 0 s),flow interruption equalized,s,0,bench-1.0.2,
+C_sensitivity,equalization_s = 0,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 0,peak inlet deviation pressure_controlled,%,25.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 0,peak inlet deviation equalized,%,25.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 1,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 1,peak inlet deviation pressure_controlled,%,25.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 1,peak inlet deviation equalized,%,15.16326649281583,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 2,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 2,peak inlet deviation pressure_controlled,%,25.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 2,peak inlet deviation equalized,%,9.19698602928607,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 3,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 3,peak inlet deviation pressure_controlled,%,25.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 3,peak inlet deviation equalized,%,5.5782540037107475,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 4,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 4,peak inlet deviation pressure_controlled,%,25.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 4,peak inlet deviation equalized,%,3.3833820809153092,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 5,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 5,peak inlet deviation pressure_controlled,%,25.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 5,peak inlet deviation equalized,%,2.0521249655974794,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 7.5,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 7.5,peak inlet deviation pressure_controlled,%,25.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 7.5,peak inlet deviation equalized,%,0.5879436464002241,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 10,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 10,peak inlet deviation pressure_controlled,%,25.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 10,peak inlet deviation equalized,%,0.16844867497713967,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 15,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 15,peak inlet deviation pressure_controlled,%,25.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,equalization_s = 15,peak inlet deviation equalized,%,0.013827109253705672,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 0,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 0,peak inlet deviation pressure_controlled,%,25.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 0,peak inlet deviation equalized,%,2.0521249655974794,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 2,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 2,peak inlet deviation pressure_controlled,%,9.19698602928607,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 2,peak inlet deviation equalized,%,2.0521249655974794,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 5,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 5,peak inlet deviation pressure_controlled,%,2.0521249655974794,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 5,peak inlet deviation equalized,%,2.0521249655974794,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 10,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 10,peak inlet deviation pressure_controlled,%,0.16844867497713967,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 10,peak inlet deviation equalized,%,2.0521249655974794,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 15,peak inlet deviation stop_flow,%,100.0,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 15,peak inlet deviation pressure_controlled,%,0.013827109253705672,bench-1.0.2,one-at-a-time; chip variability 0
+C_sensitivity,regulated_wait_s = 15,peak inlet deviation equalized,%,2.0521249655974794,bench-1.0.2,one-at-a-time; chip variability 0

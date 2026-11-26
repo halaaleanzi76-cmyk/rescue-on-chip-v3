@@ -9,9 +9,14 @@ import Laboratory from '@/pages/laboratory';
 import Compare from '@/pages/compare';
 import Runs from '@/pages/runs';
 import Model from '@/pages/model';
-import ResearchAI from '@/pages/research-ai';
-import ClinicalEvidence from '@/pages/clinical-evidence';
 import Vascular from '@/pages/vascular';
+import Home from '@/pages/home';
+import Problem from '@/pages/problem';
+import Invention from '@/pages/invention';
+import Validation from '@/pages/validation';
+import Results from '@/pages/results';
+import EvidenceHub from '@/pages/evidence-hub';
+import JudgeMode from '@/pages/judge';
 import AccountPage from '@/pages/account';
 import AdminPage from '@/pages/admin';
 import { AuthCallbackPage, ForgotPasswordPage, ResetPasswordPage, SignInPage, SignUpPage } from '@/pages/auth';
@@ -36,9 +41,14 @@ function Router() {
     <Shell>
     <RoutedErrorBoundary>
       <Switch>
-        <Route path="/" component={Laboratory} />
-        <Route path="/research-ai" component={ResearchAI} />
-        <Route path="/evidence" component={ClinicalEvidence} />
+        <Route path="/" component={Home} />
+        <Route path="/problem" component={Problem} />
+        <Route path="/invention" component={Invention} />
+        <Route path="/lab" component={Laboratory} />
+        <Route path="/validation" component={Validation} />
+        <Route path="/results" component={Results} />
+        <Route path="/evidence" component={EvidenceHub} />
+        <Route path="/judge" component={JudgeMode} />
         <Route path="/vascular" component={Vascular} />
         <Route path="/analysis" component={Workbench} />
         <Route path="/compare" component={Compare} />
@@ -105,7 +115,7 @@ function MutationErrorBridge() {
 }
 
 function App() {
-  if (typeof document !== 'undefined') document.documentElement.classList.add('dark');
+  if (typeof document !== 'undefined') document.documentElement.classList.remove('dark');
   return (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>

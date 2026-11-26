@@ -1,25 +1,35 @@
-group,check,metric,value,tolerance,pass
-poiseuille,"Hagen–Poiseuille flow, 500 random parameter sets",max_rel_err,2.199569e-16,1e-12,True
-poiseuille,baseline_flow_ul_min (default run),rel_err,0.000000e+00,1e-12,True
-poiseuille,hydraulic resistance,rel_err,0.000000e+00,1e-12,True
-poiseuille,wall shear = ΔP·r/(2L),rel_err,0.000000e+00,1e-12,True
-poiseuille,Reynolds number (ρ=1000 kg/m³),rel_err,0.000000e+00,1e-12,True
-sensitivity,sensitivity d ln Q / d ln P = 1,abs_err,0.000000e+00,1e-06,True
-sensitivity,sensitivity d ln Q / d ln r = 4,abs_err,1.492140e-13,1e-06,True
-sensitivity,sensitivity d ln Q / d ln mu = -1,abs_err,7.616130e-14,1e-06,True
-sensitivity,sensitivity d ln Q / d ln L = -1,abs_err,1.871836e-13,1e-06,True
-washout,"washout vs exact exp(−Qt/V), 2712 samples, 3 topologies",max_rel_err(ref>1e-3%),4.982075e-14,0.0001,True
-washout,washout absolute error (all samples),max_abs_err_pct,3.552714e-14,0.001,True
-transient,peak deviation equalized = |offset|·e^(−wait/τ),abs_err_pct,9.325873e-15,1e-09,True
-transient,peak deviation pressure_controlled = |offset|·e^(−wait/τ),abs_err_pct,0.000000e+00,1e-09,True
-tracer,tracer donor/receiver vs exact expm solution,"max_err(rel, abs<1e-3)",1.138094e-07,0.0001,True
-network,"node pressures vs independent dense solver (14 nodes, 18 segments)",max_rel_err,3.420672e-16,1e-09,True
-network,junction mass conservation (solver-reported),max_norm_residual,9.758826e-13,1e-09,True
-network,global mass balance: outlet flow = inlet flow,rel_err,9.785999e-13,1e-09,True
-network,linearity: 2×ΔP → 2×Q,rel_err,0.000000e+00,1e-09,True
-network,viscosity: 2×μ → Q/2,rel_err,0.000000e+00,1e-09,True
-network,all radii ×1.1 → Q×1.1⁴,rel_err,1.491874e-12,1e-09,True
-network,BC consistency: fixed-flow(Q*) recovers p_in,rel_err,1.959961e-13,1e-09,True
-reproducibility,same seed + config → byte-identical result,identical(1=yes),1.000000e+00,1.0,True
-reproducibility,different seed → different virtual-chip sample,differs(1=yes),1.000000e+00,1.0,True
-uncertainty,"uncertainty propagation CV_Q ≈ 4·CV_r (n=100, delta method)",rel_diff,8.984272e-02,0.15,True
+category,group,check,metric,value,tolerance,pass
+A,poiseuille,"Hagen–Poiseuille flow, 500 random parameter sets",max_rel_err,2.199569e-16,1e-12,True
+A,poiseuille,Baseline flow (default run),rel_err,0.000000e+00,1e-12,True
+A,poiseuille,Hydraulic resistance,rel_err,0.000000e+00,1e-12,True
+A,poiseuille,Wall shear = ΔP·r/(2L),rel_err,0.000000e+00,1e-12,True
+A,poiseuille,Reynolds number (ρ=1000 kg/m³),rel_err,0.000000e+00,1e-12,True
+A,dimensions,Length scaling: all lengths ×1.7 → Q×1.7³,rel_err,0.000000e+00,1e-09,True
+A,dimensions,Unit factor m³/s → µL/min = 1e9·60,abs_err,0.000000e+00,1e-06,True
+A,sensitivity,Elasticity ∂lnQ/∂lnP = 1,abs_err,2.220446e-13,1e-06,True
+A,sensitivity,Elasticity ∂lnQ/∂lnr = 4,abs_err,1.492140e-13,1e-06,True
+A,sensitivity,Elasticity ∂lnQ/∂lnμ = -1,abs_err,1.871836e-13,1e-06,True
+A,sensitivity,Elasticity ∂lnQ/∂lnL = -1,abs_err,1.871836e-13,1e-06,True
+A,washout,"Carryover vs exact exp(−Qt/V), 2712 samples, 3 topologies",max_rel_err,4.982075e-14,0.0001,True
+A,tracer,Barrier tracer vs exact matrix-exponential solution,max_err,1.138094e-07,0.0001,True
+A,network,"Node pressures vs independent dense solver (14 nodes, 18 segments)",max_rel_err,3.420672e-16,1e-09,True
+A,network,Conservation of mass at every junction,max_norm_residual,9.758826e-13,1e-09,True
+A,network,Global mass balance: outlet flow = inlet flow,rel_err,9.785999e-13,1e-09,True
+A,network,Pressure–flow linearity: 2×ΔP → 2×Q,rel_err,0.000000e+00,1e-09,True
+A,network,Viscosity: 2×μ → Q/2,rel_err,0.000000e+00,1e-09,True
+A,network,All radii ×1.1 → Q×1.1⁴,rel_err,1.491874e-12,1e-09,True
+A,boundary,Boundary conditions: fixed-flow(Q*) recovers fixed p_in,rel_err,1.959961e-13,1e-09,True
+A,boundary,Complete feeding-artery occlusion → zero network flow,abs_flow_ul_min,0.000000e+00,1e-12,True
+A,reproducibility,Same seed + config → byte-identical result,identical,1.000000e+00,1.0,True
+A,reproducibility,Different seed → different virtual-chip sample,differs,1.000000e+00,1.0,True
+A,uncertainty,Uncertainty propagation CV_Q ≈ 4·CV_r (n=100),rel_diff,8.984272e-02,0.15,True
+S,2x2 benchmark,Fluid (perfusate) effect recovered exactly (no chip variability),rel_err,0.000000e+00,1e-09,True
+S,2x2 benchmark,Vessel effect recovered exactly (no chip variability),rel_err,0.000000e+00,1e-09,True
+S,2x2 benchmark,Fluid × vessel interaction recovered exactly (no chip variability),rel_err,0.000000e+00,1e-09,True
+S,2x2 benchmark,Fluid (perfusate) effect recovered under 3% chip variability (n=100/arm),rel_err,2.074519e-02,0.05,True
+S,2x2 benchmark,Vessel effect recovered under 3% chip variability (n=100/arm),rel_err,4.045767e-03,0.05,True
+S,2x2 benchmark,Fluid × vessel interaction recovered under 3% chip variability (n=100/arm),rel_err,1.095137e-01,0.05,False
+S,A/B/C falsification,Default: C < B < A as predicted by residual = offset·e^(−wait/τ),ordered,1.000000e+00,1.0,True
+S,A/B/C falsification,Strong comparator B (15 s wait) must beat C (5 s): engine ranks B first,B_better,1.000000e+00,1.0,True
+S,A/B/C falsification,No equalization time: C fails the ≤5% goal (model can fail),C_failed,1.000000e+00,1.0,True
+S,A/B/C falsification,Stop-flow is the only topology with flow interruption,ok,1.000000e+00,1.0,True

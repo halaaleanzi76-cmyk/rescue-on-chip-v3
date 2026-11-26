@@ -101,7 +101,7 @@ export function useLabSession() {
         qc.invalidateQueries({ queryKey: getGetSummaryQueryKey() });
         seq.current++;
         setPreview(null); setPending(false);
-        setLocation(`/?run=${r.id}`);
+        setLocation(`/lab?run=${r.id}`);
         toast({ title: tr('cfg.savedToast'), description: tr('cfg.savedToastBody', { id: r.id.slice(0, 8), fp: r.fingerprint.slice(0, 12) }) });
       },
     });
@@ -115,7 +115,7 @@ export function useLabSession() {
     model, summary, runId, run, vis, form, touched, v, changed, baseline,
     setField, revert, resetDefaults, save, create,
     preview, previewError, pending, displayed,
-    loadRun: (id: string) => setLocation(`/?run=${id}`),
+    loadRun: (id: string) => setLocation(`/lab?run=${id}`),
   };
 }
 export type LabSession = ReturnType<typeof useLabSession>;

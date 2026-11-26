@@ -1,6 +1,6 @@
 import { test, expect, setLang } from './fixtures';
 
-for (const path of ['/', '/vascular', '/runs', '/analysis', '/signup']) {
+for (const path of ['/', '/problem', '/invention', '/lab', '/validation', '/results', '/evidence', '/judge', '/vascular', '/runs', '/signup']) {
   test(`mobile Arabic layout has no horizontal overflow: ${path}`, async ({ page, consoleErrors }) => {
     await setLang(page, 'ar');
     await page.goto(path);

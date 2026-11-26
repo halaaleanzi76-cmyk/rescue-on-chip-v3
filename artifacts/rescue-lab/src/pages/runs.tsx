@@ -34,7 +34,7 @@ export default function Runs() {
         <div className="py-12 text-center">
           <Inbox className="h-8 w-8 mx-auto text-muted-foreground" />
           <p className="mt-2 font-semibold">{q ? t('runs.noMatch') : t('runs.none')}</p>
-          <Link href="/" className="text-sm text-primary underline" data-testid="link-empty-workbench">{t('runs.openLab')}</Link>
+          <Link href="/lab" className="text-sm text-primary underline" data-testid="link-empty-workbench">{t('runs.openLab')}</Link>
         </div>
       )}
       {rows.length > 0 && (
@@ -60,7 +60,7 @@ export default function Runs() {
                     : <span className="inline-flex items-center gap-1 text-[#ef7a5a]"><X className="h-3 w-3" />{t('runs.goalExceeds')}</span>}</td>
                   <td className="py-2.5 px-2 font-num text-[11px] text-muted-foreground" title={r.fingerprint}>{r.fingerprint.slice(0, 16)}…</td>
                   <td className="py-2.5 ps-2 text-end whitespace-nowrap">
-                    <Link href={`/?run=${r.id}`} data-testid={`link-open-run-${r.id}`} className="inline-flex items-center gap-1 text-xs border rounded-sm px-2 py-1 hover:bg-primary hover:text-primary-foreground transition-colors">
+                    <Link href={`/lab?run=${r.id}`} data-testid={`link-open-run-${r.id}`} className="inline-flex items-center gap-1 text-xs border rounded-sm px-2 py-1 hover:bg-primary hover:text-primary-foreground transition-colors">
                       {t('runs.open3d')} <ArrowUpRight className="h-3 w-3 rtl:-scale-x-100" />
                     </Link>
                     <Link href={`/analysis?run=${r.id}`} data-testid={`link-analysis-run-${r.id}`} className="ms-1 inline-flex items-center gap-1 text-xs border rounded-sm px-2 py-1 hover:bg-secondary transition-colors">

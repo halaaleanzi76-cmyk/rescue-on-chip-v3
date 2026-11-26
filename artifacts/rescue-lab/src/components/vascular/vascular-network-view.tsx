@@ -104,7 +104,7 @@ function NetworkScene({ network, result, selectedId, onSelect, metric }: {
 
   return (
     <>
-      <color attach="background" args={['#08151b']} />
+      <color attach="background" args={['#10243A']} />
       <fog attach="fog" args={['#08151b', 16, 34]} />
       <ambientLight intensity={0.68} />
       <hemisphereLight args={['#b5dadd', '#10242b', 0.6]} />
@@ -168,7 +168,7 @@ export function VascularNetworkView({ network, result, selectedId, onSelect, met
   }, [canvasElement]);
   if (!hasWebgl || contextLost) {
     return (
-      <div className="vascular-canvas" data-testid="vascular-network-visualization">
+      <div className="vascular-canvas theme-instrument" data-testid="vascular-network-visualization">
         <div className="vascular-webgl-fallback" role="status" data-testid="status-vascular-webgl-fallback">
           <MonitorX size={28} />
           <strong>{tr('nv.unavailable')}</strong>
@@ -180,7 +180,7 @@ export function VascularNetworkView({ network, result, selectedId, onSelect, met
     );
   }
   return (
-    <div className="vascular-canvas" data-testid="vascular-network-visualization">
+    <div className="vascular-canvas theme-instrument" data-testid="vascular-network-visualization">
       <Canvas camera={{ position: [0, 5.8, 12], fov: 38 }} dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: 'default' }}
         onCreated={({ gl, camera, size }) => {
           const aspect = Math.max(0.75, size.width / Math.max(size.height, 1));

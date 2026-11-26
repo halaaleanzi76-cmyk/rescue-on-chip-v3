@@ -53,7 +53,7 @@ export function LabViewport({ vis, groups, methods, pb, scale, view, setView, ch
   const nTotal = vis?.geometry.channels ?? channelsTotal;
   const [toolsOpen, setToolsOpen] = useState(false);
   return (
-    <div className="relative h-full min-h-[460px] rounded-lg overflow-hidden border border-[hsl(190_40%_30%/.35)] bg-[#071116]" data-testid="viewport-3d">
+    <div className="relative h-full min-h-[460px] rounded-lg overflow-hidden border border-[hsl(190_40%_30%/.35)] bg-[#10243A] theme-instrument" data-testid="viewport-3d">
       <ViewportCanvas vis={vis} mf={groups[view.method]} pb={pb} scale={scale} mode={view.mode} opacity={view.opacity}
         crossOn={view.crossOn} crossPos={view.crossPos} showLabels={view.showLabels} showTracers={view.showTracers}
         channelsTotal={channelsTotal} radiusUm={radiusUm} selected={view.selected} onSelect={(id) => setView({ selected: id })} resetSignal={view.resetSignal} />
@@ -62,8 +62,8 @@ export function LabViewport({ vis, groups, methods, pb, scale, view, setView, ch
       <div className="absolute top-3 left-3 flex flex-col gap-1.5 max-w-[calc(100%_-_120px)] sm:max-w-[60%] pointer-events-none">
         <div className="pointer-events-auto">{status}</div>
         <div className="flex flex-wrap gap-1.5">
-          <span className="stamp text-[9px] px-1.5 py-0.5 rounded-[3px] border border-[#e8b04a]/50 text-[#e8b04a] bg-[#071116]/70" data-testid="label-conceptual">{t('vp.conceptual')}</span>
-          <span className="stamp text-[9px] px-1.5 py-0.5 rounded-[3px] border border-primary/50 text-primary bg-[#071116]/70" data-testid="label-analytical">{t('vp.analytical')}</span>
+          <span className="stamp text-[9px] px-1.5 py-0.5 rounded-[3px] border border-[#e8b04a]/50 text-[#e8b04a] bg-[#10243A]/70" data-testid="label-conceptual">{t('vp.conceptual')}</span>
+          <span className="stamp text-[9px] px-1.5 py-0.5 rounded-[3px] border border-primary/50 text-primary bg-[#10243A]/70" data-testid="label-analytical">{t('vp.analytical')}</span>
         </div>
         <span className="font-num text-[10px] text-muted-foreground" data-testid="text-channel-count">
           {t('vp.channelCount', { shown: displayCount(nTotal), total: nTotal })}

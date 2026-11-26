@@ -4,6 +4,18 @@ Working copy of `Downloads\rescue-on-chip-clean`. The original was not modified.
 Statuses follow the project mandate: VERIFIED WORKING / IMPLEMENTED - NOT SCIENTIFICALLY VALIDATED /
 BLOCKED BY EXTERNAL DEPENDENCY / NOT IMPLEMENTED / NOT TESTABLE.
 
+# Competition build (2026-11-26) — Neuro-Reflow Rescue 3.0
+| Item | Status | Evidence |
+|---|---|---|
+| Light competition identity, original SVG logo (horizontal/compact/light/dark + favicon), Inter + IBM Plex Sans Arabic | VERIFIED WORKING | `docs/screenshots/*` |
+| Pages: Home · The Problem · Rescue-on-Chip · Research Simulation (`/lab`) · Scientific Validation · Results · Evidence · Judge Mode | VERIFIED WORKING | `e2e/competition.spec.ts`, mobile overflow checks on all routes |
+| Compound lab and AI modules removed from the active site (source files kept) | DONE | routes removed in `App.tsx` |
+| Experiment A (2×2), B (A/B/C, computed ranking — B wins at 15 s wait), C (sensitivity sweep `/api/sensitivity`) | VERIFIED WORKING | E2E judge + sensitivity tests |
+| Validation lab: A 24/24 PASS · synthetic 9/10 (one pre-registered negative finding) · empirical NOT POSSIBLE · clinical NOT PERFORMED | VERIFIED WORKING | `/api/validation/run` |
+| Evidence package (PDF, CSV, JSON, 4× MD) generated from real engine runs | VERIFIED WORKING | `scripts/generate_evidence_package.py` → `REAL_WORLD_VALIDATION_EVIDENCE/package/` + `/evidence/*` |
+| Tests | VERIFIED WORKING | `test-all.ps1`: 0 suites failed; Playwright 33/33; production build passes |
+| Public hosting | BLOCKED BY EXTERNAL DEPENDENCY | no hosting account configured; runs locally |
+
 ## Start
 Open this folder in Cursor and press **Ctrl+Shift+B** (task "Start Rescue-on-Chip"), or run `.\start.ps1`.
 App: http://localhost:5173 · API docs: http://127.0.0.1:8000/api/docs · Stop: `.\stop.ps1`
