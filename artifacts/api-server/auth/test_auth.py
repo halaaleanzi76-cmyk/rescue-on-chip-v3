@@ -82,7 +82,7 @@ class AuthTests(unittest.TestCase):
         self.assertEqual(self.client.get("/api/me").status_code, 401)
         self.assertEqual(self.client.post("/api/runs", json=self.run_payload()).status_code, 401)
         self.assertEqual(self.client.get("/api/admin/users").status_code, 401)
-        self.assertEqual(self.client.post("/api/ai/train").status_code, 401)
+        self.assertEqual(self.client.get("/api/admin/audit").status_code, 401)
         runs = self.client.get("/api/runs").json()
         self.assertTrue(runs, "public demonstration run should be visible")
 
@@ -131,7 +131,7 @@ class AuthTests(unittest.TestCase):
     def test_admin_enrollment_and_permissions(self):
         regular = self.login("regular@example.test")
         self.assertEqual(self.client.get("/api/admin/users", headers=regular).status_code, 403)
-        self.assertEqual(self.client.post("/api/ai/train", headers=regular).status_code, 403)
+        self.assertEqual(self.client.get("/api/admin/audit", headers=regular).status_code, 403)
 
         admin = self.login(ADMIN_EMAIL)
         me = self.client.get("/api/me", headers=admin).json()

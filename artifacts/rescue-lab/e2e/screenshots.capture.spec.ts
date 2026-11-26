@@ -4,8 +4,8 @@ import { devices } from '@playwright/test';
 
 test.skip(!process.env.CAPTURE, 'set CAPTURE=1 to capture delivery screenshots');
 const OUT = '../../docs/screenshots';
-const PAGES: [string, string][] = [['home', '/'], ['problem', '/problem'], ['invention', '/invention'], ['simulation', '/lab'],
-  ['validation', '/validation'], ['results', '/results'], ['evidence', '/evidence'], ['judge', '/judge']];
+const PAGES: [string, string][] = [['home', '/'], ['vascular', '/vascular'], ['model', '/model'], ['simulation', '/lab'],
+  ['validation', '/validation'], ['results', '/results'], ['runs', '/runs'], ['compare', '/compare']];
 
 for (const lang of ['en', 'ar'] as const) {
   test(`screenshots desktop ${lang}`, async ({ page }) => {

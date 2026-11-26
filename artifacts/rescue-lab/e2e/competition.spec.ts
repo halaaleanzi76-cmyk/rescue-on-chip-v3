@@ -1,26 +1,34 @@
-/** Competition site: home, navigation, validation lab, sensitivity, judge mode and evidence downloads — on the real platform. */
+/** Platform: home tools, navigation, validation, sensitivity, removed pages and security headers — on the real platform. */
 import { test, expect, setLang } from './fixtures';
 
 const num = (s: string | null) => Number.parseFloat((s ?? '').replace(/[^\d.\-]/g, ''));
 
-test('home shows the logo, headline, disclaimer and a live no-reflow demo', async ({ page, consoleErrors }) => {
+test('home shows the platform tools and a live network demo, with no study or pitch content', async ({ page, consoleErrors }) => {
   await setLang(page, 'en');
   await page.goto('/');
-  await expect(page.getByTestId('home-headline')).toHaveText(/When the artery reopens, why doesn.t the brain recover\?/);
+  await expect(page.getByTestId('home-headline')).toBeVisible();
   await expect(page.getByTestId('link-home').locator('svg').first()).toBeVisible();
-  await expect(page.getByTestId('home-disclaimer')).toBeVisible();
-  await expect(page.getByTestId('button-judge-mode')).toBeVisible();
-  for (const id of ['home', 'problem', 'invention', 'lab', 'validation', 'results', 'evidence']) {
-    await expect(page.getByTestId(`link-nav-${id}`)).toBeVisible();
-  }
+  for (const id of ['home', 'lab', 'vascular', 'results', 'runs', 'validation', 'model']) await expect(page.getByTestId(`link-nav-${id}`)).toBeVisible();
+  for (const id of ['lab', 'vascular', 'results', 'runs', 'compare', 'validation', 'model']) await expect(page.getByTestId(`tool-${id}`)).toBeVisible();
+  await expect(page.getByTestId('button-judge-mode')).toHaveCount(0);
+  await expect(page.locator('body')).not.toContainText(/PMID|Stroke 20|Judge Mode/);
   const inflow = page.getByTestId('home-inflow');
   await expect(inflow).toContainText('µL/min');
   const before = num(await inflow.textContent());
   await page.getByTestId('button-home-noreflow').click();
   await expect(page.getByTestId('home-pct')).not.toContainText('100');
   expect(num(await inflow.textContent())).toBeLessThan(before);
-  await page.getByTestId('cta-simulation').click();
-  await expect(page).toHaveURL(/\/lab$/);
+  await page.getByTestId('tool-vascular').click();
+  await expect(page).toHaveURL(/\/vascular$/);
+  void consoleErrors;
+});
+
+test('removed pages redirect to the platform home', async ({ page, consoleErrors }) => {
+  await setLang(page, 'en');
+  for (const p of ['/problem', '/invention', '/evidence', '/judge']) {
+    await page.goto(p);
+    await expect(page).toHaveURL(/\/$/);
+  }
   void consoleErrors;
 });
 
@@ -32,7 +40,7 @@ test('validation lab keeps the four verdicts separate and lists the negative fin
   await expect(page.getByTestId('verdict-B')).toContainText(/not possible/i);
   await expect(page.getByTestId('verdict-C')).toContainText(/not performed/i);
   await expect(page.getByTestId('list-negative-findings')).toBeVisible();
-  await expect(page.getByTestId('table-validation').locator('tbody tr').first()).toBeVisible();
+  await expect(page.locator('body')).not.toContainText(/PMID/);
   void consoleErrors;
 });
 
@@ -46,42 +54,9 @@ test('sensitivity sweep runs the engine and states a verdict', async ({ page, co
   void consoleErrors;
 });
 
-test('judge mode: chapters navigate and the A/B/C ranking is computed, not fixed', async ({ page, consoleErrors }) => {
-  test.setTimeout(90_000);
-  await setLang(page, 'en');
-  await page.goto('/');
-  await page.getByTestId('button-judge-mode').click();
-  await expect(page.getByTestId('judge-mode')).toBeVisible();
-  await expect(page.getByTestId('judge-clock')).toBeVisible();
-  for (let i = 0; i < 6; i++) await expect(page.getByTestId(`judge-chapter-${i}`)).toBeVisible();
-  let found = false;
-  for (let i = 0; i < 6 && !found; i++) {
-    await page.getByTestId(`judge-chapter-${i}`).click();
-    found = await page.getByTestId('judge-abc').isVisible();
+test('API: unrelated endpoints are gone', async ({ request }) => {
+  for (const u of ['/api/source', '/api/ai/overview', '/api/evidence/overview']) {
+    const r = await request.get(u);
+    expect(r.status(), u).toBe(404);
   }
-  expect(found).toBe(true);
-  const best = page.getByTestId('judge-best');
-  await page.getByTestId('judge-regwait').fill('0');
-  await expect(best).toBeVisible({ timeout: 30_000 });
-  const atZero = await best.textContent();
-  await page.getByTestId('judge-regwait').fill('15');
-  await expect(best).not.toHaveText(atZero!, { timeout: 30_000 });
-  void consoleErrors;
-});
-
-test('evidence hub downloads are real files', async ({ page, request, consoleErrors }) => {
-  await setLang(page, 'en');
-  await page.goto('/evidence');
-  const links = page.getByTestId('evidence-downloads').locator('a[href^="/evidence/"]');
-  const n = await links.count();
-  expect(n).toBeGreaterThanOrEqual(7);
-  for (let i = 0; i < n; i++) {
-    const href = (await links.nth(i).getAttribute('href'))!;
-    const res = await request.get(href);
-    expect(res.status(), href).toBe(200);
-    const body = await res.body();
-    expect(body.length, href).toBeGreaterThan(300);
-    expect(body.subarray(0, 15).toString(), href).not.toContain('<!doctype');
-  }
-  void consoleErrors;
 });

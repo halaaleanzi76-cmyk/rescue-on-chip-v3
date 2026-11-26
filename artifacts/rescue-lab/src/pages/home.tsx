@@ -1,12 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'wouter';
-import { ArrowRight, ArrowLeft, FlaskConical, ShieldCheck, Presentation, Activity } from 'lucide-react';
+import { ArrowRight, ArrowLeft, FlaskConical, ShieldCheck, Activity, Network, BarChart3, History, Columns2, Sigma } from 'lucide-react';
 import { solveVascularNetwork, useGetVascularNetwork, type VascularSolveResult } from '@workspace/api-client-react';
-import { useQuery } from '@tanstack/react-query';
 import { usePageTitle } from '@/components/shell';
 import { Logo, BRAND } from '@/components/brand';
-import { useI18n } from '@/lib/i18n';
-import { apiJson } from '@/lib/auth';
+import { useI18n, type MessageKey } from '@/lib/i18n';
 import { fmt } from '@/lib/lab';
 
 /** Capillaries blocked by the "no-reflow" demo (a plausible plugging pattern inside the capillary bed). */
@@ -93,75 +91,49 @@ function NetworkHero() {
   );
 }
 
-function EvidenceStrip() {
-  const { t } = useI18n();
-  const v = useQuery({ queryKey: ['validation'], queryFn: () => apiJson<{ verdicts: Record<string, { status: string; passed?: number; total?: number }> }>('/api/validation/run'), staleTime: 300_000 });
-  const d = v.data?.verdicts;
-  const cell = (label: string, st?: { status: string; passed?: number; total?: number }, fallback?: string) => (
-    <div className="rounded-xl border bg-white p-3">
-      <div className="text-[11px] text-muted-foreground">{label}</div>
-      <div className="mt-1 text-sm font-semibold text-[#10243A]">
-        {st ? (st.total ? `${st.passed}/${st.total} ${st.status === 'PASS' ? '✓' : '·'}` : fallback) : '…'}
-      </div>
-    </div>
-  );
-  return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2" data-testid="home-evidence">
-      {cell(t('home.evA'), d?.A_mathematical_verification)}
-      {cell(t('home.evS'), d?.S_synthetic_benchmarks)}
-      {cell(t('home.evB'), d?.B_independent_empirical_validation, t('home.evNotPossible'))}
-      {cell(t('home.evC'), d?.C_clinical_validation, t('home.evNotDone'))}
-    </div>
-  );
-}
+const TOOLS: { href: string; icon: typeof FlaskConical; t: MessageKey; d: MessageKey; id: string }[] = [
+  { href: '/lab', icon: FlaskConical, t: 'tool.lab', d: 'tool.labD', id: 'lab' },
+  { href: '/vascular', icon: Network, t: 'tool.vascular', d: 'tool.vascularD', id: 'vascular' },
+  { href: '/results', icon: BarChart3, t: 'tool.results', d: 'tool.resultsD', id: 'results' },
+  { href: '/runs', icon: History, t: 'tool.runs', d: 'tool.runsD', id: 'runs' },
+  { href: '/compare', icon: Columns2, t: 'tool.compare', d: 'tool.compareD', id: 'compare' },
+  { href: '/validation', icon: ShieldCheck, t: 'tool.validation', d: 'tool.validationD', id: 'validation' },
+  { href: '/model', icon: Sigma, t: 'tool.model', d: 'tool.modelD', id: 'model' },
+];
 
 export default function Home() {
   const { t, dir } = useI18n();
   usePageTitle(t('nav2.home'));
   const Arrow = dir === 'rtl' ? ArrowLeft : ArrowRight;
-  const blocks: [string, string, string?][] = [
-    [t('home.problemTitle'), t('home.problemBody'), t('home.problemCite')],
-    [t('home.inventionTitle'), t('home.inventionBody')],
-    [t('home.diffTitle'), t('home.diffBody')],
-    [t('home.todayTitle'), t('home.todayBody')],
-  ];
   return (
-    <div className="max-w-[1240px] mx-auto px-4 md:px-6 py-8 md:py-12 space-y-12">
+    <div className="max-w-[1240px] mx-auto px-4 md:px-6 py-8 md:py-12 space-y-10">
       <section className="grid lg:grid-cols-[1.05fr_1fr] gap-8 items-center">
         <div>
           <Logo size={52} className="mb-6" />
-          <div className="text-[12px] font-medium tracking-wide text-[#087F8C]">{t('home.kicker')}</div>
-          <h1 className="mt-3 text-[34px] md:text-[46px] leading-[1.12] font-extrabold tracking-tight text-[#10243A]" data-testid="home-headline">{t('home.h1')}</h1>
-          <p className="mt-4 text-base md:text-lg text-[#3B5268] leading-relaxed max-w-[56ch]">{t('home.sub')}</p>
+          <div className="text-[12px] font-medium tracking-wide text-[#087F8C]">{t('home2.kicker')}</div>
+          <h1 className="mt-3 text-[32px] md:text-[42px] leading-[1.15] font-extrabold tracking-tight text-[#10243A]" data-testid="home-headline">{t('home2.h1')}</h1>
+          <p className="mt-4 text-base md:text-lg text-[#3B5268] leading-relaxed max-w-[56ch]">{t('home2.sub')}</p>
           <div className="mt-7 flex flex-wrap gap-3">
             <Link href="/lab" data-testid="cta-simulation" className="inline-flex items-center gap-2 rounded-full bg-[#087F8C] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#066e79]">
               <FlaskConical className="h-4 w-4" />{t('home.ctaSim')}<Arrow className="h-4 w-4" />
-            </Link>
-            <Link href="/evidence" data-testid="cta-evidence" className="inline-flex items-center gap-2 rounded-full border border-[#10243A]/20 bg-white px-5 py-3 text-sm font-semibold text-[#10243A] hover:border-[#087F8C]">
-              <ShieldCheck className="h-4 w-4 text-[#087F8C]" />{t('home.ctaEvidence')}
-            </Link>
-            <Link href="/judge" data-testid="cta-judge" className="inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold text-[#087F8C] hover:underline">
-              <Presentation className="h-4 w-4" />{t('home.ctaJudge')}
             </Link>
           </div>
         </div>
         <NetworkHero />
       </section>
 
-      <section className="grid md:grid-cols-2 gap-4">
-        {blocks.map(([h, b, c]) => (
-          <article key={h} className="rounded-2xl border bg-white p-6">
-            <h2 className="text-lg font-bold text-[#10243A]">{h}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-[#3B5268]">{b}</p>
-            {c && <p className="mt-3 text-[11px] text-muted-foreground">{c}</p>}
-          </article>
-        ))}
-      </section>
-
       <section className="space-y-3">
-        <h2 className="text-lg font-bold text-[#10243A]">{t('home.evidenceTitle')}</h2>
-        <EvidenceStrip />
-        <p className="text-sm text-[#3B5268] max-w-[80ch]"><b className="text-[#10243A]">{t('home.valueTitle')}: </b>{t('home.valueBody')}</p>
+        <h2 className="text-lg font-bold text-[#10243A]">{t('home2.tools')}</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3" data-testid="home-tools">
+          {TOOLS.map((x) => (
+            <Link key={x.href} href={x.href} data-testid={`tool-${x.id}`}
+              className="group rounded-2xl border bg-white p-5 hover:border-[#087F8C] hover:shadow-[0_10px_30px_rgba(16,36,58,.08)] transition">
+              <x.icon className="h-5 w-5 text-[#087F8C]" />
+              <div className="mt-3 font-semibold text-[#10243A]">{t(x.t)}</div>
+              <p className="mt-1 text-sm text-[#3B5268] leading-relaxed">{t(x.d)}</p>
+            </Link>
+          ))}
+        </div>
       </section>
 
       <p className="rounded-xl border border-[#E2EAF0] bg-white px-4 py-3 text-xs text-[#3B5268]" data-testid="home-disclaimer" style={{ borderInlineStart: `4px solid ${BRAND.teal}` }}>

@@ -1,6 +1,6 @@
 {
  "suite_version": "validation-suite-1.0.0",
- "generated_at_utc": "2026-11-26T19:30:50.201903+00:00",
+ "generated_at_utc": "2026-11-26T22:12:40.215916+00:00",
  "engine_versions": {
   "switching": "bench-1.0.2",
   "vascular": "vascular-poiseuille-network-0.1.0"
@@ -440,28 +440,28 @@
   "simulation.test_engine": {
    "returncode": 0,
    "summary": [
-    "Ran 10 tests in 0.601s",
+    "Ran 10 tests in 0.529s",
     "OK"
    ]
   },
   "simulation.test_visualization": {
    "returncode": 0,
    "summary": [
-    "Ran 8 tests in 0.302s",
+    "Ran 8 tests in 0.247s",
     "OK"
    ]
   },
   "vascular.test_solver": {
    "returncode": 0,
    "summary": [
-    "Ran 13 tests in 0.007s",
+    "Ran 13 tests in 0.006s",
     "OK"
    ]
   },
   "vascular.test_api": {
    "returncode": 0,
    "summary": [
-    "Ran 5 tests in 0.070s",
+    "Ran 5 tests in 0.067s",
     "OK"
    ]
   }

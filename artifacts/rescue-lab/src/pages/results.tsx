@@ -7,7 +7,7 @@ import { usePageTitle } from '@/components/shell';
 import { useI18n, type MessageKey } from '@/lib/i18n';
 import { apiJson } from '@/lib/auth';
 import { METHOD_COLORS, METHOD_LABEL, fmt } from '@/lib/lab';
-import { PageHeader, Card } from './problem';
+import { PageHeader, Card } from '@/components/page-parts';
 import { VerdictCards, useValidation } from './validation';
 import Workbench from './workbench';
 

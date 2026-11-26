@@ -67,12 +67,16 @@ def main():
         raise AssertionError("Missing run should return 404")
     except urllib.error.HTTPError as exc:
         assert exc.code==404
-    assert request("/source")[2].startswith(b"%PDF")
+    try:
+        request("/source")
+        raise AssertionError("The proposal PDF must not be served publicly")
+    except urllib.error.HTTPError as exc:
+        assert exc.code==404
     summary=json.loads(request("/summary")[2])
     assert summary["total_runs"]>=1
     print(json.dumps({"status":"passed","checks":["health","model defaults","anonymous save refused","create (with token) or public run","persist and reload",
           "fingerprint","three topologies","24 virtual chips","HTML report","trace CSV","full JSON",
-          "parameter rejection","missing run","source PDF","summary"],
+          "parameter rejection","missing run","proposal PDF not served","summary"],
           "run_id":run["id"],"baseline_flow_ul_min":run["baseline_flow_ul_min"],
           "equalized_peak_pct":run["metrics"][2]["peak_deviation_pct"]},indent=2))
 

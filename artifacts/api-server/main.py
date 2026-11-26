@@ -37,29 +37,15 @@ from simulation.engine import MODEL_VERSION, simulate
 from simulation.reports import EQUATIONS, html_report
 from simulation import store
 from simulation.visualization import derive_visualization
-from simulation.contracts import (
-    AIModelRegistryEntry, AIReproducibilityReport, AIResearchOverview, AIPredictionResponse,
-    CompoundDescription, CompoundInput, CompoundSearchResponse, MoleculeConformerResponse,
-    ClinicalEvidenceOverview, ClinicalEvidenceSearchResponse, TrainingJobStatus,
-)
-from research import jobs as research_jobs
-from research.service import (
-    describe_structure, model_registry, predict_structure, research_overview,
-    search_pubchem, training_log,
-)
-from research.chemistry import generate_conformer
-from research.clinical_evidence.database import evidence_overview, search_evidence
-from research.training import MODELS_DIR
 from vascular.contracts import VascularNetwork, VascularSolveInput, VascularSolveResult
 from vascular.graph import build_default_network
 from vascular.solver import solve_network
-from auth.core import CurrentUser, optional_user, require_admin, require_role
+from auth.core import CurrentUser, optional_user, require_role
 from auth.routes import router as auth_router
 
 logger = logging.getLogger("rescue-lab")
 slots = threading.BoundedSemaphore(2)
 ROOT = Path(__file__).resolve().parents[2]
-CLINICAL_EVIDENCE_DIR = Path(__file__).resolve().parent / "research" / "clinical_evidence"
 
 
 @lru_cache(maxsize=1)
@@ -83,6 +69,30 @@ async def lifespan(app):
 app = FastAPI(title="Api", version="1.0.0", lifespan=lifespan,
               docs_url="/api/docs", openapi_url="/api/openapi.json", redoc_url=None)
 app.add_middleware(GZipMiddleware, minimum_size=1000)
+
+CSP = ("default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+       "font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; "
+       "connect-src 'self' https://*.supabase.co wss://*.supabase.co; worker-src 'self' blob:; "
+       "frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'")
+SECURITY_HEADERS = {
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+    "Cross-Origin-Opener-Policy": "same-origin",
+}
+
+
+@app.middleware("http")
+async def security_headers(request, call_next):
+    response = await call_next(request)
+    for k, v in SECURITY_HEADERS.items():
+        response.headers.setdefault(k, v)
+    # Swagger UI (/api/docs) loads its own CDN assets; everything else gets the strict policy.
+    if not request.url.path.startswith("/api/docs"):
+        response.headers.setdefault("Content-Security-Policy", CSP)
+    return response
 app.include_router(auth_router)
 
 
@@ -205,140 +215,6 @@ def report(run_id: str, format: str = Query("html", pattern="^(html|csv|json)$")
     return Response(html_report(run),media_type="text/html",headers=headers)
 
 
-@app.get("/api/source")
-def source():
-    return FileResponse(Path(__file__).resolve().parent/"resources"/"project-proposal.pdf",
-                        media_type="application/pdf",filename="Rescue-on-Chip-Research-Proposal.pdf")
-
-
-@app.get("/api/ai/overview", response_model=AIResearchOverview, operation_id="getAIResearchOverview")
-def ai_overview():
-    return research_overview()
-
-
-@app.get("/api/ai/training", response_model=TrainingJobStatus, operation_id="getAITrainingStatus")
-def ai_training_status():
-    state = research_jobs.get_state()
-    if state["status"] == "idle":
-        entries = model_registry()
-        if entries:
-            state["status"] = "completed"
-            state["model_version"] = entries[0]["model_version"]
-            state["log"] = training_log()
-    return state
-
-
-@app.post("/api/ai/train", response_model=TrainingJobStatus, status_code=202, operation_id="startAITraining")
-def start_ai_training(_: CurrentUser = Depends(require_admin)):
-    try:
-        return research_jobs.start_training()
-    except RuntimeError as exc:
-        raise HTTPException(429, str(exc))
-
-
-@app.get("/api/ai/models", response_model=list[AIModelRegistryEntry], operation_id="listAIModels")
-def list_ai_models():
-    return model_registry()
-
-
-@app.get(
-    "/api/ai/models/{model_version}/report",
-    response_model=AIReproducibilityReport,
-    operation_id="downloadAIReproducibilityReport",
-)
-def download_ai_report(model_version: str):
-    if len(model_version) > 120 or any(char not in "abcdefghijklmnopqrstuvwxyz0123456789-" for char in model_version):
-        raise HTTPException(404, "Model version not found.")
-    model_dir = MODELS_DIR / model_version
-    manifest_path = model_dir / "manifest.json"
-    metrics_path = model_dir / "metrics.json"
-    if not manifest_path.is_file() or not metrics_path.is_file():
-        raise HTTPException(404, "Model version not found.")
-    report_data = {
-        "manifest": json.loads(manifest_path.read_text()),
-        "metrics": json.loads(metrics_path.read_text()),
-        "training_log": (model_dir / "training.log").read_text().splitlines()
-        if (model_dir / "training.log").exists() else [],
-    }
-    return JSONResponse(
-        content=report_data,
-        headers={"Content-Disposition": f'attachment; filename="rescue-on-chip-{model_version}-reproducibility.json"'},
-    )
-
-
-@app.get("/api/ai/compound/search", response_model=CompoundSearchResponse, operation_id="searchPubChemCompounds")
-def ai_compound_search(q: str = Query(min_length=1, max_length=100)):
-    try:
-        return {"results": search_pubchem(q)}
-    except ValueError as exc:
-        raise HTTPException(422, str(exc))
-    except RuntimeError as exc:
-        raise HTTPException(502, str(exc))
-
-
-@app.post("/api/ai/compound/describe", response_model=CompoundDescription, operation_id="describeCompound")
-def ai_describe_compound(data: CompoundInput):
-    try:
-        return describe_structure(data.structure, data.representation)
-    except ValueError as exc:
-        raise HTTPException(422, str(exc))
-
-
-@app.post("/api/ai/compound/conformer", response_model=MoleculeConformerResponse, operation_id="generateCompoundConformer")
-def ai_compound_conformer(data: CompoundInput):
-    try:
-        return generate_conformer(data.structure, data.representation)
-    except ValueError as exc:
-        raise HTTPException(422, str(exc))
-
-
-@app.post("/api/ai/predict", response_model=AIPredictionResponse, operation_id="predictCompoundResponse")
-def ai_predict_compound(data: CompoundInput):
-    try:
-        return predict_structure(data.structure, data.representation)
-    except ValueError as exc:
-        raise HTTPException(422, str(exc))
-    except RuntimeError as exc:
-        logger.exception("Stored research model could not be safely verified or loaded")
-        raise HTTPException(503, "The stored research model is unavailable or failed integrity validation.")
-
-
-@app.get("/api/evidence/overview", response_model=ClinicalEvidenceOverview, operation_id="getClinicalEvidenceOverview")
-def clinical_evidence_overview():
-    try:
-        return evidence_overview()
-    except (sqlite3.Error, OSError, RuntimeError):
-        logger.exception("Read-only clinical evidence database is unavailable")
-        raise HTTPException(503, "The public clinical evidence database is unavailable.")
-
-
-@app.get("/api/evidence/search", response_model=ClinicalEvidenceSearchResponse, operation_id="searchClinicalEvidence")
-def clinical_evidence_search(q: str = Query(min_length=1, max_length=100)):
-    try:
-        return search_evidence(q)
-    except ValueError as exc:
-        raise HTTPException(422, str(exc))
-    except (sqlite3.Error, OSError, RuntimeError):
-        logger.exception("Read-only clinical evidence search failed")
-        raise HTTPException(503, "The public clinical evidence search is unavailable.")
-
-
-@app.get("/api/evidence/report", operation_id="downloadClinicalEvidenceImportReport")
-def clinical_evidence_import_report():
-    path = CLINICAL_EVIDENCE_DIR / "stage1_import_report.json"
-    if not path.is_file():
-        raise HTTPException(404, "The verified evidence import report is unavailable.")
-    return FileResponse(path, media_type="application/json", filename="clinical-evidence-import-report.json")
-
-
-@app.get("/api/evidence/import-log", operation_id="downloadClinicalEvidenceImportLog")
-def clinical_evidence_import_log():
-    path = CLINICAL_EVIDENCE_DIR / "importer-run-2026-11-23.log"
-    if not path.is_file():
-        raise HTTPException(404, "The public evidence import log is unavailable.")
-    return FileResponse(path, media_type="text/plain", filename="clinical-evidence-import.log")
-
-
 @app.get("/api/vascular/network", response_model=VascularNetwork, operation_id="getVascularNetwork")
 def vascular_network():
     return build_default_network()
@@ -406,7 +282,14 @@ def sensitivity(parameter: str = Query(...), points: int = Query(7, ge=3, le=11)
 # ---------------------------------------------------------------- production: serve the built web app
 STATIC_DIR = Path(os.environ.get("STATIC_DIR", ROOT / "deploy" / "static")).resolve()
 if (STATIC_DIR / "index.html").is_file():
+    import base64, hashlib, re as _re
     from fastapi.responses import HTMLResponse
+
+    # Allow exactly the inline scripts shipped in index.html (by hash), nothing else.
+    _inline = _re.findall(r"<script>(.*?)</script>", (STATIC_DIR / "index.html").read_text(encoding="utf-8"), _re.S)
+    _hashes = " ".join(f"'sha256-{base64.b64encode(hashlib.sha256(x.encode()).digest()).decode()}'" for x in _inline)
+    if _hashes:
+        CSP = CSP.replace("script-src 'self'", f"script-src 'self' {_hashes}", 1)
 
     @app.get("/{full_path:path}", include_in_schema=False)
     def spa(full_path: str):

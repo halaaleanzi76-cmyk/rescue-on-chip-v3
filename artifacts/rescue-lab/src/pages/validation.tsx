@@ -4,7 +4,7 @@ import { CheckCircle2, XCircle, MinusCircle, Loader2, RefreshCw, Download } from
 import { usePageTitle } from '@/components/shell';
 import { useI18n } from '@/lib/i18n';
 import { apiJson } from '@/lib/auth';
-import { PageHeader, Card } from './problem';
+import { PageHeader, Card } from '@/components/page-parts';
 import { cn } from '@/lib/utils';
 
 export type SuiteRow = { category: 'A' | 'S'; group: string; check: string; metric: string; value: number; tolerance: number; pass: boolean; detail?: Record<string, unknown> };
@@ -81,7 +81,7 @@ export default function Validation() {
       </div>
       <VerdictCards s={s} />
       <div className="grid md:grid-cols-2 gap-3">
-        <Card><p className="text-sm text-[#10243A] font-medium" data-testid="text-verdict-B">{t('val.Bstatement')}</p><p className="mt-2 text-xs text-muted-foreground">{t('val.Bsources')}</p></Card>
+        <Card><p className="text-sm text-[#10243A] font-medium" data-testid="text-verdict-B">{t('val.Bstatement')}</p></Card>
         <Card><p className="text-sm text-[#10243A]">{t('val.Cstatement')}</p><p className="mt-2 text-xs text-muted-foreground">{t('val.never')}</p></Card>
       </div>
 

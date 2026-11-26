@@ -1,24 +1,20 @@
-import { useEffect, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
-import Workbench from '@/pages/workbench';
-import Laboratory from '@/pages/laboratory';
-import Compare from '@/pages/compare';
-import Runs from '@/pages/runs';
-import Model from '@/pages/model';
-import Vascular from '@/pages/vascular';
+const Workbench = lazy(() => import('@/pages/workbench'));
+const Laboratory = lazy(() => import('@/pages/laboratory'));
+const Compare = lazy(() => import('@/pages/compare'));
+const Runs = lazy(() => import('@/pages/runs'));
+const Model = lazy(() => import('@/pages/model'));
+const Vascular = lazy(() => import('@/pages/vascular'));
 import Home from '@/pages/home';
-import Problem from '@/pages/problem';
-import Invention from '@/pages/invention';
-import Validation from '@/pages/validation';
-import Results from '@/pages/results';
-import EvidenceHub from '@/pages/evidence-hub';
-import JudgeMode from '@/pages/judge';
-import AccountPage from '@/pages/account';
-import AdminPage from '@/pages/admin';
+const Validation = lazy(() => import('@/pages/validation'));
+const Results = lazy(() => import('@/pages/results'));
+const AccountPage = lazy(() => import('@/pages/account'));
+const AdminPage = lazy(() => import('@/pages/admin'));
 import { AuthCallbackPage, ForgotPasswordPage, ResetPasswordPage, SignInPage, SignUpPage } from '@/pages/auth';
 import { Shell } from '@/components/shell';
 import { I18nProvider, useI18n } from '@/lib/i18n';
@@ -29,6 +25,7 @@ import {
   Switch,
   useLocation,
   Router as WouterRouter,
+  Redirect,
 } from 'wouter';
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false, retry: 1 } } });
@@ -40,15 +37,16 @@ function Router() {
     // survives a page crash.
     <Shell>
     <RoutedErrorBoundary>
+      <Suspense fallback={<div className="p-10 text-sm text-muted-foreground" role="status">…</div>}>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/problem" component={Problem} />
-        <Route path="/invention" component={Invention} />
         <Route path="/lab" component={Laboratory} />
         <Route path="/validation" component={Validation} />
         <Route path="/results" component={Results} />
-        <Route path="/evidence" component={EvidenceHub} />
-        <Route path="/judge" component={JudgeMode} />
+        <Route path="/problem"><Redirect to="/" replace /></Route>
+        <Route path="/invention"><Redirect to="/" replace /></Route>
+        <Route path="/evidence"><Redirect to="/" replace /></Route>
+        <Route path="/judge"><Redirect to="/" replace /></Route>
         <Route path="/vascular" component={Vascular} />
         <Route path="/analysis" component={Workbench} />
         <Route path="/compare" component={Compare} />
@@ -63,6 +61,7 @@ function Router() {
         <Route path="/admin" component={AdminPage} />
         <Route component={NotFound} />
       </Switch>
+      </Suspense>
     </RoutedErrorBoundary>
     </Shell>
   );

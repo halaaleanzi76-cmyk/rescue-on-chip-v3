@@ -1,7 +1,7 @@
 import { type ReactNode, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { useHealthCheck, getHealthCheckQueryKey, useGetSummary } from '@workspace/api-client-react';
-import { Home, Stethoscope, Cpu, FlaskConical, ShieldCheck as Shield, BarChart3, BookOpenCheck, Presentation, Languages, LogIn, UserRound, ShieldCheck } from 'lucide-react';
+import { Home, Network, FlaskConical, ShieldCheck as Shield, BarChart3, History, Sigma, Languages, LogIn, UserRound, ShieldCheck } from 'lucide-react';
 import { Logo as BrandLogo } from '@/components/brand';
 import { cn } from '@/lib/utils';
 import { useI18n, type MessageKey } from '@/lib/i18n';
@@ -9,12 +9,12 @@ import { apiJson, useAuth } from '@/lib/auth';
 
 const NAV: { href: string; label: MessageKey; icon: typeof Home; id: string; match?: string[] }[] = [
   { href: '/', label: 'nav2.home', icon: Home, id: 'home' },
-  { href: '/problem', label: 'nav2.problem', icon: Stethoscope, id: 'problem', match: ['/vascular'] },
-  { href: '/invention', label: 'nav2.invention', icon: Cpu, id: 'invention', match: ['/model'] },
-  { href: '/lab', label: 'nav2.simulation', icon: FlaskConical, id: 'lab' },
+  { href: '/lab', label: 'nav2.simulation', icon: FlaskConical, id: 'lab', match: ['/compare'] },
+  { href: '/vascular', label: 'nav2.vascular', icon: Network, id: 'vascular' },
+  { href: '/results', label: 'nav2.results', icon: BarChart3, id: 'results', match: ['/analysis'] },
+  { href: '/runs', label: 'nav2.runs', icon: History, id: 'runs' },
   { href: '/validation', label: 'nav2.validation', icon: Shield, id: 'validation' },
-  { href: '/results', label: 'nav2.results', icon: BarChart3, id: 'results', match: ['/analysis', '/runs', '/compare'] },
-  { href: '/evidence', label: 'nav2.evidence', icon: BookOpenCheck, id: 'evidence' },
+  { href: '/model', label: 'nav2.model', icon: Sigma, id: 'model' },
 ];
 
 function LanguageSwitch() {
@@ -93,7 +93,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const [loc] = useLocation();
   const { t } = useI18n();
   const summary = useGetSummary();
-  const wide = loc === '/' || ['/lab', '/compare', '/vascular', '/problem', '/invention', '/validation', '/results', '/evidence', '/judge'].some((p) => loc.startsWith(p));
+  const wide = loc === '/' || ['/lab', '/compare', '/vascular', '/validation', '/results'].some((p) => loc.startsWith(p));
   return (
     <div className="min-h-[100dvh] flex flex-col">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-background focus:p-2">{t('nav.lab')}</a>
@@ -119,10 +119,6 @@ export function Shell({ children }: { children: ReactNode }) {
             })}
           </nav>
           <div className="ms-auto flex items-center gap-3">
-            <Link href="/judge" data-testid="button-judge-mode"
-              className="inline-flex items-center gap-1.5 rounded-full bg-[#10243A] px-3.5 py-1.5 text-[12.5px] font-semibold text-white hover:bg-[#16314f]">
-              <Presentation className="h-4 w-4" />{t('nav2.judge')}
-            </Link>
             <Health />
             <LanguageSwitch />
             <AccountMenu />

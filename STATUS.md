@@ -1,3 +1,11 @@
+# Platform-only release (2026-11-27)
+The public site now contains only the user platform: Home (tools) · Research Simulation · Vascular Network · Results & Sensitivity ·
+Saved Runs · Compare · Engine Validation · Model & Equations. Problem, invention, evidence/studies and judge-mode pages were removed
+(old URLs redirect home); `/api/source`, `/api/ai/*` and `/api/evidence/*` are no longer served (modules remain in the repository).
+Security headers (CSP with hashed inline script, HSTS, nosniff, X-Frame-Options DENY, Referrer-Policy, Permissions-Policy) on every response.
+Routes are code-split: initial JS 760 kB (230 kB gzip) instead of 2.37 MB; three.js loads only on 3D pages.
+Tests: test-all 0 failed; Playwright 31/31 against dev and against the production build with CSP.
+
 # Rescue-on-Chip v3: verified status (2026-11-26)
 
 Working copy of `Downloads\rescue-on-chip-clean`. The original was not modified.
