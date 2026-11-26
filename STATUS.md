@@ -14,7 +14,7 @@ BLOCKED BY EXTERNAL DEPENDENCY / NOT IMPLEMENTED / NOT TESTABLE.
 | Validation lab: A 24/24 PASS · synthetic 9/10 (one pre-registered negative finding) · empirical NOT POSSIBLE · clinical NOT PERFORMED | VERIFIED WORKING | `/api/validation/run` |
 | Evidence package (PDF, CSV, JSON, 4× MD) generated from real engine runs | VERIFIED WORKING | `scripts/generate_evidence_package.py` → `REAL_WORLD_VALIDATION_EVIDENCE/package/` + `/evidence/*` |
 | Tests | VERIFIED WORKING | `test-all.ps1`: 0 suites failed; Playwright 33/33; production build passes |
-| Public hosting | BLOCKED BY EXTERNAL DEPENDENCY | no hosting account configured; runs locally |
+| Public hosting (Render free) | VERIFIED WORKING | https://rescue-on-chip.onrender.com — competition + mobile E2E 16/16 against the live site |
 
 ## Start
 Open this folder in Cursor and press **Ctrl+Shift+B** (task "Start Rescue-on-Chip"), or run `.\start.ps1`.

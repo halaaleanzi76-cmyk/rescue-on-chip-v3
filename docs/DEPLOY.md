@@ -1,4 +1,5 @@
 # Free hosting (Render)
+nLive: https://rescue-on-chip.onrender.com
 
 The hosted site is one Render web service: FastAPI serves the API and the pre-built web app from `deploy/static`,
 with a free Render PostgreSQL database. Everything is declared in `render.yaml`.
