@@ -1,0 +1,95 @@
+{
+  "stage": "evidence database installation and public API import",
+  "verified_at_utc": "2026-11-23T09:38:24.509135+00:00",
+  "import_command": "python sync_public_evidence.py --compound aspirin --max-studies 10 --max-labels 3 --max-signals 5",
+  "clinical_use": "RESEARCH_ONLY; no patient-level records; no clinical efficacy or safety inference",
+  "database_file": "clinical_evidence_sources.sqlite",
+  "database_sha256": "0a123f249cab5f43555f334105b4715a56f7510e2f7110463bb9031b1be74b8f",
+  "import_log_file": "importer-run-2026-11-23.log",
+  "import_log_sha256": "f8ac9d113683da89c386f8af36a392239a329fca02452c25439d965c01961340",
+  "catalog_count": 21,
+  "integration_state_counts": {
+    "CATALOG_ONLY_NOT_CONNECTED": 18,
+    "LIVE_FETCH_CONFIRMED": 3
+  },
+  "record_counts": {
+    "source_catalog": 21,
+    "clinical_trials": 10,
+    "clinical_outcomes": 9,
+    "fda_labels": 3,
+    "safety_signals": 5,
+    "fetch_log": 3
+  },
+  "successful_source_count": 3,
+  "fetches": [
+    {
+      "source_id": "CTG",
+      "request_url": "https://clinicaltrials.gov/api/v2/studies?query.intr=aspirin&pageSize=10&format=json",
+      "fetched_at": "2026-11-23T09:29:53.998599+00:00",
+      "http_status": 200,
+      "count_records": 10,
+      "response_sha256": "f1094036ad1933a15a8529b1f8c923c423ba5656210c000a947b17b16f2ecccb",
+      "outcome": "SUCCESS",
+      "detail": ""
+    },
+    {
+      "source_id": "OPENFDA_LABEL",
+      "request_url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22aspirin%22&limit=3",
+      "fetched_at": "2026-11-23T09:29:55.393745+00:00",
+      "http_status": 200,
+      "count_records": 3,
+      "response_sha256": "3bf7bfaea937ce5c416f2895e8501496e4c8fa170374001a67159ecfa1e7bc3a",
+      "outcome": "SUCCESS",
+      "detail": ""
+    },
+    {
+      "source_id": "OPENFDA_FAERS",
+      "request_url": "https://api.fda.gov/drug/event.json?search=patient.drug.medicinalproduct%3A%22aspirin%22&count=patient.reaction.reactionmeddrapt.exact&limit=5",
+      "fetched_at": "2026-11-23T09:29:56.700743+00:00",
+      "http_status": 200,
+      "count_records": 5,
+      "response_sha256": "99eb031bb4812120c297a1de86d301293de8c9cc4c7e14294fa5f81f4c829308",
+      "outcome": "SUCCESS",
+      "detail": "Spontaneous report counts are NOT adverse-event incidence or causal evidence."
+    }
+  ],
+  "verified_trial": {
+    "nct_id": "NCT01813435",
+    "title": "GLOBAL LEADERS: A Clinical Study Comparing Two Forms of Anti-platelet Therapy After Stent Implantation",
+    "status": "COMPLETED",
+    "phase": "PHASE3",
+    "enrollment": 15991,
+    "interventions": [
+      "Ticagrelor",
+      "Acetylsalicylic Acid",
+      "Clopidogrel"
+    ],
+    "conditions": [
+      "Coronary Artery Disease (CAD)"
+    ],
+    "posted_results": true,
+    "posted_outcome_records": 9,
+    "registry_version_date": "2022-03-15",
+    "imported_at_utc": "2026-11-23T09:29:53.994390+00:00",
+    "public_record_url": "https://clinicaltrials.gov/study/NCT01813435",
+    "record_canonical_sha256": "3de65ad98b2550ffd3cf2764c964eb48b807077961c5badd4dc1178f159e9284",
+    "verification_request_url": "https://clinicaltrials.gov/api/v2/studies/NCT01813435?format=json",
+    "verification_http_status": 200,
+    "verification_response_body_sha256": "ab7d2d3b8ce2ed9f687a253589f30efcbdddabdcf4a4c55d8d9c834f50b0caec",
+    "verified_title_matches": true,
+    "canonical_record_hash_matches": true
+  },
+  "notes": [
+    "ClinicalTrials.gov entries and outcomes are public aggregate registry records, not patient-level data.",
+    "The verified trial used aspirin as an antiplatelet intervention/comparator; it is not evidence for Rescue-on-Chip or a treatment recommendation.",
+    "openFDA labels are product-specific. The top three query matches do not represent all approved products or indications.",
+    "FAERS values are spontaneous report-category counts, not incidence, causal effects, comparative risks, or a safety conclusion.",
+    "Only the three sources with successful HTTP 200 imports are marked LIVE_FETCH_CONFIRMED; all other catalog sources remain unconnected."
+  ],
+  "pre_import_database_backup": {
+    "file": "backups/clinical_evidence_sources.pre_import.sqlite",
+    "sha256": "d01555d929d9c389e31afce6253c778d26203ac6741c5fc2a1e3c89ecf96b63d",
+    "catalog_sources": 21,
+    "clinical_trials_at_backup": 0
+  }
+}

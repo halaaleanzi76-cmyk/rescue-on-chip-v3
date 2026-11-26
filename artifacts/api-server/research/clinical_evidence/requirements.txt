@@ -1,0 +1,2 @@
+# The demo importer and its offline tests use only the Python standard library.
+# The existing Rescue-on-Chip app may have its own, separate dependencies.

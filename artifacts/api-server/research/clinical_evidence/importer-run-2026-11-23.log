@@ -1,0 +1,9 @@
+COMMAND: python sync_public_evidence.py --compound aspirin --max-studies 10 --max-labels 3 --max-signals 5
+[CTG] Imported 10 study summaries (not patient-level records).
+[OPENFDA_LABEL] Imported 3 public labeling records.
+[OPENFDA_FAERS] Imported 5 reaction reporting-count categories (not risk estimates).
+[FETCH] {"source_id": "OPENFDA_FAERS", "url": "https://api.fda.gov/drug/event.json?search=patient.drug.medicinalproduct%3A%22aspirin%22&count=patient.reaction.reactionmeddrapt.exact&limit=5", "retrieved_at_utc": "2026-11-23T09:29:56.700743+00:00", "http_status": 200, "records": 5, "response_sha256": "99eb031bb4812120c297a1de86d301293de8c9cc4c7e14294fa5f81f4c829308", "outcome": "SUCCESS", "detail": "Spontaneous report counts are NOT adverse-event incidence or causal evidence."}
+[FETCH] {"source_id": "OPENFDA_LABEL", "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name%3A%22aspirin%22&limit=3", "retrieved_at_utc": "2026-11-23T09:29:55.393745+00:00", "http_status": 200, "records": 3, "response_sha256": "3bf7bfaea937ce5c416f2895e8501496e4c8fa170374001a67159ecfa1e7bc3a", "outcome": "SUCCESS", "detail": ""}
+[FETCH] {"source_id": "CTG", "url": "https://clinicaltrials.gov/api/v2/studies?query.intr=aspirin&pageSize=10&format=json", "retrieved_at_utc": "2026-11-23T09:29:53.998599+00:00", "http_status": 200, "records": 10, "response_sha256": "f1094036ad1933a15a8529b1f8c923c423ba5656210c000a947b17b16f2ecccb", "outcome": "SUCCESS", "detail": ""}
+
+RESEARCH ONLY. Clinical efficacy/safety cannot be concluded from this data import.

@@ -1,0 +1,99 @@
+MASTER COMMAND — Rescue-on-Chip: Evidence Database, Trained AI, Vascular 3D Twin & Clinical Research Readiness
+
+You are working INSIDE my existing Rescue-on-Chip / Neuro-Reflow Simulator Replit project. Do not make a mockup and do not replace the existing scientific Python engine, trained AID1288 E-selectin model, data, experiment history, reports, or 3D chip laboratory.
+
+I have attached the folder/package RescueOnChip_ClinicalEvidence_Starter, containing:
+- clinical_evidence_sources.sqlite (a SQLite TEMPLATE with 21 official research-source catalog records; it is NOT a populated clinical dataset)
+- data_sources.csv, schema.sql
+- sync_public_evidence.py (working prototype to fetch public clinical trial, FDA labeling, and FDA spontaneous-report summaries)
+- test_sync.py and README_AR.md
+
+CRITICAL: The 21 catalog entries are NOT 21 completed API integrations. Verify each live connection before marking it connected. Never falsely report that data have been downloaded, that a model has been trained, or that efficacy/safety has been established.
+
+OBJECTIVE
+Develop a research-grade scientific platform that integrates official drug efficacy, safety, molecular, and clinical evidence; trains only scientifically appropriate AI models on legally accessible data; and shows chip and anatomically correct artery→arteriole→capillary→venule→vein 3D simulations side by side. The output must separate experimental evidence, clinical evidence, statistical predictions, and physical simulations. It must remain RESEARCH ONLY and must not issue patient-specific treatment recommendations or unvalidated clinical efficacy claims.
+
+STAGE 0 — BACKUP AND AUDIT
+1. Inspect the current application, backend, 3D views, AI training artifacts, model scores, APIs, and storage.
+2. Verify a recoverable Git commit/Replit checkpoint before edits.
+3. Retain the AID1288 model as an exploratory assay-specific E-selectin activity predictor. Its supplied held-out ROC-AUC=0.700 and precision=0.133 DO NOT establish clinical efficacy, calibration, vascular flow response, or clinical safety.
+4. Examine licenses, internet access, service resource limits, and persistence options before large data downloads.
+
+STAGE 1 — INSTALL THE EVIDENCE DATABASE
+1. Read README_AR.md and schema.sql. Import the starter SQLite database or migrate its schema into the existing PostgreSQL database.
+2. Do not drop existing tables. Implement migrations with backups and migration tests.
+3. Preserve `source_catalog` with accurate access status (`CATALOG_ONLY_NOT_CONNECTED` until confirmed).
+4. Run `python -m unittest -v` for the included offline smoke tests.
+5. Run, if public APIs are accessible:
+   `python sync_public_evidence.py --compound "aspirin" --max-studies 10 --max-labels 3 --max-signals 5`
+   Then inspect the imported study, label, and report-count tables. Treat aspirin only as an API test example, NOT as a project therapeutic recommendation.
+6. Show imported source URLs, retrieved timestamps, record counts, raw hashes and HTTP status codes. If a request fails, show the actual error.
+7. Add a secure Compound Evidence Search screen with search / provenance / last refresh / source access mode / not-covered indications.
+
+STAGE 2 — ADD RESEARCH DATA SOURCES
+Use only official, lawful interfaces and documented terms:
+- ClinicalTrials.gov API v2 for trial registration, arms, results and posted adverse events.
+- AACT (Clinical Trials Transformation Initiative) for large relational SQL analysis of trial protocol and results records. It may require an account; do NOT claim you imported the entire AACT database unless you actually did.
+- FDA openFDA drug label and FAERS spontaneous adverse event reports.
+- DailyMed structured drug labeling and Drugs@FDA regulatory reviews/approval material.
+- PubMed for published clinical and mechanistic research references.
+- PubChem BioAssay, ChEMBL and EPA CompTox/ToxCast for laboratory/mechanistic endpoints.
+- FDA pharmacogenomic labeling table for documented drug–biomarker relationships.
+- EMA CTIS for European trial results where available.
+- MIMIC-IV, Vivli, YODA and OHDSI may provide suitable patient/participant-level validation data only through authorized credentialed access, research agreements, and relevant ethics approvals. Build optional secure connectors ONLY after user authorization. Never bypass access restrictions, scrape restricted content, or upload confidential records to public web storage.
+Store source-specific terms, endpoint and indication, population, intervention/comparator, dose, exposure duration, sample size, outcome definition, effect estimate, confidence interval, study design, DOI/NCT ID, raw source identifier, retrieval timestamp, limitations, and review status where published.
+
+STAGE 3 — BUILD A CLINICAL EVIDENCE GRAPH WITH PROPER GATES
+Create a structured link chain:
+Chemical identity → molecular assay → cell/tissue endpoint → vascular physiological parameter → clinical endpoint.
+For EACH proposed link, document the source, species/cell line, sample/population, dose, units, causal versus associative evidence, effect size, applicable conditions, replication and uncertainty. Unsupported links stay DISCONNECTED with status `NOT_ESTABLISHED`.
+Do not translate E-selectin activity into lower blood pressure, improved flow, survival or clinical efficacy without separately established bridging models and evidence.
+Implement clinically meaningful comparison by indication, population, comparator and specific endpoint, NEVER an undifferentiated global drug 'effectiveness score'.
+
+STAGE 4 — TRAIN ACTUAL ENDPOINT-SPECIFIC AI MODELS, IF SUITABLE DATA EXIST
+1. First audit the biological question and context of use. Define what the model predicts and the conditions under which the label was measured.
+2. Identify one vascular laboratory endpoint with sufficient real labeled data and train a genuine reproducible Python model using RDKit + scikit-learn. Use leakage-resistant splits and scaffold-based evaluation where appropriate. Record class imbalance and assay context.
+3. Keep untouched test data isolated from model selection, calibration fitting, and threshold tuning.
+4. Evaluate classification with PR-AUC, ROC-AUC, precision/recall, calibration and confidence intervals; regression with MAE/RMSE/uncertainty as applicable.
+5. Save serialized model, feature-generation pipeline, training log, data manifest, version and hashes. Demonstrate actual model reload and inference on a held-out structure.
+6. Do not train a supposed patient-specific clinical efficacy predictor on aggregate ClinicalTrials.gov or FAERS records. For such a task, require properly governed patient-level longitudinal or randomized trial data, with defined targets, confounding assessment, temporal order, follow-up and outcome ascertainment.
+7. If data are insufficient or unavailable, explicitly say so and DO NOT invent a model, validation metrics or clinical claims. The existing E-selectin model remains exploratory only.
+
+STAGE 5 — INDEPENDENT EXTERNAL VALIDATION
+Create an External Validation Lab with immutable reports. Require genuinely independent cohorts from a different institution, time period, assay platform or clinical study as appropriate; do not reuse the development dataset or tune against the test set. Capture geography, data collection period, population, inclusion/exclusion criteria, endpoint compatibility, selection bias, missingness, distribution shift, calibration, discrimination, uncertainty, sample size and subgroup performance where legitimate and adequately powered.
+Use TRIPOD+AI for transparent reporting and PROBAST+AI for risk-of-bias/applicability assessment, not as labels automatically certifying model safety.
+Assess utility and harms of false predictions for the intended use. Add a clinician/scientist review log and conflict-of-interest documentation.
+An empty external validation report must be labeled `NOT AVAILABLE`, never `PASSED`.
+
+STAGE 6 — HUMAN VASCULAR 3D TWIN BESIDE EXISTING CHIP 3D
+Maintain the original 3D Rescue-on-Chip display on the left. On the right build a high-quality interactive human vascular anatomy with separate arteries, arterioles, microvascular capillaries, venules and veins; correct wall/endothelium/appropriate smooth muscle, interactive cross sections and flow visualization. Veins are NOT inside arteries.
+Provide synchronized views with a desktop side-by-side comparison, and stacked/tabs on iPhone. Support rotation, zoom, clipping/cross-section, timeline, playback and vessel inspection. Use Three.js and React Three Fiber if compatible.
+Preserve the chip's existing Python physics. Build a SEPARATE, clearly documented vascular model, initially 0D/1D or network-based with mass conservation, resistance, pressure and flow, and optional compliance. Use physiologically reasonable assumptions and boundary conditions with testable units. Never call it patient-specific or full 3D CFD without a verified solver and patient data.
+No false spatial pressure maps, invented drug responses or particle motion represented as calculated CFD. Label conceptual visuals. Allow side-by-side comparison only for quantities that can be legitimately compared after scaling and model assumptions.
+
+STAGE 7 — MATERIAL EXPOSURE, SAFETY AND EFFICACY RESEARCH UI
+Allow compound name, SMILES/InChI for compatible substances, concentration, formulation, duration, physical properties and exposure conditions. Separate measured, literature, RDKit-derived, AI-predicted, simulated, and clinically established outputs. Show source provenance and uncertainty at each level.
+Display source-specific evidence, published study contrasts and uncertainty. For unknown or unstudied compounds, show `Clinical efficacy not established for this indication` and `Safety not established` instead of numerical therapeutic claims.
+FAERS reporting counts MUST NOT be treated as causal adverse-event rates or risk probabilities. Approved label sections are indication and product specific.
+
+STAGE 8 — CLINICAL RESEARCH GOVERNANCE AND REGULATORY READINESS
+Create a Clinical Readiness Board with independent verification gates:
+A. clearly defined intended use and population
+B. traceable valid molecular/physiology evidence bridge
+C. appropriately curated clinical outcome datasets
+D. external independent performance + calibration
+E. demographic or subgroup bias and data shift assessment
+F. expert review, ethical approvals and privacy controls
+G. prospective evaluation / clinical utility as required
+H. regulatory review according to applicable SFDA guidance MDS-G010 and relevant FDA/IMDRF GMLP expectations.
+`clinical_use_policy` MUST stay research-only. Do not create an UI toggle that claims medical clearance. Clinical decision support, prescribing or patient-specific risk/efficacy decisions require appropriate medical device classification, validation, clinical governance and regulatory authorization. Do not misrepresent certification status.
+
+STAGE 9 — SCIENTIFIC QUALITY, TESTS & DELIVERY
+Implement a real dashboard showing data source sync success/failures, datasets and rights, train/test separation, model loading and performance, truly independent external validation status, subgroup quality, evidence bridge status, clinician review status, clinical safety limitations, 3D visualization integrity, and exported research reports. Make every status backed by verifiable logs, links and files.
+Run tests of schema and migrations, live connectors, duplicate and identity mapping, missing data, endpoint units, leakage, calibration, model serialization, 0D/1D physics conservation, 3D fidelity limits, mobile Safari performance, and report reproducibility.
+Generate actual execution logs and list of blocked items. No invented success flags, fake peer reviews, fake training runs, or unsupported claims of clinical readiness.
+
+IMPLEMENT IN ORDER: checkpoint → evidence DB + importer → working research UI → endpoint data audit → real model training/evaluation → independent-validation design/tests → vascular 3D twin → physicochemical and physiological linkage research → clinical evidence research board.
+Stop safely and report blockers when real data, compute, reviewer approval, or controlled-access authorization are missing. Do not purchase paid services or upload patient information without explicit authorization.
+
+START WITH THE DATABASE FILES IN MY ATTACHMENT AND SHOW THE ACTUAL IMPORT LOG AND ONE VERIFIED PUBLIC CLINICAL STUDY RECORD BEFORE MOVING TO THE NEXT STAGE.

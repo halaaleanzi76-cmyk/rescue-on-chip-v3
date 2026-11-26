@@ -1,0 +1,64 @@
+{
+  "retrieved_at_utc": "2026-11-26T18:32Z",
+  "retrieval_method": "NCBI E-utilities efetch (PubMed XML) and NCBI BioC PMC-OA API; checksums in SHA256SUMS.txt",
+  "sources": [
+    {
+      "pmid": "40160088",
+      "doi": "10.1161/STROKEAHA.124.049574",
+      "title": "Persistent Tissue-Level Hypoperfusion (No-Reflow) Negates the Clinical Benefit of Successful Thrombectomy",
+      "journal": "Stroke, 2025",
+      "type": "Clinical: post hoc pooled analysis of EXTEND-IA and EXTEND-IA TNK trials (n=456 analysed of 537)",
+      "full_text_access": "Not open access (no PMC record). Only the PubMed abstract was retrieved.",
+      "downloaded": [{"file": "pubmed_40160088.xml", "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=40160088&retmode=xml", "content": "PubMed record + abstract"}],
+      "measured_variables": "eTICI angiographic grade; no-reflow defined as >15% reduction of relative CBF or CBV on 24-h perfusion CT/MRI; 90-day mRS (favourable 0-2); follow-up infarct volume",
+      "published_numbers_used_as_observations": false,
+      "summary_statistics_in_abstract": "favourable outcome 13/30 (no-reflow), 81/120 (complete flow), 150/238 (eTICI 2b), 34/68 (unsuccessful); aOR 0.31 [0.12-0.77] vs complete flow",
+      "role": "BACKGROUND ONLY (clinical motivation)",
+      "comparable_to_model_outputs": false,
+      "reason": "Outputs are patient-level clinical/imaging outcomes. The engines output in-vitro hydraulic quantities (inlet pressure, flow in µL/min, carryover %) and prescribed-permeability tracer fractions. No mapping exists from microfluidic switching physics to mRS or infarct volume; using these numbers as validation would be invalid."
+    },
+    {
+      "pmid": "41078791",
+      "pmcid": "PMC12508954",
+      "doi": "10.1021/acsomega.5c06071",
+      "title": "Modeling Ischemia-Reperfusion Injury in Stroke Using the BBB Chip",
+      "journal": "ACS Omega, 2025",
+      "license": "CC BY (from PMC BioC record)",
+      "type": "Experimental in-vitro BBB chip (HBMEC + astrocytes + pericytes + microglia), OGD/R injury, drug screen",
+      "full_text_access": "Open access. Full text downloaded and searched.",
+      "downloaded": [
+        {"file": "pubmed_41078791.xml", "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=41078791&retmode=xml", "content": "PubMed record + abstract"},
+        {"file": "pmc_PMC12508954_bioc.xml", "url": "https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_xml/PMC12508954/unicode", "content": "Full text (CC BY)"},
+        {"file": "pmc_PMC12508954_fulltext.txt", "url": "derived from the BioC file", "content": "Plain-text extraction used for searching"}
+      ],
+      "not_retrieved": [
+        {"item": "Supporting Information PDF ao5c06071_si_001.pdf", "attempts": [
+          "https://pmc.ncbi.nlm.nih.gov/articles/instance/12508954/bin/ao5c06071_si_001.pdf -> returned an HTML page, not the PDF",
+          "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12508954/supplementaryFiles -> HTTP 503"
+        ], "described_in_main_text_as": "Figures S1-S5 (mRNA, GO analysis, drug effect on permeability). Not inspected."}
+      ],
+      "measured_variables": "4 and 40 kDa FITC-dextran permeability (vessel->brain side, plate-reader fluorescence), cell viability, apoptosis, mitochondrial function, transcriptome, ELISA (IL-1beta), immunostaining",
+      "perfusion_method": "Chips on a swing bed/shaker (gravity-driven rocking). No pump, no reported pressure, flow rate or shear stress.",
+      "numeric_values_available_in_text": "None for permeability: results are given only in figures (Figure 1f, 2d, S5); no tables or raw data files located.",
+      "role": "BACKGROUND ONLY (supports that OGD/R increases BBB permeability)",
+      "comparable_to_model_outputs": false,
+      "reason": "(1) In the engine, permeability is an INPUT prescribed by the user, not a prediction, so measured permeability cannot test the model. (2) No pressure/flow/switching data exist to compare with the hydraulic outputs (rocker-driven, unreported flow). (3) Values only in figures; digitising them would add extraction error and could at most PARAMETERISE the injury multiplier (calibration), never validate it."
+    },
+    {
+      "pmid": "41808629",
+      "doi": "10.1021/acs.analchem.6c00142",
+      "title": "A BBB-on-a-Chip for Ischemic Stroke Modeling: In Situ Multiparameter Monitoring with Integrated TEER and Ion Sensors",
+      "journal": "Analytical Chemistry, 2026",
+      "type": "Experimental in-vitro BBB chip with integrated TEER and K+ electrodes, OGD/R",
+      "full_text_access": "Not open access (no PMC record). Only the PubMed abstract was retrieved.",
+      "downloaded": [{"file": "pubmed_41808629.xml", "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=41808629&retmode=xml", "content": "PubMed record + abstract"}],
+      "summary_statistics_in_abstract": "baseline TEER 200.18 Ohm·cm2; TEER -46.41% during OGD; recovery to ~73% of control after reperfusion; extracellular K+ +23.8% during OGD",
+      "published_numbers_used_as_observations": false,
+      "role": "BACKGROUND ONLY",
+      "comparable_to_model_outputs": false,
+      "reason": "The engines do not compute TEER, electrical resistance or ion concentrations. TEER and tracer permeability are related but not interconvertible without a calibrated, model-specific relationship. Abstract-level summary values with no sample size, variance or raw data cannot support an error analysis."
+    }
+  ],
+  "datasets_used_for_quantitative_comparison": [],
+  "statement_B": "Independent empirical validation is not currently possible with the available data."
+}

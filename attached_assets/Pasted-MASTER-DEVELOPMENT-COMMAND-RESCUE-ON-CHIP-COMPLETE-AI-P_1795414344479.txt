@@ -1,0 +1,629 @@
+MASTER DEVELOPMENT COMMAND
+
+RESCUE-ON-CHIP — COMPLETE AI-POWERED VASCULAR RESEARCH PLATFORM
+
+You are acting as a multidisciplinary team consisting of:
+
+* Senior AI/ML Research Scientist
+* Computational Biology Researcher
+* Molecular Informatics Specialist
+* Vascular Biology Researcher
+* Scientific Software Architect
+* Python Backend Engineer
+* Computational Fluid Dynamics Engineer
+* Full-Stack Developer
+* 3D Scientific Visualization Engineer
+* Scientific Data Engineer
+* Machine Learning Validation Specialist
+* Quality Assurance Engineer
+
+Your mission is to transform my EXISTING Rescue-on-Chip / Neuro-Reflow Rescue 3.0 application into a highly advanced, AI-powered scientific research platform.
+
+I want a REAL, WORKING scientific AI system that retrieves scientific datasets, processes molecular information, trains machine learning models, validates predictions, and connects supported results to my existing Python simulation engine and interactive 3D laboratory.
+
+DO NOT build a chatbot pretending to be an AI prediction engine.
+
+DO NOT create fake prediction results, fabricated training datasets, hardcoded accuracy metrics, or nonfunctional interface elements.
+
+You must implement, execute, test, and document actual working code.
+
+Preserve the existing scientific project, equations, Python simulation engine, crossover experiments, experiment results, reporting functionality, and interactive 3D laboratory.
+
+⸻
+
+PHASE 0 — PROJECT INSPECTION AND BACKUP
+
+Before modifying any existing files:
+
+1. Inspect the complete existing project and its dependencies.
+2. Identify the existing Python computation engine.
+3. Identify frontend frameworks, APIs, and simulation data structures.
+4. Identify the current 3D laboratory implementation.
+5. Review any scientific proposal or methodology files already attached to the project.
+6. Identify existing validation limitations.
+7. Verify that a recoverable Git commit or Replit checkpoint exists.
+8. Preserve all existing working functions.
+
+Create a detailed development architecture and an implementation checklist.
+
+Do not replace or simplify the existing working simulation.
+
+⸻
+
+PHASE 1 — SCIENTIFIC DATABASE INTEGRATION
+
+Build a scientific chemical and biological data acquisition system.
+
+Integrate appropriate official sources, including:
+
+1. PubChem PUG REST API
+2. ChEMBL Web Services API
+3. EPA CompTox / ToxCast data
+4. PubChem BioAssay, where relevant
+5. Curated, legally accessible research datasets relevant to vascular biology
+
+The platform must be able to retrieve:
+
+* Chemical identity
+* Molecular formulas
+* SMILES and InChI
+* Available physicochemical properties
+* Molecular descriptors
+* Relevant biological assay results
+* Measured activity values
+* Concentrations and units
+* Assay conditions
+* Biological models and cell types
+* Literature references
+* Dataset version and provenance
+
+Use real API responses and real downloadable datasets.
+
+Respect licenses, API limits, attribution requirements, and data-access restrictions.
+
+Never fabricate unavailable records.
+
+Create a persistent database using PostgreSQL or SQLite as appropriate.
+
+Implement caching, schema validation, duplicate detection, error handling, and source traceability.
+
+⸻
+
+PHASE 2 — CUSTOM MATERIAL RESEARCH LAB
+
+Create a professional Material & Compound Research Laboratory.
+
+Users must be able to:
+
+1. Search for known compounds.
+2. Enter a completely new chemical compound.
+3. Paste a SMILES or InChI structure.
+4. Upload compatible SDF files.
+5. Enter experimental substances or mixtures.
+6. Specify concentration and units.
+7. Specify exposure duration.
+8. Provide experimental conditions.
+9. Upload user-measured properties.
+10. Save and compare substances.
+
+Use RDKit to:
+
+* Parse and validate molecular structures.
+* Standardize chemical representations where scientifically appropriate.
+* Calculate supported molecular descriptors.
+* Generate molecular fingerprints.
+* Calculate molecular similarity.
+* Identify structurally related compounds.
+* Generate 2D and 3D molecular representations.
+
+Do not confuse calculated molecular descriptors with experimentally measured biological properties.
+
+For materials without a defined molecular structure, provide an alternative composition-based input workflow.
+
+⸻
+
+PHASE 3 — REAL VASCULAR AI TRAINING DATA
+
+This phase is CRITICAL.
+
+Identify real scientific datasets suitable for developing machine learning models relevant to vascular responses.
+
+Investigate candidate endpoints such as:
+
+* Endothelial cell viability
+* Endothelial permeability
+* Endothelial inflammatory response
+* Vascular-related cellular toxicity
+* Vasodilation and vasoconstriction
+* Relevant vascular signaling responses
+
+Only select endpoints supported by sufficiently appropriate measured data.
+
+Do not treat unrelated general toxicity assays as direct measurements of vascular response.
+
+For every candidate dataset, document:
+
+* Official source
+* Download link or API query
+* Number of unique compounds
+* Number of valid observations
+* Endpoint definition
+* Biological assay system
+* Measurement units
+* Exposure conditions
+* Data completeness
+* Label quality
+* Known limitations
+* Licensing conditions
+
+Select ONE scientifically defensible vascular-related endpoint as the initial training target.
+
+If no suitable vascular dataset is available, explicitly report this limitation.
+
+In that case, you may train an accurately labeled auxiliary physicochemical model as a technical demonstration, but NEVER present it as a validated vascular-response predictor.
+
+⸻
+
+PHASE 4 — AUTOMATED DATA PREPROCESSING
+
+Implement a reproducible Python data engineering pipeline.
+
+Required functionality:
+
+1. Download or import verified scientific datasets.
+2. Validate molecular structures.
+3. Standardize molecular identifiers.
+4. Detect and handle duplicates.
+5. Normalize units.
+6. Retain concentration and exposure metadata.
+7. Handle missing values appropriately.
+8. Identify invalid or inconsistent measurements.
+9. Preserve biological assay identity.
+10. Detect conflicting experimental records.
+11. Prevent target leakage.
+12. Generate molecular descriptors and fingerprints.
+13. Produce training-ready data files.
+14. Generate a machine-readable dataset manifest.
+
+Do not automatically merge measurements from biologically incompatible assays.
+
+Ensure that the same molecule or closely related duplicate records do not leak across training and testing partitions.
+
+Provide a complete data-processing report.
+
+⸻
+
+PHASE 5 — TRAIN THE AI MODELS FOR REAL
+
+IMPLEMENT AND EXECUTE ACTUAL MACHINE LEARNING TRAINING.
+
+Use Python and scientifically appropriate libraries such as:
+
+* RDKit
+* NumPy
+* Pandas
+* scikit-learn
+* SciPy
+* joblib
+* Optuna when resources permit
+* PyTorch only when justified by dataset size and available compute
+
+Start with transparent baseline models.
+
+Evaluate suitable algorithms, including:
+
+* Random Forest
+* Gradient Boosting
+* Regularized linear or logistic regression
+* Other scientifically justified approaches
+
+Train models specifically for supported biological endpoints.
+
+Do not build one universal prediction model by combining incompatible labels.
+
+Training requirements:
+
+1. Create reproducible training scripts.
+2. Use fixed random seeds.
+3. Use leakage-resistant data splitting.
+4. Prefer scaffold-based splitting for molecular generalization assessment when appropriate.
+5. Perform cross-validation.
+6. Tune model hyperparameters without contaminating the test set.
+7. Evaluate predictions on a separate untouched test set.
+8. Assess model calibration.
+9. Evaluate class imbalance where relevant.
+10. Analyze prediction errors.
+11. Save trained model files.
+12. Save preprocessing objects.
+13. Version every trained model.
+14. Store training configuration and dataset hashes.
+15. Generate actual training logs.
+
+For classification models, report suitable metrics such as:
+
+* ROC-AUC
+* PR-AUC
+* Sensitivity
+* Specificity
+* Precision
+* F1
+* Calibration metrics
+
+For regression models, report suitable metrics such as:
+
+* MAE
+* RMSE
+* R²
+* Residual analysis
+
+Report metrics only when actually calculated.
+
+If a dataset is too small or inadequate, state that model training is not scientifically defensible.
+
+IMPORTANT:
+
+Do not stop after writing the training script.
+
+Attempt to execute actual training on an eligible real dataset, within available compute limits.
+
+Verify that the trained model loads and performs inference.
+
+Never claim that training succeeded unless it actually completed.
+
+⸻
+
+PHASE 6 — AI PREDICTION FOR NEW COMPOUNDS
+
+Build a dedicated Python inference engine.
+
+When a user enters a previously unseen compound:
+
+1. Validate the molecular structure.
+2. Calculate supported molecular descriptors.
+3. Detect any matching known compounds.
+4. Identify similar compounds in the training data.
+5. Load the relevant trained model.
+6. Check whether the compound is within the model’s applicability domain.
+7. Generate predictions for supported endpoints.
+8. Estimate prediction uncertainty using validated methods.
+9. Display the endpoint, units, assumptions, and model version.
+10. Clearly distinguish predictions from experimental measurements.
+
+Use conformal prediction, calibrated probability estimates, or other appropriate uncertainty methods when valid.
+
+Report similarity and out-of-distribution warnings.
+
+If the compound is outside the model’s reliable domain, abstain from presenting an authoritative numerical prediction.
+
+Display:
+
+“Prediction unavailable or unreliable — outside validated model applicability domain.”
+
+Never assume that an unknown chemical is safe or biologically effective.
+
+⸻
+
+PHASE 7 — CONCENTRATION-DEPENDENT PREDICTION
+
+Investigate whether the selected endpoint supports concentration-dependent modeling.
+
+Where suitable data exist, implement models incorporating:
+
+* Compound structure
+* Concentration
+* Exposure time
+* Assay context
+* Relevant experimental conditions
+
+Model concentration-response relationships only when justified.
+
+Do not infer a dose-response curve from a single measurement without an explicit supported model and sufficient evidence.
+
+Visualize supported concentration-response predictions and their uncertainty.
+
+Clearly label extrapolated concentration ranges.
+
+⸻
+
+PHASE 8 — AI + PYTHON PHYSICS INTEGRATION
+
+Connect the AI inference engine to the existing Rescue-on-Chip Python simulation engine.
+
+Preserve the original mathematical equations.
+
+The AI system must NOT automatically convert generic molecular toxicity predictions into changes in blood flow, viscosity, vessel diameter, permeability, or vascular resistance.
+
+Before connecting any prediction to the physical simulation:
+
+1. Identify the physical parameter affected.
+2. Verify a documented mathematical or experimental relationship.
+3. Check units and dimensional consistency.
+4. Verify applicable concentration ranges.
+5. Establish model assumptions.
+6. Propagate relevant uncertainty.
+
+If a justified mapping exists, allow the predicted parameter to influence the simulation.
+
+Otherwise, show the biological prediction separately.
+
+Never create a scientifically unsupported bridge between molecular AI outputs and vascular fluid mechanics.
+
+⸻
+
+PHASE 9 — ADVANCED INTERACTIVE 3D LABORATORY
+
+Preserve and upgrade the existing interactive 3D research laboratory.
+
+Use Three.js / React Three Fiber where compatible.
+
+Include:
+
+* Interactive microfluidic chip
+* Transparent channels
+* Valve systems
+* Animated fluid-flow visualization
+* Experimental reservoirs
+* Flow direction indicators
+* Pressure overlays
+* Time-dependent simulation controls
+* Interactive camera navigation
+* Before-and-after comparisons
+* Experiment playback
+* Molecular 3D viewer
+
+Connect supported physical visualizations to actual Python simulation results.
+
+If spatially resolved pressure or velocity information is unavailable, do not fabricate those fields.
+
+Label nonquantitative illustrations as conceptual.
+
+Add an AI Prediction Overlay showing supported biological predictions separately from the physical-flow visualization.
+
+⸻
+
+PHASE 10 — PREMIUM SCIENTIFIC AI DASHBOARD
+
+Redesign the application into an advanced scientific research platform.
+
+Create these integrated modules:
+
+1. Research Mission Control
+2. Material & Compound Laboratory
+3. Scientific Database Explorer
+4. AI Model Training Studio
+5. AI Vascular Prediction Lab
+6. 3D Virtual Simulation Laboratory
+7. Experiment Comparison Studio
+8. Scientific Results Explorer
+9. Validation & Model Performance
+10. Research Reports & Reproducibility
+
+The AI Model Training Studio must show:
+
+* Selected dataset
+* Dataset quality
+* Training status
+* Model architecture
+* Actual training progress and logs
+* Real validation metrics
+* Model comparison
+* Saved model versions
+* Prediction availability
+* Scientific limitations
+
+Add working controls for dataset import, training, evaluation, and inference.
+
+Use a professional dark scientific visual identity with restrained cyan, teal, and amber accents.
+
+Make the platform responsive on desktop and iPhone Safari.
+
+The 3D laboratory and the scientific AI workflow should be the central features.
+
+⸻
+
+PHASE 11 — MODEL MANAGEMENT AND RETRAINING
+
+Implement a model registry.
+
+Allow authorized users to:
+
+* View model versions
+* Inspect evaluation results
+* Import new permitted datasets
+* Retrain models
+* Compare model versions
+* Select an eligible validated model for inference
+* Download reproducibility reports
+
+New compounds entered by users must NOT automatically become training labels.
+
+Retraining requires real labeled observations and dataset verification.
+
+Prevent unvalidated models from silently replacing previously validated models.
+
+Add training-job progress, failure recovery, and persistent logs where supported.
+
+⸻
+
+PHASE 12 — SCIENTIFIC VALIDATION AND TESTING
+
+Create automated and end-to-end tests covering:
+
+1. Database retrieval
+2. Molecular structure validation
+3. Descriptor calculation
+4. Dataset cleaning
+5. Training data splitting
+6. Data leakage prevention
+7. Model training execution
+8. Model serialization and loading
+9. Prediction reproducibility
+10. Applicability-domain detection
+11. Uncertainty reporting
+12. Python simulation integrity
+13. AI-to-physics interface validation
+14. 3D visualization consistency
+15. Export functionality
+16. Mobile usability
+
+Test both known and previously unseen molecular structures.
+
+Test invalid structures and missing inputs.
+
+Use synthetic fixtures only for software unit tests, never as substitutes for scientific training data.
+
+Provide actual test results.
+
+⸻
+
+PHASE 13 — SCIENTIFIC REPORT GENERATOR
+
+Create downloadable reports containing:
+
+* Research objective
+* Compound information
+* Molecular descriptors
+* Data sources
+* Training dataset provenance
+* Model architecture
+* Validation methodology
+* Actual model performance
+* Predicted endpoints
+* Uncertainty estimates
+* Applicability-domain assessment
+* Supported simulation results
+* Scientific limitations
+* Reproducibility metadata
+* Model version
+* Dataset and configuration hashes
+
+Support PDF, CSV, and JSON where appropriate.
+
+Reports must clearly state that computational predictions are research hypotheses requiring experimental validation.
+
+Never claim clinical validation or human-level predictive reliability without evidence.
+
+⸻
+
+PHASE 14 — PERFORMANCE, COST, AND DEPLOYMENT
+
+Prioritize compatibility with the existing Replit environment and available resources.
+
+Use CPU-efficient models as the starting point.
+
+Avoid unnecessary GPU dependencies and resource-intensive deep learning when simpler models are scientifically adequate.
+
+Use modular Python services and a React-based frontend if compatible with the existing project.
+
+If full model training exceeds Replit resource limitations:
+
+1. Preserve the training pipeline.
+2. Provide a portable training environment.
+3. Support exporting datasets and training scripts.
+4. Support importing trained models back into the application.
+5. Document the exact external training requirements.
+
+Do not silently purchase resources, activate paid infrastructure, or subscribe to paid APIs.
+
+Handle API keys through environment secrets.
+
+Apply appropriate access control, input validation, upload limits, and safe model loading.
+
+Never expose secrets or confidential data.
+
+⸻
+
+PHASE 15 — EXECUTION AND COMPLETION REQUIREMENTS
+
+This is an IMPLEMENTATION request, not a request for another development proposal.
+
+Follow this order:
+
+STEP 1:
+Inspect the existing project and verify a recovery checkpoint.
+
+STEP 2:
+Implement scientific database connections and a working material input system.
+
+STEP 3:
+Find and audit real candidate training datasets.
+
+STEP 4:
+Select one defensible prediction endpoint.
+
+STEP 5:
+Implement and RUN the data preprocessing pipeline.
+
+STEP 6:
+Implement and RUN actual AI model training.
+
+STEP 7:
+Evaluate the trained model on held-out data.
+
+STEP 8:
+Save and load the trained model successfully.
+
+STEP 9:
+Implement inference for previously unseen chemical structures.
+
+STEP 10:
+Build the AI prediction and training dashboard.
+
+STEP 11:
+Integrate scientifically justified results with the Python physics engine.
+
+STEP 12:
+Connect supported results to the existing 3D laboratory.
+
+STEP 13:
+Run end-to-end tests.
+
+STEP 14:
+Produce reproducibility documentation and scientific reports.
+
+Implement incrementally, using checkpoints between major stages.
+
+Do not waste resources rebuilding already functional components.
+
+Do not mark a stage complete without concrete evidence.
+
+If execution is blocked by unavailable data, insufficient compute, missing permissions, or scientific validity constraints, document the exact blocker and leave the system in a reproducible state.
+
+Do not simulate a successful AI training run.
+
+⸻
+
+FINAL DELIVERABLES
+
+I expect:
+
+1. A working AI-powered research web application.
+2. Integrated scientific chemical databases.
+3. A functional custom compound input system.
+4. A reproducible scientific data pipeline.
+5. At least one actually trained and independently evaluated endpoint model, if a suitable dataset is available.
+6. Actual training logs and recorded evaluation metrics.
+7. Working inference for eligible unseen compounds.
+8. Applicability-domain and uncertainty assessment.
+9. Integration with the existing Python scientific engine where justified.
+10. Interactive 3D scientific visualization.
+11. A model-training and validation dashboard.
+12. Downloadable scientific reports.
+13. Automated tests and reproducibility documentation.
+14. Clear disclosure of all scientific and computational limitations.
+
+The platform must explicitly distinguish:
+
+* Experimental measurements
+* Literature-derived evidence
+* Deterministic physicochemical calculations
+* AI-generated predictions
+* Physics-based simulation outputs
+* Conceptual visualizations
+* Unavailable or unsupported predictions
+
+The ultimate goal is a technically credible, advanced AI research prototype for investigating potential vascular responses to chemical compounds.
+
+Scientific validity, reproducibility, and functional implementation are mandatory.
+
+START WITH PROJECT INSPECTION AND DATASET DISCOVERY, THEN PROCEED THROUGH THE IMPLEMENTATION STAGES USING REAL CODE AND REAL DATA.

@@ -1,0 +1,2204 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 1.0.0
+servers:
+- url: /api
+paths:
+  /healthz:
+    get:
+      summary: Health
+      operationId: healthCheck
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStatus'
+  /model:
+    get:
+      summary: Model
+      operationId: getModel
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelInfo'
+  /summary:
+    get:
+      summary: Summary
+      operationId: getSummary
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabSummary'
+  /runs:
+    get:
+      summary: Runs
+      operationId: listRuns
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/RunSummary'
+                type: array
+                title: Response Listruns
+    post:
+      summary: Run
+      operationId: createRun
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExperimentInput'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulationRun'
+  /runs/{run_id}:
+    get:
+      summary: Get Run
+      operationId: getRun
+      parameters:
+      - name: run_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Run Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulationRun'
+  /runs/{run_id}/visualization:
+    get:
+      summary: Visualization
+      operationId: getRunVisualization
+      parameters:
+      - name: run_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Run Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunVisualization'
+  /preview:
+    post:
+      summary: Preview
+      operationId: previewSimulation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExperimentInput'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulationPreview'
+  /runs/{run_id}/report:
+    get:
+      summary: Report
+      operationId: downloadReport
+      parameters:
+      - name: run_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Run Id
+      responses:
+        '200':
+          description: Self-contained HTML report, use ?format=csv or json for raw
+            data
+          content:
+            application/json:
+              schema: {}
+            text/html:
+              schema:
+                type: string
+  /ai/overview:
+    get:
+      summary: Ai Overview
+      operationId: getAIResearchOverview
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIResearchOverview'
+  /ai/training:
+    get:
+      summary: Ai Training Status
+      operationId: getAITrainingStatus
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingJobStatus'
+  /ai/train:
+    post:
+      summary: Start Ai Training
+      operationId: startAITraining
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingJobStatus'
+  /ai/models:
+    get:
+      summary: Ai Models
+      operationId: listAIModels
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AIModelRegistryEntry'
+                type: array
+                title: Response Listaimodels
+  /ai/models/{model_version}/report:
+    get:
+      summary: Ai Report
+      operationId: downloadAIReproducibilityReport
+      parameters:
+      - name: model_version
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Model Version
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIReproducibilityReport'
+  /ai/compound/search:
+    get:
+      summary: Ai Search
+      operationId: searchPubChemCompounds
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Q
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompoundSearchResponse'
+  /ai/compound/describe:
+    post:
+      summary: Ai Describe
+      operationId: describeCompound
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompoundInput'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompoundDescription'
+  /ai/compound/conformer:
+    post:
+      summary: Ai Conformer
+      operationId: generateCompoundConformer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompoundInput'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoleculeConformerResponse'
+  /ai/predict:
+    post:
+      summary: Ai Predict
+      operationId: predictCompoundResponse
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompoundInput'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIPredictionResponse'
+  /evidence/overview:
+    get:
+      summary: Clinical Evidence Overview
+      operationId: getClinicalEvidenceOverview
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClinicalEvidenceOverview'
+  /evidence/search:
+    get:
+      summary: Clinical Evidence Search
+      operationId: searchClinicalEvidence
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Q
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClinicalEvidenceSearchResponse'
+  /evidence/report:
+    get:
+      summary: Download Evidence Report
+      operationId: downloadClinicalEvidenceImportReport
+      responses:
+        '200':
+          description: JSON evidence import report
+          content:
+            application/json:
+              schema: {}
+  /evidence/import-log:
+    get:
+      summary: Download Evidence Import Log
+      operationId: downloadClinicalEvidenceImportLog
+      responses:
+        '200':
+          description: Text public API import log
+          content:
+            application/json:
+              schema: {}
+  /vascular/network:
+    get:
+      summary: Get Vascular Network
+      operationId: getVascularNetwork
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VascularNetwork'
+  /vascular/solve:
+    post:
+      summary: Solve Vascular Network
+      operationId: solveVascularNetwork
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VascularSolveInput'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VascularSolveResult'
+components:
+  schemas:
+    AIModelRegistryEntry:
+      properties:
+        model_version:
+          type: string
+          title: Model Version
+        status:
+          type: string
+          title: Status
+        endpoint:
+          type: string
+          title: Endpoint
+        algorithm:
+          type: string
+          title: Algorithm
+        trained_at_utc:
+          type: string
+          title: Trained At Utc
+        eligible_for_reliable_prediction:
+          type: boolean
+          title: Eligible For Reliable Prediction
+        integrity_verified:
+          type: boolean
+          title: Integrity Verified
+        test_metrics:
+          additionalProperties: true
+          type: object
+          title: Test Metrics
+      type: object
+      required:
+      - model_version
+      - status
+      - endpoint
+      - algorithm
+      - trained_at_utc
+      - eligible_for_reliable_prediction
+      - integrity_verified
+      - test_metrics
+      title: AIModelRegistryEntry
+    AIPredictionResponse:
+      properties:
+        canonical_smiles:
+          type: string
+          title: Canonical Smiles
+        descriptors:
+          additionalProperties:
+            type: number
+          type: object
+          title: Descriptors
+        endpoint:
+          type: string
+          title: Endpoint
+        evidence:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Evidence
+        prediction_available:
+          type: boolean
+          title: Prediction Available
+        exploratory_score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Exploratory Score
+        score_is_calibrated_probability:
+          type: boolean
+          title: Score Is Calibrated Probability
+        uncertainty_available:
+          type: boolean
+          title: Uncertainty Available
+        model_version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model Version
+        applicability:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Applicability
+        nearest_compounds:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Nearest Compounds
+        message:
+          type: string
+          title: Message
+        physics_integration:
+          type: string
+          title: Physics Integration
+      type: object
+      required:
+      - canonical_smiles
+      - descriptors
+      - endpoint
+      - prediction_available
+      - score_is_calibrated_probability
+      - uncertainty_available
+      - nearest_compounds
+      - message
+      - physics_integration
+      title: AIPredictionResponse
+    AIReproducibilityReport:
+      properties:
+        manifest:
+          additionalProperties: true
+          type: object
+          title: Manifest
+        metrics:
+          additionalProperties: true
+          type: object
+          title: Metrics
+        training_log:
+          items:
+            type: string
+          type: array
+          title: Training Log
+      type: object
+      required:
+      - manifest
+      - metrics
+      - training_log
+      title: AIReproducibilityReport
+    AIResearchOverview:
+      properties:
+        dataset:
+          additionalProperties: true
+          type: object
+          title: Dataset
+        models:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Models
+        latest_model:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Latest Model
+        prediction_policy:
+          type: string
+          title: Prediction Policy
+      type: object
+      required:
+      - dataset
+      - models
+      - prediction_policy
+      title: AIResearchOverview
+    Arm:
+      properties:
+        arm:
+          type: string
+          title: Arm
+        label:
+          type: string
+          title: Label
+        fluid:
+          type: integer
+          title: Fluid
+        vessel:
+          type: integer
+          title: Vessel
+        n:
+          type: integer
+          title: N
+        mean_flow_ul_min:
+          type: number
+          title: Mean Flow Ul Min
+        ci_low:
+          type: number
+          title: Ci Low
+        ci_high:
+          type: number
+          title: Ci High
+        rescue_flow_ul_min:
+          type: number
+          title: Rescue Flow Ul Min
+        normalized_flow_pct:
+          type: number
+          title: Normalized Flow Pct
+        permeability_um_s:
+          type: number
+          title: Permeability Um S
+      type: object
+      required:
+      - arm
+      - label
+      - fluid
+      - vessel
+      - n
+      - mean_flow_ul_min
+      - ci_low
+      - ci_high
+      - rescue_flow_ul_min
+      - normalized_flow_pct
+      - permeability_um_s
+      title: Arm
+    Chip:
+      properties:
+        arm:
+          type: string
+          title: Arm
+        fluid:
+          type: integer
+          title: Fluid
+        vessel:
+          type: integer
+          title: Vessel
+        replicate:
+          type: integer
+          title: Replicate
+        radius_um:
+          type: number
+          title: Radius Um
+        flow_ul_min:
+          type: number
+          title: Flow Ul Min
+        rescue_flow_ul_min:
+          type: number
+          title: Rescue Flow Ul Min
+        permeability_um_s:
+          type: number
+          title: Permeability Um S
+      type: object
+      required:
+      - arm
+      - fluid
+      - vessel
+      - replicate
+      - radius_um
+      - flow_ul_min
+      - rescue_flow_ul_min
+      - permeability_um_s
+      title: Chip
+    ClinicalEvidenceOverview:
+      properties:
+        sources:
+          items:
+            $ref: '#/components/schemas/EvidenceSourceStatus'
+          type: array
+          title: Sources
+        table_counts:
+          additionalProperties:
+            type: integer
+          type: object
+          title: Table Counts
+        clinical_use_classification:
+          type: string
+          title: Clinical Use Classification
+        patient_specific_recommendations_allowed:
+          type: boolean
+          title: Patient Specific Recommendations Allowed
+        safety_efficacy_claims_allowed:
+          type: boolean
+          title: Safety Efficacy Claims Allowed
+      type: object
+      required:
+      - sources
+      - table_counts
+      - clinical_use_classification
+      - patient_specific_recommendations_allowed
+      - safety_efficacy_claims_allowed
+      title: ClinicalEvidenceOverview
+    ClinicalEvidenceSearchResponse:
+      properties:
+        query:
+          type: string
+          title: Query
+        trials:
+          items:
+            $ref: '#/components/schemas/ClinicalTrialEvidenceRecord'
+          type: array
+          title: Trials
+        labels:
+          items:
+            $ref: '#/components/schemas/FdaLabelEvidenceRecord'
+          type: array
+          title: Labels
+        safety_signals:
+          items:
+            $ref: '#/components/schemas/FaersSignalEvidenceRecord'
+          type: array
+          title: Safety Signals
+        fetches:
+          items:
+            $ref: '#/components/schemas/EvidenceFetchRecord'
+          type: array
+          title: Fetches
+        not_covered:
+          items:
+            type: string
+          type: array
+          title: Not Covered
+      type: object
+      required:
+      - query
+      - trials
+      - labels
+      - safety_signals
+      - fetches
+      - not_covered
+      title: ClinicalEvidenceSearchResponse
+    ClinicalTrialEvidenceRecord:
+      properties:
+        nct_id:
+          type: string
+          title: Nct Id
+        query_compound:
+          type: string
+          title: Query Compound
+        study_title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Study Title
+        overall_status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Overall Status
+        phase:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Phase
+        enrollment:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Enrollment
+        intervention_names:
+          items:
+            type: string
+          type: array
+          title: Intervention Names
+        condition_names:
+          items:
+            type: string
+          type: array
+          title: Condition Names
+        has_posted_results:
+          type: boolean
+          title: Has Posted Results
+        outcome_count:
+          type: integer
+          title: Outcome Count
+        record_url:
+          type: string
+          title: Record Url
+        source_version_date:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Version Date
+        fetched_at:
+          type: string
+          title: Fetched At
+        raw_sha256:
+          type: string
+          title: Raw Sha256
+      type: object
+      required:
+      - nct_id
+      - query_compound
+      - study_title
+      - overall_status
+      - phase
+      - enrollment
+      - intervention_names
+      - condition_names
+      - has_posted_results
+      - outcome_count
+      - record_url
+      - source_version_date
+      - fetched_at
+      - raw_sha256
+      title: ClinicalTrialEvidenceRecord
+    CompoundDescription:
+      properties:
+        representation:
+          type: string
+          title: Representation
+        canonical_smiles:
+          type: string
+          title: Canonical Smiles
+        inchi_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Inchi Key
+        descriptors:
+          additionalProperties:
+            type: number
+          type: object
+          title: Descriptors
+        descriptor_note:
+          type: string
+          title: Descriptor Note
+      type: object
+      required:
+      - representation
+      - canonical_smiles
+      - descriptors
+      - descriptor_note
+      title: CompoundDescription
+    CompoundInput:
+      properties:
+        structure:
+          type: string
+          maxLength: 2048
+          minLength: 1
+          title: Structure
+        representation:
+          type: string
+          enum:
+          - smiles
+          - inchi
+          title: Representation
+          default: smiles
+      type: object
+      required:
+      - structure
+      title: CompoundInput
+    CompoundSearchItem:
+      properties:
+        cid:
+          type: integer
+          title: Cid
+        molecular_formula:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Molecular Formula
+        canonical_smiles:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Canonical Smiles
+        iupac_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Iupac Name
+        molecular_weight_da:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Molecular Weight Da
+        source:
+          type: string
+          title: Source
+      type: object
+      required:
+      - cid
+      - source
+      title: CompoundSearchItem
+    CompoundSearchResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/CompoundSearchItem'
+          type: array
+          title: Results
+      type: object
+      required:
+      - results
+      title: CompoundSearchResponse
+    Contrast:
+      properties:
+        name:
+          type: string
+          title: Name
+        value:
+          type: number
+          title: Value
+      type: object
+      required:
+      - name
+      - value
+      title: Contrast
+    EvidenceFetchRecord:
+      properties:
+        source_id:
+          type: string
+          title: Source Id
+        request_url:
+          type: string
+          title: Request Url
+        fetched_at:
+          type: string
+          title: Fetched At
+        http_status:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Http Status
+        count_records:
+          type: integer
+          title: Count Records
+        response_sha256:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Response Sha256
+        outcome:
+          type: string
+          title: Outcome
+        detail:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Detail
+      type: object
+      required:
+      - source_id
+      - request_url
+      - fetched_at
+      - http_status
+      - count_records
+      - response_sha256
+      - outcome
+      - detail
+      title: EvidenceFetchRecord
+    EvidenceSourceStatus:
+      properties:
+        source_id:
+          type: string
+          title: Source Id
+        name:
+          type: string
+          title: Name
+        domain:
+          type: string
+          title: Domain
+        access_mode:
+          type: string
+          title: Access Mode
+        official_url:
+          type: string
+          title: Official Url
+        api_base:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Api Base
+        contents:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Contents
+        critical_limitations:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Critical Limitations
+        integration_state:
+          type: string
+          title: Integration State
+        latest_request_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Latest Request Url
+        latest_fetched_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Latest Fetched At
+        latest_http_status:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Latest Http Status
+        latest_record_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Latest Record Count
+        latest_response_sha256:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Latest Response Sha256
+        latest_outcome:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Latest Outcome
+      type: object
+      required:
+      - source_id
+      - name
+      - domain
+      - access_mode
+      - official_url
+      - integration_state
+      title: EvidenceSourceStatus
+    ExperimentInput:
+      properties:
+        name:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: Name
+          default: Pressure-equilibrated crossover
+        seed:
+          type: integer
+          maximum: 2147483647.0
+          minimum: 0.0
+          title: Seed
+          default: 42
+        replicates:
+          type: integer
+          maximum: 100.0
+          minimum: 3.0
+          title: Replicates
+          default: 6
+        pressure_pa:
+          type: number
+          maximum: 10000.0
+          minimum: 10.0
+          title: Pressure Pa
+          default: 1000
+        radius_um:
+          type: number
+          maximum: 100.0
+          minimum: 5.0
+          title: Radius Um
+          default: 25
+        length_mm:
+          type: number
+          maximum: 100.0
+          minimum: 1.0
+          title: Length Mm
+          default: 10
+        channels:
+          type: integer
+          maximum: 200.0
+          minimum: 1.0
+          title: Channels
+          default: 16
+        viscosity_mpas:
+          type: number
+          maximum: 10.0
+          minimum: 0.5
+          title: Viscosity Mpas
+          default: 1.2
+        altered_viscosity_ratio:
+          type: number
+          maximum: 5.0
+          minimum: 1.0
+          title: Altered Viscosity Ratio
+          default: 1.8
+        narrowing_pct:
+          type: number
+          maximum: 70.0
+          minimum: 0.0
+          title: Narrowing Pct
+          default: 20
+        occlusion_pct:
+          type: number
+          maximum: 90.0
+          minimum: 0.0
+          title: Occlusion Pct
+          default: 15
+        radius_cv_pct:
+          type: number
+          maximum: 15.0
+          minimum: 0.0
+          title: Radius Cv Pct
+          default: 3
+        duration_s:
+          type: number
+          maximum: 600.0
+          minimum: 20.0
+          title: Duration S
+          default: 60
+        switch_s:
+          type: number
+          maximum: 300.0
+          minimum: 1.0
+          title: Switch S
+          default: 10
+        offset_pct:
+          type: number
+          maximum: 150.0
+          minimum: -150.0
+          title: Offset Pct
+          default: 25
+        regulated_tau_s:
+          type: number
+          maximum: 10.0
+          minimum: 0.1
+          title: Regulated Tau S
+          default: 2
+        equalized_tau_s:
+          type: number
+          maximum: 10.0
+          minimum: 0.1
+          title: Equalized Tau S
+          default: 2
+        regulated_wait_s:
+          type: number
+          maximum: 60.0
+          minimum: 0.0
+          title: Regulated Wait S
+          default: 0
+        equalization_s:
+          type: number
+          maximum: 60.0
+          minimum: 0.0
+          title: Equalization S
+          default: 5
+        stop_duration_s:
+          type: number
+          maximum: 10.0
+          minimum: 0.1
+          title: Stop Duration S
+          default: 1.5
+        dead_volume_ul:
+          type: number
+          maximum: 10.0
+          minimum: 0.01
+          title: Dead Volume Ul
+          default: 0.1
+        permeability_um_s:
+          type: number
+          maximum: 1.0
+          minimum: 0.0001
+          title: Permeability Um S
+          default: 0.01
+        injury_permeability_ratio:
+          type: number
+          maximum: 20.0
+          minimum: 1.0
+          title: Injury Permeability Ratio
+          default: 3
+        receiver_volume_ul:
+          type: number
+          maximum: 100.0
+          minimum: 0.1
+          title: Receiver Volume Ul
+          default: 1
+        rescue_fraction:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Rescue Fraction
+          default: 0
+        barrier_margin_pct:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Barrier Margin Pct
+          default: 10
+      additionalProperties: false
+      type: object
+      title: ExperimentInput
+    FaersSignalEvidenceRecord:
+      properties:
+        query_compound:
+          type: string
+          title: Query Compound
+        signal_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Signal Name
+        report_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Report Count
+        source:
+          type: string
+          title: Source
+        fetched_at:
+          type: string
+          title: Fetched At
+        search_query:
+          type: string
+          title: Search Query
+        interpretation:
+          type: string
+          title: Interpretation
+      type: object
+      required:
+      - query_compound
+      - signal_name
+      - report_count
+      - source
+      - fetched_at
+      - search_query
+      - interpretation
+      title: FaersSignalEvidenceRecord
+    FdaLabelEvidenceRecord:
+      properties:
+        label_key:
+          type: string
+          title: Label Key
+        query_compound:
+          type: string
+          title: Query Compound
+        effective_time:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Effective Time
+        drug_names:
+          items:
+            type: string
+          type: array
+          title: Drug Names
+        indications_text:
+          type: string
+          title: Indications Text
+        warnings_text:
+          type: string
+          title: Warnings Text
+        contraindications_text:
+          type: string
+          title: Contraindications Text
+        adverse_reactions_text:
+          type: string
+          title: Adverse Reactions Text
+        clinical_studies_text:
+          type: string
+          title: Clinical Studies Text
+        source_url:
+          type: string
+          title: Source Url
+        fetched_at:
+          type: string
+          title: Fetched At
+        raw_sha256:
+          type: string
+          title: Raw Sha256
+      type: object
+      required:
+      - label_key
+      - query_compound
+      - effective_time
+      - drug_names
+      - indications_text
+      - warnings_text
+      - contraindications_text
+      - adverse_reactions_text
+      - clinical_studies_text
+      - source_url
+      - fetched_at
+      - raw_sha256
+      title: FdaLabelEvidenceRecord
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HealthStatus:
+      properties:
+        status:
+          type: string
+          title: Status
+      type: object
+      required:
+      - status
+      title: HealthStatus
+    LabSummary:
+      properties:
+        total_runs:
+          type: integer
+          title: Total Runs
+        virtual_chips:
+          type: integer
+          title: Virtual Chips
+        model_version:
+          type: string
+          title: Model Version
+        latest_run_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Latest Run Id
+      type: object
+      required:
+      - total_runs
+      - virtual_chips
+      - model_version
+      - latest_run_id
+      title: LabSummary
+    MethodMetric:
+      properties:
+        method:
+          type: string
+          title: Method
+        label:
+          type: string
+          title: Label
+        peak_deviation_pct:
+          type: number
+          title: Peak Deviation Pct
+        pressure_target_met:
+          type: boolean
+          title: Pressure Target Met
+        carryover_pct:
+          type: number
+          title: Carryover Pct
+        carryover_target_met:
+          type: boolean
+          title: Carryover Target Met
+        washout_s:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Washout S
+        flush_volume_ul:
+          type: number
+          title: Flush Volume Ul
+        interruption_s:
+          type: number
+          title: Interruption S
+        reversal_detected:
+          type: boolean
+          title: Reversal Detected
+      type: object
+      required:
+      - method
+      - label
+      - peak_deviation_pct
+      - pressure_target_met
+      - carryover_pct
+      - carryover_target_met
+      - washout_s
+      - flush_volume_ul
+      - interruption_s
+      - reversal_detected
+      title: MethodMetric
+    ModelInfo:
+      properties:
+        version:
+          type: string
+          title: Version
+        status:
+          type: string
+          title: Status
+        source_title:
+          type: string
+          title: Source Title
+        source_date:
+          type: string
+          title: Source Date
+        defaults:
+          $ref: '#/components/schemas/ExperimentInput'
+        equations:
+          items:
+            type: string
+          type: array
+          title: Equations
+        assumptions:
+          items:
+            type: string
+          type: array
+          title: Assumptions
+      type: object
+      required:
+      - version
+      - status
+      - source_title
+      - source_date
+      - defaults
+      - equations
+      - assumptions
+      title: ModelInfo
+    MoleculeConformerAtom:
+      properties:
+        index:
+          type: integer
+          title: Index
+        element:
+          type: string
+          title: Element
+        x:
+          type: number
+          title: X
+        y:
+          type: number
+          title: Y
+        z:
+          type: number
+          title: Z
+      type: object
+      required:
+      - index
+      - element
+      - x
+      - y
+      - z
+      title: MoleculeConformerAtom
+    MoleculeConformerBond:
+      properties:
+        begin:
+          type: integer
+          title: Begin
+        end:
+          type: integer
+          title: End
+        order:
+          type: number
+          title: Order
+      type: object
+      required:
+      - begin
+      - end
+      - order
+      title: MoleculeConformerBond
+    MoleculeConformerResponse:
+      properties:
+        canonical_smiles:
+          type: string
+          title: Canonical Smiles
+        atoms:
+          items:
+            $ref: '#/components/schemas/MoleculeConformerAtom'
+          type: array
+          title: Atoms
+        bonds:
+          items:
+            $ref: '#/components/schemas/MoleculeConformerBond'
+          type: array
+          title: Bonds
+        force_field_energy:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Force Field Energy
+        method:
+          type: string
+          title: Method
+        seed:
+          type: integer
+          title: Seed
+        note:
+          type: string
+          title: Note
+      type: object
+      required:
+      - canonical_smiles
+      - atoms
+      - bonds
+      - force_field_energy
+      - method
+      - seed
+      - note
+      title: MoleculeConformerResponse
+    RunSummary:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        created_at:
+          type: string
+          title: Created At
+        fingerprint:
+          type: string
+          title: Fingerprint
+        seed:
+          type: integer
+          title: Seed
+        replicates:
+          type: integer
+          title: Replicates
+        equalized_peak_pct:
+          type: number
+          title: Equalized Peak Pct
+        pressure_target_met:
+          type: boolean
+          title: Pressure Target Met
+      type: object
+      required:
+      - id
+      - name
+      - created_at
+      - fingerprint
+      - seed
+      - replicates
+      - equalized_peak_pct
+      - pressure_target_met
+      title: RunSummary
+    RunVisualization:
+      properties:
+        run_id:
+          type: string
+          title: Run Id
+        model_version:
+          type: string
+          title: Model Version
+        visualization_version:
+          type: string
+          title: Visualization Version
+        geometry:
+          $ref: '#/components/schemas/VisualizationGeometry'
+        axial_positions_mm:
+          items:
+            type: number
+          type: array
+          title: Axial Positions Mm
+        radial_fractions:
+          items:
+            type: number
+          type: array
+          title: Radial Fractions
+        frames:
+          items:
+            $ref: '#/components/schemas/VisualizationFrame'
+          type: array
+          title: Frames
+        pressure_min_pa:
+          type: number
+          title: Pressure Min Pa
+        pressure_max_pa:
+          type: number
+          title: Pressure Max Pa
+        velocity_abs_max_mm_s:
+          type: number
+          title: Velocity Abs Max Mm S
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+      type: object
+      required:
+      - run_id
+      - model_version
+      - visualization_version
+      - geometry
+      - axial_positions_mm
+      - radial_fractions
+      - frames
+      - pressure_min_pa
+      - pressure_max_pa
+      - velocity_abs_max_mm_s
+      - notes
+      title: RunVisualization
+    SimulationPreview:
+      properties:
+        run:
+          $ref: '#/components/schemas/SimulationRun'
+        visualization:
+          $ref: '#/components/schemas/RunVisualization'
+      type: object
+      required:
+      - run
+      - visualization
+      title: SimulationPreview
+    SimulationRun:
+      properties:
+        id:
+          type: string
+          title: Id
+        created_at:
+          type: string
+          title: Created At
+        config:
+          $ref: '#/components/schemas/ExperimentInput'
+        model_version:
+          type: string
+          title: Model Version
+        fingerprint:
+          type: string
+          title: Fingerprint
+        baseline_flow_ul_min:
+          type: number
+          title: Baseline Flow Ul Min
+        reynolds_number:
+          type: number
+          title: Reynolds Number
+        wall_shear_pa:
+          type: number
+          title: Wall Shear Pa
+        resistance_pa_s_m3:
+          type: number
+          title: Resistance Pa S M3
+        metrics:
+          items:
+            $ref: '#/components/schemas/MethodMetric'
+          type: array
+          title: Metrics
+        traces:
+          items:
+            $ref: '#/components/schemas/TracePoint'
+          type: array
+          title: Traces
+        arms:
+          items:
+            $ref: '#/components/schemas/Arm'
+          type: array
+          title: Arms
+        replicates:
+          items:
+            $ref: '#/components/schemas/Chip'
+          type: array
+          title: Replicates
+        contrasts:
+          items:
+            $ref: '#/components/schemas/Contrast'
+          type: array
+          title: Contrasts
+        tracer:
+          items:
+            $ref: '#/components/schemas/TracerPoint'
+          type: array
+          title: Tracer
+        assumptions:
+          items:
+            type: string
+          type: array
+          title: Assumptions
+        warnings:
+          items:
+            type: string
+          type: array
+          title: Warnings
+        software:
+          $ref: '#/components/schemas/Software'
+      type: object
+      required:
+      - id
+      - created_at
+      - config
+      - model_version
+      - fingerprint
+      - baseline_flow_ul_min
+      - reynolds_number
+      - wall_shear_pa
+      - resistance_pa_s_m3
+      - metrics
+      - traces
+      - arms
+      - replicates
+      - contrasts
+      - tracer
+      - assumptions
+      - warnings
+      - software
+      title: SimulationRun
+    Software:
+      properties:
+        numpy:
+          type: string
+          title: Numpy
+        scipy:
+          type: string
+          title: Scipy
+        pandas:
+          type: string
+          title: Pandas
+      type: object
+      required:
+      - numpy
+      - scipy
+      - pandas
+      title: Software
+    TracePoint:
+      properties:
+        method:
+          type: string
+          title: Method
+        time_s:
+          type: number
+          title: Time S
+        pressure_pa:
+          type: number
+          title: Pressure Pa
+        flow_ul_min:
+          type: number
+          title: Flow Ul Min
+        carryover_pct:
+          type: number
+          title: Carryover Pct
+      type: object
+      required:
+      - method
+      - time_s
+      - pressure_pa
+      - flow_ul_min
+      - carryover_pct
+      title: TracePoint
+    TracerPoint:
+      properties:
+        condition:
+          type: string
+          title: Condition
+        time_s:
+          type: number
+          title: Time S
+        donor_fraction:
+          type: number
+          title: Donor Fraction
+        receiver_fraction:
+          type: number
+          title: Receiver Fraction
+      type: object
+      required:
+      - condition
+      - time_s
+      - donor_fraction
+      - receiver_fraction
+      title: TracerPoint
+    TrainingJobStatus:
+      properties:
+        status:
+          type: string
+          enum:
+          - idle
+          - running
+          - completed
+          - failed
+          title: Status
+        training_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Training Id
+        started_at_utc:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Started At Utc
+        updated_at_utc:
+          type: string
+          title: Updated At Utc
+        model_version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model Version
+        log:
+          items:
+            type: string
+          type: array
+          title: Log
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+      type: object
+      required:
+      - status
+      - updated_at_utc
+      - log
+      title: TrainingJobStatus
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    VascularNetwork:
+      properties:
+        network_version:
+          type: string
+          title: Network Version
+        tissue_scope:
+          type: string
+          title: Tissue Scope
+        inlet_node_id:
+          type: string
+          title: Inlet Node Id
+        outlet_node_id:
+          type: string
+          title: Outlet Node Id
+        nodes:
+          items:
+            $ref: '#/components/schemas/VascularNode'
+          type: array
+          title: Nodes
+        segments:
+          items:
+            $ref: '#/components/schemas/VascularSegment'
+          type: array
+          title: Segments
+        geometry_note:
+          type: string
+          title: Geometry Note
+        physical_assumptions:
+          items:
+            type: string
+          type: array
+          title: Physical Assumptions
+      additionalProperties: false
+      type: object
+      required:
+      - network_version
+      - tissue_scope
+      - inlet_node_id
+      - outlet_node_id
+      - nodes
+      - segments
+      - geometry_note
+      - physical_assumptions
+      title: VascularNetwork
+    VascularNode:
+      properties:
+        node_id:
+          type: string
+          title: Node Id
+        role:
+          type: string
+          enum:
+          - inlet
+          - junction
+          - outlet
+          title: Role
+        position_m:
+          prefixItems:
+          - type: number
+          - type: number
+          - type: number
+          type: array
+          maxItems: 3
+          minItems: 3
+          title: Position M
+      additionalProperties: false
+      type: object
+      required:
+      - node_id
+      - role
+      - position_m
+      title: VascularNode
+    VascularSegment:
+      properties:
+        segment_id:
+          type: string
+          title: Segment Id
+        start_node_id:
+          type: string
+          title: Start Node Id
+        end_node_id:
+          type: string
+          title: End Node Id
+        vessel_class:
+          type: string
+          enum:
+          - artery
+          - arteriole
+          - capillary
+          - venule
+          - vein
+          title: Vessel Class
+        length_m:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Length M
+        radius_m:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Radius M
+        start_position_m:
+          prefixItems:
+          - type: number
+          - type: number
+          - type: number
+          type: array
+          maxItems: 3
+          minItems: 3
+          title: Start Position M
+        end_position_m:
+          prefixItems:
+          - type: number
+          - type: number
+          - type: number
+          type: array
+          maxItems: 3
+          minItems: 3
+          title: End Position M
+        geometry_basis:
+          type: string
+          title: Geometry Basis
+      additionalProperties: false
+      type: object
+      required:
+      - segment_id
+      - start_node_id
+      - end_node_id
+      - vessel_class
+      - length_m
+      - radius_m
+      - start_position_m
+      - end_position_m
+      - geometry_basis
+      title: VascularSegment
+    VascularSegmentResult:
+      properties:
+        segment_id:
+          type: string
+          title: Segment Id
+        start_node_id:
+          type: string
+          title: Start Node Id
+        end_node_id:
+          type: string
+          title: End Node Id
+        vessel_class:
+          type: string
+          enum:
+          - artery
+          - arteriole
+          - capillary
+          - venule
+          - vein
+          title: Vessel Class
+        length_m:
+          type: number
+          title: Length M
+        radius_m:
+          type: number
+          title: Radius M
+        cross_section_area_m2:
+          type: number
+          title: Cross Section Area M2
+        hydraulic_resistance_pa_s_m3:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Hydraulic Resistance Pa S M3
+        pressure_start_pa:
+          type: number
+          title: Pressure Start Pa
+        pressure_end_pa:
+          type: number
+          title: Pressure End Pa
+        pressure_start_mmhg:
+          type: number
+          title: Pressure Start Mmhg
+        pressure_end_mmhg:
+          type: number
+          title: Pressure End Mmhg
+        flow_rate_m3_s:
+          type: number
+          title: Flow Rate M3 S
+        flow_rate_ul_min:
+          type: number
+          title: Flow Rate Ul Min
+        flow_direction:
+          type: string
+          enum:
+          - forward
+          - reverse
+          - stagnant
+          title: Flow Direction
+        mean_velocity_m_s:
+          type: number
+          title: Mean Velocity M S
+        mean_velocity_mm_s:
+          type: number
+          title: Mean Velocity Mm S
+        wall_shear_stress_pa:
+          type: number
+          title: Wall Shear Stress Pa
+        start_position_m:
+          prefixItems:
+          - type: number
+          - type: number
+          - type: number
+          type: array
+          maxItems: 3
+          minItems: 3
+          title: Start Position M
+        end_position_m:
+          prefixItems:
+          - type: number
+          - type: number
+          - type: number
+          type: array
+          maxItems: 3
+          minItems: 3
+          title: End Position M
+        occluded:
+          type: boolean
+          title: Occluded
+      additionalProperties: false
+      type: object
+      required:
+      - segment_id
+      - start_node_id
+      - end_node_id
+      - vessel_class
+      - length_m
+      - radius_m
+      - cross_section_area_m2
+      - hydraulic_resistance_pa_s_m3
+      - pressure_start_pa
+      - pressure_end_pa
+      - pressure_start_mmhg
+      - pressure_end_mmhg
+      - flow_rate_m3_s
+      - flow_rate_ul_min
+      - flow_direction
+      - mean_velocity_m_s
+      - mean_velocity_mm_s
+      - wall_shear_stress_pa
+      - start_position_m
+      - end_position_m
+      - occluded
+      title: VascularSegmentResult
+    VascularSolveInput:
+      properties:
+        boundary_mode:
+          type: string
+          enum:
+          - fixed_pressure
+          - fixed_inlet_flow
+          title: Boundary Mode
+          default: fixed_pressure
+        inlet_pressure_pa:
+          type: number
+          maximum: 100000.0
+          minimum: 0.0
+          title: Inlet Pressure Pa
+          default: 1000
+        outlet_pressure_pa:
+          type: number
+          maximum: 100000.0
+          minimum: 0.0
+          title: Outlet Pressure Pa
+          default: 0
+        inlet_flow_ul_min:
+          type: number
+          maximum: 1000000.0
+          exclusiveMinimum: 0.0
+          title: Inlet Flow Ul Min
+          default: 1
+        viscosity_pa_s:
+          type: number
+          maximum: 0.1
+          exclusiveMinimum: 0.0
+          title: Viscosity Pa S
+          default: 0.0012
+        radius_overrides_um:
+          additionalProperties:
+            type: number
+          type: object
+          maxProperties: 100
+          title: Radius Overrides Um
+        occluded_segment_ids:
+          items:
+            type: string
+          type: array
+          maxItems: 100
+          title: Occluded Segment Ids
+      additionalProperties: false
+      type: object
+      title: VascularSolveInput
+      description: User-controlled steady-state inputs; numbers are not patient measurements.
+    VascularSolveResult:
+      properties:
+        network_version:
+          type: string
+          title: Network Version
+        model_version:
+          type: string
+          title: Model Version
+        input_fingerprint:
+          type: string
+          title: Input Fingerprint
+        boundary_mode:
+          type: string
+          enum:
+          - fixed_pressure
+          - fixed_inlet_flow
+          title: Boundary Mode
+        viscosity_pa_s:
+          type: number
+          title: Viscosity Pa S
+        inlet_pressure_pa:
+          type: number
+          title: Inlet Pressure Pa
+        inlet_pressure_mmhg:
+          type: number
+          title: Inlet Pressure Mmhg
+        outlet_pressure_pa:
+          type: number
+          title: Outlet Pressure Pa
+        outlet_pressure_mmhg:
+          type: number
+          title: Outlet Pressure Mmhg
+        inlet_flow_m3_s:
+          type: number
+          title: Inlet Flow M3 S
+        inlet_flow_ul_min:
+          type: number
+          title: Inlet Flow Ul Min
+        max_normalized_mass_balance_residual:
+          type: number
+          title: Max Normalized Mass Balance Residual
+        node_pressures_pa:
+          additionalProperties:
+            type: number
+          type: object
+          title: Node Pressures Pa
+        segments:
+          items:
+            $ref: '#/components/schemas/VascularSegmentResult'
+          type: array
+          title: Segments
+        assumptions:
+          items:
+            type: string
+          type: array
+          title: Assumptions
+        warnings:
+          items:
+            type: string
+          type: array
+          title: Warnings
+      additionalProperties: false
+      type: object
+      required:
+      - network_version
+      - model_version
+      - input_fingerprint
+      - boundary_mode
+      - viscosity_pa_s
+      - inlet_pressure_pa
+      - inlet_pressure_mmhg
+      - outlet_pressure_pa
+      - outlet_pressure_mmhg
+      - inlet_flow_m3_s
+      - inlet_flow_ul_min
+      - max_normalized_mass_balance_residual
+      - node_pressures_pa
+      - segments
+      - assumptions
+      - warnings
+      title: VascularSolveResult
+    VisualizationFrame:
+      properties:
+        method:
+          type: string
+          title: Method
+        time_s:
+          type: number
+          title: Time S
+        pressure_pa:
+          type: number
+          title: Pressure Pa
+        flow_ul_min:
+          type: number
+          title: Flow Ul Min
+        mean_velocity_mm_s:
+          type: number
+          title: Mean Velocity Mm S
+        centerline_velocity_mm_s:
+          type: number
+          title: Centerline Velocity Mm S
+        viscosity_mpas:
+          type: number
+          title: Viscosity Mpas
+        wall_shear_pa:
+          type: number
+          title: Wall Shear Pa
+        carryover_pct:
+          type: number
+          title: Carryover Pct
+        displacement_mm:
+          type: number
+          title: Displacement Mm
+        axial_pressure_pa:
+          items:
+            type: number
+          type: array
+          title: Axial Pressure Pa
+        radial_velocity_mm_s:
+          items:
+            type: number
+          type: array
+          title: Radial Velocity Mm S
+      type: object
+      required:
+      - method
+      - time_s
+      - pressure_pa
+      - flow_ul_min
+      - mean_velocity_mm_s
+      - centerline_velocity_mm_s
+      - viscosity_mpas
+      - wall_shear_pa
+      - carryover_pct
+      - displacement_mm
+      - axial_pressure_pa
+      - radial_velocity_mm_s
+      title: VisualizationFrame
+    VisualizationGeometry:
+      properties:
+        radius_um:
+          type: number
+          title: Radius Um
+        length_mm:
+          type: number
+          title: Length Mm
+        channels:
+          type: integer
+          title: Channels
+        outlet_pressure_pa:
+          type: number
+          title: Outlet Pressure Pa
+      type: object
+      required:
+      - radius_um
+      - length_mm
+      - channels
+      - outlet_pressure_pa
+      title: VisualizationGeometry

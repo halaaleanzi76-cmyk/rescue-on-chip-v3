@@ -1,0 +1,393 @@
+// Rescue-on-Chip Virtual Platform — database schema
+// PostgreSQL (Supabase or local Docker). Mirrors the proposal: perfusates, vessel conditions,
+// manifolds A/B/C, chips & batches, experiments (2x2 crossover, falsification, rescue screen),
+// runs with S0–S4 states, safety events, endpoints, analyses, preregistration, audit trail.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ───────────── Enums ─────────────
+
+enum Role {
+  ADMIN
+  RESEARCHER
+  REVIEWER
+  VIEWER
+}
+
+enum FluidKind {
+  REFERENCE
+  ALTERED
+}
+
+enum VesselKind {
+  INTACT
+  INJURED
+}
+
+enum InjuryType {
+  NONE
+  OGD            // oxygen–glucose deprivation
+  INFLAMMATORY
+  PERICYTE_CONSTRICTION
+  NEUTROPHIL_PLUGGING
+  MICROEMBOLI
+  COMBINED
+}
+
+enum ManifoldKind {
+  A_STOP_FLOW
+  B_PRESSURE_CONTROLLED
+  C_EQUALIZATION
+}
+
+enum ExperimentType {
+  BENCH_ONLY          // PoC phase 0
+  VISCOSITY_CHALLENGE // phase 1
+  CROSSOVER_2X2       // phase 2
+  RESCUE_SCREEN       // phase 3
+  ROBUSTNESS          // phase 4
+  FALSIFICATION_ABC   // §9 head-to-head
+  PARAMETER_SWEEP     // Monte-Carlo / sensitivity
+}
+
+enum ExperimentStatus {
+  DRAFT
+  PREREGISTERED
+  RUNNING
+  COMPLETED
+  ARCHIVED
+}
+
+enum RunStatus {
+  QUEUED
+  RUNNING
+  COMPLETED
+  ABORTED_SAFETY
+  FAILED
+}
+
+enum OperatingState {
+  S0_BASELINE
+  S1_INJURY
+  S2_PRE_EQUALIZATION
+  S3_CROSSOVER
+  S4_RESCUE
+}
+
+enum SafetyEventType {
+  BUBBLE
+  PRESSURE_SPIKE
+  FLOW_REVERSAL
+  LEAK
+  INTERLOCK_STOP
+}
+
+enum Severity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+enum Verdict {
+  PASS
+  FAIL
+  FALSE_EFFICACY_RISK
+  INCONCLUSIVE
+}
+
+// ───────────── Users & projects ─────────────
+
+model User {
+  id          String       @id @default(cuid())
+  email       String       @unique
+  name        String
+  role        Role         @default(RESEARCHER)
+  locale      String       @default("ar")
+  createdAt   DateTime     @default(now())
+  projects    Project[]
+  experiments Experiment[]
+  notes       Note[]
+  auditLogs   AuditLog[]
+}
+
+model Project {
+  id          String       @id @default(cuid())
+  name        String
+  description String?
+  ownerId     String
+  owner       User         @relation(fields: [ownerId], references: [id])
+  experiments Experiment[]
+  milestones  Milestone[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Milestone {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title       String
+  deliverable String
+  startMonth  Int
+  endMonth    Int
+  budgetMinSAR Int
+  budgetMaxSAR Int
+  done        Boolean  @default(false)
+}
+
+// ───────────── Library (reusable building blocks) ─────────────
+
+model PerfusateProfile {
+  id           String          @id @default(cuid())
+  name         String          @unique
+  kind         FluidKind
+  viscosity_cP Float
+  particleLoad Float           // 0..1
+  tracer       String?         // e.g. FITC-dextran 4 kDa
+  description  String?
+  arms         ExperimentArm[]
+}
+
+model VesselCondition {
+  id                     String          @id @default(cuid())
+  name                   String          @unique
+  kind                   VesselKind
+  injuryType             InjuryType      @default(NONE)
+  swelling               Float           // fractional radius loss
+  pericyteConstriction   Float
+  permeabilityMultiplier Float
+  viabilityPenalty       Float
+  description            String?
+  arms                   ExperimentArm[]
+}
+
+model ManifoldDesign {
+  id                 String          @id @default(cuid())
+  name               String          @unique
+  kind               ManifoldKind
+  deadVolume_uL      Float
+  tau_s              Float
+  residualOffset_pct Float
+  stopDuration_s     Float
+  bubbleProb         Float
+  reversalProb       Float
+  description        String?
+  arms               ExperimentArm[]
+}
+
+model Intervention {
+  id                   String          @id @default(cuid())
+  name                 String          @unique
+  mechanismClass       String          // generic class only — no drug claims
+  isVehicle            Boolean         @default(false)
+  occlusionReduction   Float
+  constrictionReversal Float
+  permeabilityEffect   Float
+  cytotoxicity         Float
+  description          String?
+  arms                 ExperimentArm[]
+}
+
+model ChipBatch {
+  id          String   @id @default(cuid())
+  code        String   @unique   // e.g. FAB-2026-11-A
+  fabricatedAt DateTime
+  batchEffect Float    // resistance multiplier (~1 ± 0.05)
+  notes       String?
+  chips       Chip[]
+}
+
+model Chip {
+  id        String    @id @default(cuid())
+  code      String    @unique
+  batchId   String
+  batch     ChipBatch @relation(fields: [batchId], references: [id])
+  channels  Int       @default(64)
+  radius_um Float     @default(25)
+  length_mm Float     @default(10)
+  hasPericytes  Boolean @default(false)
+  hasAstrocytes Boolean @default(false)
+  retired   Boolean   @default(false)
+  runs      Run[]
+}
+
+// ───────────── Experiments ─────────────
+
+model Experiment {
+  id            String           @id @default(cuid())
+  projectId     String
+  project       Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdById   String
+  createdBy     User             @relation(fields: [createdById], references: [id])
+  title         String
+  type          ExperimentType
+  status        ExperimentStatus @default(DRAFT)
+  hypothesis    String?
+  masterSeed    Int
+  replicatesPerArm Int           @default(6)
+  blinded       Boolean          @default(true)
+  // Global run settings (overridable per arm in protocol JSON)
+  drivingPressure_mbar Float     @default(20)
+  flushVolume_uL       Float     @default(50)
+  duration_s           Float     @default(30)
+  switchAt_s           Float     @default(10)
+  rescueAt_s           Float     @default(18)
+  guardThreshold_pct   Float     @default(3)
+  pressureLimit_pct    Float     @default(60)
+  interlockEnabled     Boolean   @default(true)
+  protocol      Json?            // free-form extra settings / sweep ranges
+  arms          ExperimentArm[]
+  runs          Run[]
+  analyses      AnalysisResult[]
+  preregistration Preregistration?
+  notes         Note[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@index([projectId, status])
+}
+
+model ExperimentArm {
+  id             String           @id @default(cuid())
+  experimentId   String
+  experiment     Experiment       @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+  label          String           // e.g. "Altered + Injured + Vehicle"
+  blindCode      String           // shown instead of label when blinded
+  perfusateId    String
+  perfusate      PerfusateProfile @relation(fields: [perfusateId], references: [id])
+  vesselId       String
+  vessel         VesselCondition  @relation(fields: [vesselId], references: [id])
+  manifoldId     String
+  manifold       ManifoldDesign   @relation(fields: [manifoldId], references: [id])
+  interventionId String?
+  intervention   Intervention?    @relation(fields: [interventionId], references: [id])
+  runs           Run[]
+
+  @@unique([experimentId, blindCode])
+}
+
+model Preregistration {
+  id              String     @id @default(cuid())
+  experimentId    String     @unique
+  experiment      Experiment @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+  primaryEndpoint String     // e.g. perfusionIndex_pct
+  primaryContrast String     // e.g. "AJ intervention vs AJ vehicle"
+  permMargin_pct  Float      @default(15)
+  targets         Json       // e.g. { peakDeviation_pct: 5, carryover_pct: 5 }
+  contentHash     String     // SHA-256 of the locked plan → tamper evidence
+  lockedAt        DateTime   @default(now())
+}
+
+// ───────────── Runs & data ─────────────
+
+model Run {
+  id           String     @id @default(cuid())
+  experimentId String
+  experiment   Experiment @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+  armId        String
+  arm          ExperimentArm @relation(fields: [armId], references: [id], onDelete: Cascade)
+  chipId       String
+  chip         Chip       @relation(fields: [chipId], references: [id])
+  replicate    Int
+  seed         Int
+  status       RunStatus  @default(QUEUED)
+  engineVersion String    @default("0.1")
+  startedAt    DateTime?
+  finishedAt   DateTime?
+  trace        RunTrace?
+  states       StateTransition[]
+  events       SafetyEvent[]
+  endpoint     EndpointResult?
+
+  @@unique([experimentId, armId, replicate])
+  @@index([experimentId, status])
+}
+
+/// Time series stored as compact JSON arrays (≈300 points per run).
+model RunTrace {
+  id            String @id @default(cuid())
+  runId         String @unique
+  run           Run    @relation(fields: [runId], references: [id], onDelete: Cascade)
+  t             Json   // number[] seconds
+  pressure_pct  Json   // number[]
+  flow_uL_min   Json   // number[]
+}
+
+model StateTransition {
+  id           String         @id @default(cuid())
+  runId        String
+  run          Run            @relation(fields: [runId], references: [id], onDelete: Cascade)
+  state        OperatingState
+  t_s          Float
+  checksPassed Boolean
+  note         String?
+}
+
+model SafetyEvent {
+  id       String          @id @default(cuid())
+  runId    String
+  run      Run             @relation(fields: [runId], references: [id], onDelete: Cascade)
+  type     SafetyEventType
+  severity Severity        @default(WARNING)
+  t_s      Float
+  detail   String
+}
+
+model EndpointResult {
+  id                        String  @id @default(cuid())
+  runId                     String  @unique
+  run                       Run     @relation(fields: [runId], references: [id], onDelete: Cascade)
+  peakPressureDeviation_pct Float
+  flowInterruption_s        Float
+  flowReversal              Boolean
+  carryover_pct             Float
+  occlusionFraction         Float
+  perfusionIndex_pct        Float
+  flow_uL_min               Float
+  permeability_e6_cm_s      Float
+  viability_pct             Float
+}
+
+model AnalysisResult {
+  id           String     @id @default(cuid())
+  experimentId String
+  experiment   Experiment @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+  kind         String     // "2x2", "two-axis", "manifold-compare", "sweep"
+  metric       String     // endpoint analysed
+  result       Json       // cells, effects, CIs …
+  verdict      Verdict?
+  createdAt    DateTime   @default(now())
+}
+
+// ───────────── Collaboration & audit ─────────────
+
+model Note {
+  id           String      @id @default(cuid())
+  authorId     String
+  author       User        @relation(fields: [authorId], references: [id])
+  experimentId String?
+  experiment   Experiment? @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+  body         String
+  createdAt    DateTime    @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String   // e.g. "experiment.preregister", "run.execute"
+  entity    String
+  entityId  String
+  payload   Json?
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+}

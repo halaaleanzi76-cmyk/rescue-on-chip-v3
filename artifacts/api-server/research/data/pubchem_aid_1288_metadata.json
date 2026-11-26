@@ -1,0 +1,838 @@
+{
+  "assay_id": 1288,
+  "assay_name": "Confirmatory Screen:  Chemical Inhibitors of TNF alpha stimulated E Selectin expression",
+  "source_name": "Columbia University Molecular Screening Center",
+  "source_id": "Esel_CS_DR_05102008",
+  "source_url": "https://pubchem.ncbi.nlm.nih.gov/bioassay/1288",
+  "csv_url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/assay/aid/1288/CSV",
+  "metadata_url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/assay/aid/1288/description/JSON",
+  "description": [
+    "Data Source: Columbia University Molecular Screening Center",
+    "Source (MLSCN Center Name): Columbia University Molecular Screening Center",
+    "Center Affiliation: Columbia University Molecular Screening Center",
+    "Assay Provider: Thomas Mayer, Columbia University Molecular Screening Center",
+    "Network: Molecular Library Screening Center Network (MLSCN)",
+    "Grant Proposal Number: 1R03MH076509-01",
+    "",
+    "E Selectin HCS was developed and screened at the Columbia University Molecular Screening Center as part of the Molecular Screening Center Network (MLSCN).  ",
+    "",
+    "Inflammatory disease requires that endothelial cells detect and amplify a pro-inflammatory signal. This results in the adherence, activation, and ultimately transmigration of lymphocytes at the site of damage. Drugs that block this process would significantly alleviate the symptoms of inflammation. This assay detects an early event in this process, the expression of E-selectin on the surface of endothelial cells, which is essential for lymphocyte adherence.",
+    "Assay Principle. Cytokines such as tumor necrosis factor alpha (TNFalpha) and interleukin 1 (IL-1) activate a pro-inflammatory response in endothelial cells by nuclear translocation of the NFkappaB transcription factor (1). This response induces the transcription of pro-inflammatory genes (2), including E-selectin. Cell surface expression of E-selectin upon stimulation with cytokines in primary human umbilical vein cells (HUVEC) provides a readout to study the effects of bioactive compounds on the responsiveness of endothelium to pro-inflammatory stimuli (3).",
+    "",
+    "Compounds identified from a previously described set of experiments entitled \"Primary HTS assay for chemical inhibitors of TNF alpha stimulated E Selectin expression\" were selected for testing in this assay. Further information on the primary screening can be found by searching on this website for PubChem AID = 1246.",
+    "",
+    "Among the 843 active compounds identified during the primary screening, 773 were assessed in triplicate at 2uM to identify potentially false positive. 80 compounds were selected and assessed in dose-response experiments in 8 data point, 1:2 dilution starting at a nominal test concentration of 10 uM.",
+    "",
+    "TNFalpha Induced E-Selectin Expression HCS/HTS was developed and run at the Columbia University Molecular Screening Center as part of the Molecular Library Screening Center Network (MLSCN). Grant number: 1R03MH076509-01; Assay: TNFalpha Induced E-Selectin, Assay Provider Dr. Thomas Mayer, Department of Physiology and Cellular Biophysics at Columbia University.",
+    "",
+    "(1)  Li, X. and G. R. Stark (2002). \"NFkappaB-dependent signaling pathways.\" Exp Hematol 30(4): 285-96",
+    "",
+    "(2) Zhou, Z., M. C. Connell, et al. (2007). \"TNFR1-induced NF-kappaB, but not ERK, p38MAPK or JNK activation, mediates TNF-induced ICAM-1 and VCAM-1 expression on endothelial cells.\" Cell Signal 19(6): 1238-48",
+    "",
+    "(3) Pober, J. S. (2002). \"Endothelial activation: intracellular signaling pathways.\" Arthritis Res 4 Suppl 3: S109-16.",
+    "",
+    "Keywords:  Inflammation, endothelial cells, Tumor necrosis factor alpha, E Selectin, cell adhesion, vascular cell adhesion molecule, cytokine, lymphocyte, vascular endothelium bioassay, biological signal transduction, high content, microscopy, Columbia University"
+  ],
+  "protocol": [
+    "Materials",
+    "",
+    "1. For the culture and the screen",
+    "-  HUVEC (Human Umbilical Vein Endothelial Cell, pooled cryopreserved, Cambrex #cc-2519)",
+    "-  Bullet Kit (EBM-2 and EGM-2 singlequot) (Cambrex, #cc-3162)",
+    "-  Trypsin/EDTA (GibcoBRL Invitrogen, #25300-112)",
+    "-  Recombinant human TNFalpha (R&D, #210-TA-010)",
+    "-  Phosphate Buffered Saline (PBS), tablets, w/o Ca2+ and Mg2+ (MP Biochemicals, #2810305)",
+    "-  Compound plates (2mM in 100% DMSO) ",
+    "-  Positive control: IKK2 Inhibitor IV (Calbiochem, #401484)",
+    "-  DMSO (SIGMA, 154938-1l)",
+    "-  Paraformaldehyde (EMS, #15710)",
+    "-  384-well Assay plates (Corning, #7109) ",
+    "",
+    "2. For the Immunodetection ",
+    "-  Phosphate Buffered Saline (PBS), tablets, w/o Ca2+ and Mg2+ (MP Biochemicals, #2810305)",
+    "-  Triton -X100 (Roche Applied Science Boeringher-Mannheim, #789704)",
+    "-  Mouse anti E Selectin (CD62E) antibody (Invitrogen, #AHS6211)",
+    "-  Goat anti mouse 647 (Molecular Probe Invitrogen, #A21236)",
+    "-  Hoechst 33342 (Molecular Probe Invitrogen, #H3570, 10 mg/ml solution in water)",
+    "-  Donor Calf Serum (Cambrex, #14-472F)",
+    "",
+    "3. Working solutions",
+    "-  Stimulation Solution: 60 ng/ml, TNF alpha in EGM-2 ",
+    "-  Fixation Solution: 16% Paraformaldehyde ",
+    "-  Permeabilization/Block Solution: 0.2% Triton X-100, 10% Donor Calf Serum in PBS ",
+    "-  Primary antibody (1/2000) in  10% Donor Calf serum in PBS ",
+    "-  Goat anti mouse 647 (1/2000) and Hoechst 33342 [1/10,000 (1 uM)] in 10% Donor Calf serum in PBS",
+    "",
+    "Protocol",
+    "",
+    "1. Cell Culture",
+    "-  HUVEC cells were obtained from Cambrex as frozen stocks",
+    "-  Cells were grown in EGM-2 medium with supplements (Cambrex)",
+    "-  To passage cells, the monolayer was washed first with PBS (5 ml) and then with a trypsin/EDTA solution (5 ml)",
+    "-  Cells were detached by incubation with 5 ml of trypsin per T175 flask",
+    "-  Cells were resuspended in 5 ml of EGM-2 and centrifuged for 5 min at 1000 x g",
+    "-  Cells were seeded at dilutions of 1:2 or 1:3 and grown until they reached confluency",
+    "",
+    "2. Cell Seeding   (using an 8-channel multi-drop, MTX labs)",
+    "-  Seed 4,500 HUVEC per well in 40 ViewPlates (per batch) in 50 ul EGM-2 ",
+    "-  Incubate overnight (15 h) at 37 C, 5% CO2 and 100% humidity before stimulation",
+    "",
+    "3. Compounds Addition",
+    "a. Triplicate at 2uM",
+    "- Pintool 50nl of compounds (i.e. 2uM final concentration) (from cherry picked compound plate) to columns 3 to 22 of assay plate in triplicates.",
+    "b. Dose Response",
+    "- Add 5 ul of compounds (i.e. 10 uM final concentration) (from cherry picked compound plate) in row A and I of assay plate; perform a serial dilution one to two from Row A to H and Row I to P respectively (concentration range: 10uM to 80 nM) ",
+    "- Incubate 1h 37 deg C, 5% CO2 and humidity. Proceed immediately to stimulation",
+    "",
+    "4. Stimulation",
+    "-  Add 10 uL of 60 ng/ml TNF alpha in EGM-2 in all columns except background and negative controls (negative controls are in every other row in columns 2 and 24)",
+    "-  Incubate for 4 h at 37 C, 5% CO2 and 100% humidity",
+    "-  Proceed immediately to fixation",
+    "",
+    "5. Fixation",
+    "-  Dispense 17 uL of fixation solution per well",
+    "-  Incubate for 20 min at Room Temperature",
+    "-  Wash 1x with PBS (1 x 400 uL rolling wash)",
+    "-  Leave 50 uL residual volume in each well.",
+    "",
+    "6. Immunostaining",
+    "-  Wash 1x with PBS (1 x 400 uL rolling wash)",
+    "-  Aspirate 50 uL per well",
+    "-  Dispense 30 uL of permeabilization/blocking solution per well",
+    "-  Incubate 20 min at Room Temperature",
+    "-  Wash 1x with PBS (1x 400 uL rolling wash)",
+    "-  Dispense primary antibody solution (25 uL per well) ",
+    "-  Incubate 20 min at room temperature",
+    "-  Wash with PBS (1 x 400 uL rolling wash)",
+    "-  Dispense 25 uL of secondary antibody and Hoechst solution per well",
+    "-  Incubate 20 min at Room Temperature",
+    "-  Wash 3x PBS (3 x 400 uL rolling wash)",
+    "-  Dispense 50 uL of PBS per well",
+    "-  Plates (can be stored at 4 C) are ready to be scanned INCell 3000 analyzer (GE, healthcare)",
+    "",
+    "Analysis",
+    "",
+    "In this publication we report the confirmatory screening results for inhibitors identified from the 160K MLSMR compound library. ",
+    "All calculations were done using Assay Explorer 3.0 from MDL. ",
+    "For analysis and hit definition N granules raw results were normalized per plate using high and low controls (non-stimulated and stimulated DMSO / buffer control wells) per plate to give % inhibition (CS_%Inh). In addition to plate-based statistics we generate control statistics for data and controls wells to evaluate the stability over time and reasonable hit threshold. For QC, control wells with a Cell Count (normalized cell count per plate) of less than 10% were discarded. For each experiment all images of data wells with % inhibition equal or greater than the applied threshold were visually inspected to define the final screening results as Hit_Visual.",
+    "The primary screen hits (active and inconclusive) were analyzed in triplicates at the primary screening conditions (2uM) to eliminate false positive hits. For hit selection, a threshold (Hit_Thresh) greater than 30% has been applied. ",
+    "The remaining compounds (80) were assessed in dose-response experiment (8 data points, 1:2 dilution starting at a nominal test concentration of 10uM). For each compound, percentage inhibitions were plotted against compound concentration. A four parameter equation describing a sigmoidal dose-response curve was then fitted with adjustable baseline using Assay Explorer software (MDL Information Systems). The reported IC50 values were generated from fitted curves either by determining the X-intercept of the inflexion point of the generated sigmoid curve (DR_IC50Method = IC50_Curve Fit) or by solving for X-intercept at the 50% inhibition level of Y-intercept when a plateau was not reached (DR_IC50Method = IC50_Backcalc). In cases where the highest concentration tested (i.e. 10uM) did not result in greater than 50% inhibition, the IC50 was determined manually as greater than 10uM (DR_IC50Method = IC50_manual).",
+    "The activity score was calculated based on IC50. Compounds with an IC50 greater than 10uM were considered inactive. Compounds with an IC50 equal to or less than 10uM were considered active.  "
+  ],
+  "results": [
+    {
+      "tid": 1,
+      "name": "CS_%Inh",
+      "description": [
+        "Average of measures of normalized percent inhibition of the confirmation screen."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 2,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 2,
+      "name": "CS_StdDev",
+      "description": [
+        "Standard deviation of the measures of the normalized percent inhibition."
+      ],
+      "type": 1,
+      "unit": 15
+    },
+    {
+      "tid": 3,
+      "name": "CS_N",
+      "description": [
+        "Number of measures of percent inhibition of the confirmation screen."
+      ],
+      "type": 2,
+      "unit": 254
+    },
+    {
+      "tid": 4,
+      "name": "DR_Qualifier",
+      "description": [
+        "Qualifier identifies if the resultant data IC50 came from a fitted curve or was determined manually to be less than or greater than its listed IC50 concentration."
+      ],
+      "type": 4
+    },
+    {
+      "tid": 5,
+      "name": "DR_IC50",
+      "description": [
+        "Inhibitor concentration in uM at 50% inhibition."
+      ],
+      "type": 1,
+      "unit": 5,
+      "ac": true
+    },
+    {
+      "tid": 6,
+      "name": "DR_LogIC50",
+      "description": [
+        "Log10 of the IC50 in M concentration."
+      ],
+      "type": 1,
+      "unit": 254
+    },
+    {
+      "tid": 7,
+      "name": "DR_Max%Inh",
+      "description": [
+        "Maximum %Inhibition"
+      ],
+      "type": 1,
+      "unit": 15
+    },
+    {
+      "tid": 8,
+      "name": "DR_Min%Inh",
+      "description": [
+        "Minimum %Inhibition"
+      ],
+      "type": 1,
+      "unit": 15
+    },
+    {
+      "tid": 9,
+      "name": "DR_IC50Method",
+      "description": [
+        "IC50 calculation method"
+      ],
+      "type": 4
+    },
+    {
+      "tid": 10,
+      "name": "DR_HillSlope",
+      "description": [
+        "Steepness of the curve (no unit)."
+      ],
+      "type": 1,
+      "unit": 254
+    },
+    {
+      "tid": 11,
+      "name": "DR_ChiSquare",
+      "description": [
+        "Measure of the \"goodness\" of the curve fit."
+      ],
+      "type": 1,
+      "unit": 254
+    },
+    {
+      "tid": 12,
+      "name": "DR_Rsquare",
+      "description": [
+        "Measure the success of the curve fit (square of the correlation between the response values and the predicted response values)."
+      ],
+      "type": 1,
+      "unit": 254
+    },
+    {
+      "tid": 13,
+      "name": "DR_N",
+      "description": [
+        "Overall number of data points of percent inhibition that was used for calculations (includes all concentration points); in some cases a data point can be excluded as outlier."
+      ],
+      "type": 1,
+      "unit": 254
+    },
+    {
+      "tid": 14,
+      "name": "DR_Comments",
+      "description": [
+        "Addition comments based of visual inspection."
+      ],
+      "type": 4
+    },
+    {
+      "tid": 15,
+      "name": "DR_%Inh_10.00 uM",
+      "description": [
+        "Normalized % inhibition at 10 uM inhibitor concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 10,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 16,
+      "name": "DR_%Inh_5.00 uM",
+      "description": [
+        "Normalized % inhibition at 5 uM inhibitor concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 5,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 17,
+      "name": "DR_%Inh_2.50 uM",
+      "description": [
+        "Normalized % inhibition at 2.5 uM inhibitor concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 2.5,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 18,
+      "name": "DR_%Inh_1.25 uM",
+      "description": [
+        "Normalized % inhibition at 1.25  uM inhibitor concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 1.25,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 19,
+      "name": "DR_%Inh_0.63 uM",
+      "description": [
+        "Normalized % inhibition at 0.63 uM inhibitor concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 0.629999995231628,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 20,
+      "name": "DR_%Inh_0.31 uM",
+      "description": [
+        "Normalized % inhibition at 0.31 uM inhibitor concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 0.310000002384186,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 21,
+      "name": "DR_%Inh_0.16 uM",
+      "description": [
+        "Normalized % inhibition at 0.16 uM inhibitor concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 0.159999996423721,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 22,
+      "name": "DR_%Inh_0.08 uM",
+      "description": [
+        "Normalized % inhibition at 0.08 uM inhibitor concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 0.0799999982118607,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 23,
+      "name": "DR_%CellCount_10.00 uM",
+      "description": [
+        "Normalized cell count at 10 uM concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 10,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 24,
+      "name": "DR_%CellCount_5.00 uM",
+      "description": [
+        "Normalized cell count at 5 uM concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 5,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 25,
+      "name": "DR_%CellCount_2.50 uM",
+      "description": [
+        "Normalized cell count at 2.5 uM concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 2.5,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 26,
+      "name": "DR_%CellCount_1.25 uM",
+      "description": [
+        "Normalized cell count at 1.25 uM concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 1.25,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 27,
+      "name": "DR_%CellCount_0.63 uM",
+      "description": [
+        "Normalized cell count at 0.63 uM concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 0.629999995231628,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 28,
+      "name": "DR_%CellCount_0.31 uM",
+      "description": [
+        "Normalized cell count at 0.3125 uM concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 0.310000002384186,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 29,
+      "name": "DR_%CellCount_0.16 uM",
+      "description": [
+        "Normalized cell count at 0.1563 uM concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 0.159999996423721,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 30,
+      "name": "DR_%CellCount_0.08 uM",
+      "description": [
+        "Normalized cell count at 0.0781 uM concentration; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 15,
+      "tc": {
+        "concentration": 0.0799999982118607,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 31,
+      "name": "DR_Npass_10.00 uM",
+      "description": [
+        "The total number of detected objects in the Marker channel that pass all thresholds in the Object Filters window and in the Cells area of the Granularity Measurement Parameters window; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 10,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 32,
+      "name": "DR_Npass_5.00 uM",
+      "description": [
+        "The total number of detected objects in the Marker channel that pass all thresholds in the Object Filters window and in the Cells area of the Granularity Measurement Parameters window; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 5,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 33,
+      "name": "DR_Npass_2.50 uM",
+      "description": [
+        "The total number of detected objects in the Marker channel that pass all thresholds in the Object Filters window and in the Cells area of the Granularity Measurement Parameters window; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 2.5,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 34,
+      "name": "DR_Npass_1.25 uM",
+      "description": [
+        "The total number of detected objects in the Marker channel that pass all thresholds in the Object Filters window and in the Cells area of the Granularity Measurement Parameters window; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 1.25,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 35,
+      "name": "DR_Npass_0.63 uM",
+      "description": [
+        "The total number of detected objects in the Marker channel that pass all thresholds in the Object Filters window and in the Cells area of the Granularity Measurement Parameters window; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 0.629999995231628,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 36,
+      "name": "DR_Npass_0.31 uM",
+      "description": [
+        "The total number of detected objects in the Marker channel that pass all thresholds in the Object Filters window and in the Cells area of the Granularity Measurement Parameters window; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 0.310000002384186,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 37,
+      "name": "DR_Npass_0.16 uM",
+      "description": [
+        "The total number of detected objects in the Marker channel that pass all thresholds in the Object Filters window and in the Cells area of the Granularity Measurement Parameters window; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 0.159999996423721,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 38,
+      "name": "DR_Npass_0.08 uM",
+      "description": [
+        "The total number of detected objects in the Marker channel that pass all thresholds in the Object Filters window and in the Cells area of the Granularity Measurement Parameters window; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 0.0799999982118607,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 39,
+      "name": "DR_Ngranules_10.00 uM",
+      "description": [
+        "The number of qualifying granules found within the area of the dilated nuclear mask. If the granule size is small, N granules provides a good index of granulation. The average is taken over positive cells in the well; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 10,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 40,
+      "name": "DR_Ngranules_5.00 uM",
+      "description": [
+        "The number of qualifying granules found within the area of the dilated nuclear mask. If the granule size is small, N granules provides a good index of granulation. The average is taken over positive cells in the well; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 5,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 41,
+      "name": "DR_Ngranules_2.50 uM",
+      "description": [
+        "The number of qualifying granules found within the area of the dilated nuclear mask. If the granule size is small, N granules provides a good index of granulation. The average is taken over positive cells in the well; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 2.5,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 42,
+      "name": "DR_Ngranules_1.25 uM",
+      "description": [
+        "The number of qualifying granules found within the area of the dilated nuclear mask. If the granule size is small, N granules provides a good index of granulation. The average is taken over positive cells in the well; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 1.25,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 43,
+      "name": "DR_Ngranules_0.63 uM",
+      "description": [
+        "The number of qualifying granules found within the area of the dilated nuclear mask. If the granule size is small, N granules provides a good index of granulation. The average is taken over positive cells in the well; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 0.629999995231628,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 44,
+      "name": "DR_Ngranules_0.31 uM",
+      "description": [
+        "The number of qualifying granules found within the area of the dilated nuclear mask. If the granule size is small, N granules provides a good index of granulation. The average is taken over positive cells in the well; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 0.310000002384186,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 45,
+      "name": "DR_Ngranules_0.16 uM",
+      "description": [
+        "The number of qualifying granules found within the area of the dilated nuclear mask. If the granule size is small, N granules provides a good index of granulation. The average is taken over positive cells in the well; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 0.159999996423721,
+        "unit": 5,
+        "dr_id": 1
+      }
+    },
+    {
+      "tid": 46,
+      "name": "DR_Ngranules_0.08 uM",
+      "description": [
+        "The number of qualifying granules found within the area of the dilated nuclear mask. If the granule size is small, N granules provides a good index of granulation. The average is taken over positive cells in the well; average of triplicate measurement."
+      ],
+      "type": 1,
+      "unit": 254,
+      "tc": {
+        "concentration": 0.0799999982118607,
+        "unit": 5,
+        "dr_id": 1
+      }
+    }
+  ],
+  "comments": [
+    "Possible artifacts can be caused by:",
+    "-  Fluorescent compounds",
+    "-  Toxic compounds",
+    "-  Compounds inducing apoptosis",
+    "-  Additional qualitative comments are reported in the results based on visual inspection",
+    "",
+    "The inactive compounds of this assay have activity score range of 0 to 75 and active compounds range of activity score is 75 to 100"
+  ],
+  "cross_references": [
+    {
+      "xref": {
+        "pmid": 11937262
+      }
+    },
+    {
+      "xref": {
+        "pmid": 12110129
+      }
+    },
+    {
+      "xref": {
+        "pmid": 17292586
+      }
+    },
+    {
+      "xref": {
+        "gene": 6401
+      }
+    },
+    {
+      "xref": {
+        "aid": 438
+      },
+      "comment": "Cellular assay for TNF alpha induced NFkappaB translocation"
+    },
+    {
+      "xref": {
+        "aid": 445
+      },
+      "comment": "IkB Signaling"
+    },
+    {
+      "xref": {
+        "aid": 454
+      },
+      "comment": "VCAM-1 Plate Reader Assay in Pooled HUVECs: Inhibition of TNFa induced VCAM-1 cell surface expression"
+    },
+    {
+      "xref": {
+        "aid": 455
+      },
+      "comment": "VCAM-1 Plate Reader Assay in Pooled HUVECs: Augmentation of TNFa induced VCAM-1 cell surface expression"
+    },
+    {
+      "xref": {
+        "aid": 456
+      },
+      "comment": "VCAM-1 Imaging Assay in Pooled HUVECs: Inhibition of TNFa induced VCAM-1 cell surface expression"
+    },
+    {
+      "xref": {
+        "aid": 457
+      },
+      "comment": "VCAM-1 Imaging Assay in Pooled HUVECs: Augmentation of TNFa induced VCAM-1 cell surface expression."
+    },
+    {
+      "xref": {
+        "aid": 465
+      },
+      "comment": "Primary HTS assay for chemical inhibitors of antigen receptor-induced NF-kappaB activation"
+    },
+    {
+      "xref": {
+        "aid": 462
+      },
+      "comment": "Confirmatory screen for Cellular assay for TNF alpha induced NFkappaB translocation"
+    },
+    {
+      "xref": {
+        "aid": 487
+      },
+      "comment": "TNFalpha Induced E-Selectin Expression - Primary screen"
+    },
+    {
+      "xref": {
+        "aid": 517
+      },
+      "comment": "TNFalpha Induced E-Selectin Expression - Confirmatory screen"
+    },
+    {
+      "xref": {
+        "aid": 586
+      },
+      "comment": "Dose-response cell-based assay for chemical inhibitors of antigen receptor-induced NF-kappaB activation"
+    },
+    {
+      "xref": {
+        "aid": 796
+      },
+      "comment": "IL-1B Induced NFkB Translocation - Primary Screen"
+    },
+    {
+      "xref": {
+        "aid": 802
+      },
+      "comment": "Primary HTS assay for chemical inhibitors of TNF alpha stimulated VCAM1 expression"
+    },
+    {
+      "xref": {
+        "aid": 808
+      },
+      "comment": "Primary HTS assay for chemical potentiators of TNFalpha stimulated VCAM1 expression [Screening Method]"
+    },
+    {
+      "xref": {
+        "aid": 1013
+      },
+      "comment": "Confirmatory Screen for chemical inhibitors of TNF alpha stimulated VCAM1 expression [Confirmatory Method]"
+    },
+    {
+      "xref": {
+        "aid": 1034
+      },
+      "comment": "Confirmatory Screen for chemical potentiatiors of TNF alpha stimulated VCAM1 expression [Other Method]"
+    },
+    {
+      "xref": {
+        "aid": 1246
+      },
+      "comment": "Primary HTS assay for chemical inhibitors of TNF alpha stimulated E-Selectin expression"
+    }
+  ],
+  "csv_sha256": "ab191dcc466e466f70612faa0dcdfd0a713b0a1826fc1b89d8345d47cb228f0f",
+  "metadata_sha256": "78b7ba89c2c7475dd34b897af528d8a550574cfac3cb7a8fd48f2100353a8705",
+  "retrieved_at_utc": "2026-11-23T09:04:18.293205+00:00",
+  "license_note": "The PubChem assay record does not specify a dataset license in its retrieved metadata. The record is publicly retrievable; verify depositor-specific rights before redistribution or commercial use. Source attribution is retained."
+}

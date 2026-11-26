@@ -1,0 +1,25 @@
+group,check,metric,value,tolerance,pass
+poiseuille,"Hagen–Poiseuille flow, 500 random parameter sets",max_rel_err,2.199569e-16,1e-12,True
+poiseuille,baseline_flow_ul_min (default run),rel_err,0.000000e+00,1e-12,True
+poiseuille,hydraulic resistance,rel_err,0.000000e+00,1e-12,True
+poiseuille,wall shear = ΔP·r/(2L),rel_err,0.000000e+00,1e-12,True
+poiseuille,Reynolds number (ρ=1000 kg/m³),rel_err,0.000000e+00,1e-12,True
+sensitivity,sensitivity d ln Q / d ln P = 1,abs_err,0.000000e+00,1e-06,True
+sensitivity,sensitivity d ln Q / d ln r = 4,abs_err,1.492140e-13,1e-06,True
+sensitivity,sensitivity d ln Q / d ln mu = -1,abs_err,7.616130e-14,1e-06,True
+sensitivity,sensitivity d ln Q / d ln L = -1,abs_err,1.871836e-13,1e-06,True
+washout,"washout vs exact exp(−Qt/V), 2712 samples, 3 topologies",max_rel_err(ref>1e-3%),4.982075e-14,0.0001,True
+washout,washout absolute error (all samples),max_abs_err_pct,3.552714e-14,0.001,True
+transient,peak deviation equalized = |offset|·e^(−wait/τ),abs_err_pct,9.325873e-15,1e-09,True
+transient,peak deviation pressure_controlled = |offset|·e^(−wait/τ),abs_err_pct,0.000000e+00,1e-09,True
+tracer,tracer donor/receiver vs exact expm solution,"max_err(rel, abs<1e-3)",1.138094e-07,0.0001,True
+network,"node pressures vs independent dense solver (14 nodes, 18 segments)",max_rel_err,3.420672e-16,1e-09,True
+network,junction mass conservation (solver-reported),max_norm_residual,9.758826e-13,1e-09,True
+network,global mass balance: outlet flow = inlet flow,rel_err,9.785999e-13,1e-09,True
+network,linearity: 2×ΔP → 2×Q,rel_err,0.000000e+00,1e-09,True
+network,viscosity: 2×μ → Q/2,rel_err,0.000000e+00,1e-09,True
+network,all radii ×1.1 → Q×1.1⁴,rel_err,1.491874e-12,1e-09,True
+network,BC consistency: fixed-flow(Q*) recovers p_in,rel_err,1.959961e-13,1e-09,True
+reproducibility,same seed + config → byte-identical result,identical(1=yes),1.000000e+00,1.0,True
+reproducibility,different seed → different virtual-chip sample,differs(1=yes),1.000000e+00,1.0,True
+uncertainty,"uncertainty propagation CV_Q ≈ 4·CV_r (n=100, delta method)",rel_diff,8.984272e-02,0.15,True

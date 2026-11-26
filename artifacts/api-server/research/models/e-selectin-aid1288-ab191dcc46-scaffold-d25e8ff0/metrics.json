@@ -1,0 +1,123 @@
+{
+  "algorithm_comparison": {
+    "random_forest": {
+      "folds": [
+        {
+          "active_n": 8,
+          "fold": 1,
+          "n": 153,
+          "pr_auc_average_precision": 0.11382256990123228,
+          "roc_auc": 0.7586206896551724
+        },
+        {
+          "active_n": 8,
+          "fold": 2,
+          "n": 155,
+          "pr_auc_average_precision": 0.1552423294899355,
+          "roc_auc": 0.7040816326530612
+        },
+        {
+          "active_n": 8,
+          "fold": 3,
+          "n": 153,
+          "pr_auc_average_precision": 0.07685447677854967,
+          "roc_auc": 0.5827586206896551
+        },
+        {
+          "active_n": 8,
+          "fold": 4,
+          "n": 155,
+          "pr_auc_average_precision": 0.13681437066793375,
+          "roc_auc": 0.7423469387755102
+        }
+      ],
+      "mean_fold_pr_auc": 0.12068343670941281,
+      "mean_fold_roc_auc": 0.6969519704433498,
+      "oof_pr_auc_average_precision": 0.09521216762814531,
+      "oof_raw_score_brier": 0.061135315580862847,
+      "oof_roc_auc": 0.6966502568493151
+    },
+    "regularized_logistic_regression": {
+      "folds": [
+        {
+          "active_n": 8,
+          "fold": 1,
+          "n": 153,
+          "pr_auc_average_precision": 0.08260700193058233,
+          "roc_auc": 0.6362068965517241
+        },
+        {
+          "active_n": 8,
+          "fold": 2,
+          "n": 155,
+          "pr_auc_average_precision": 0.04327077119194382,
+          "roc_auc": 0.37244897959183676
+        },
+        {
+          "active_n": 8,
+          "fold": 3,
+          "n": 153,
+          "pr_auc_average_precision": 0.10411361991825835,
+          "roc_auc": 0.6543103448275862
+        },
+        {
+          "active_n": 8,
+          "fold": 4,
+          "n": 155,
+          "pr_auc_average_precision": 0.21828575893889307,
+          "roc_auc": 0.7278911564625851
+        }
+      ],
+      "mean_fold_pr_auc": 0.11206928799491939,
+      "mean_fold_roc_auc": 0.5977143443584331,
+      "oof_pr_auc_average_precision": 0.07952204012930741,
+      "oof_raw_score_brier": 0.05554864272224433,
+      "oof_roc_auc": 0.5985659246575342
+    }
+  },
+  "calibrated_probability_available": false,
+  "decision_threshold": 0.17812464866296596,
+  "development_active": 32,
+  "development_records": 616,
+  "eligible_for_reliable_prediction": false,
+  "endpoint": "Confirmed inhibition of TNF-alpha-induced E-selectin expression in primary HUVEC screen at nominal 2 uM",
+  "model_version": "e-selectin-aid1288-ab191dcc46-scaffold-d25e8ff0",
+  "reliability_decision": "Not eligible: the single-assay data are strongly imbalanced and selected from a prior primary-screen hit set; the raw, uncalibrated score Brier value did not improve on the prevalence baseline, and the test contains only ten active examples. Keep scores exploratory and abstain from claiming a reliable vascular prediction.",
+  "selected_algorithm": "random_forest",
+  "test_active": 10,
+  "test_metrics": {
+    "active_n": 10,
+    "active_prevalence": 0.06369426751592357,
+    "baseline_test_prevalence_pr_auc": 0.06369426751592357,
+    "f1": 0.21818181818181817,
+    "false_negative": 4,
+    "false_positive": 39,
+    "inactive_n": 147,
+    "n": 157,
+    "nearest_training_tanimoto_mean": 0.34726806070840904,
+    "nearest_training_tanimoto_median": 0.33766233766233766,
+    "nearest_training_tanimoto_min": 0.20967741935483872,
+    "nearest_training_tanimoto_p10": 0.25839822024471637,
+    "null_prevalence_brier": 0.059775281381700435,
+    "pr_auc_average_precision": 0.39302984960593657,
+    "precision": 0.13333333333333333,
+    "raw_score_brier": 0.06170840082243408,
+    "recall_sensitivity": 0.6,
+    "recall_wilson_95_ci": [
+      0.31267376973365824,
+      0.8318196702937638
+    ],
+    "roc_auc": 0.6996598639455782,
+    "specificity": 0.7346938775510204,
+    "specificity_wilson_95_ci": [
+      0.6580084493423021,
+      0.7994254719380577
+    ],
+    "threshold_from_development_oof": 0.17812464866296596,
+    "true_negative": 108,
+    "true_positive": 6
+  },
+  "test_records": 157,
+  "test_scaffolds": 132,
+  "test_set_was_used_for_model_selection_or_threshold_tuning": false
+}

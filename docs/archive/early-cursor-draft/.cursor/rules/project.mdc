@@ -1,0 +1,62 @@
+---
+description: Rescue-on-Chip virtual simulation platform — always-on project rules
+alwaysApply: true
+---
+
+# Project: Rescue-on-Chip Virtual Lab (Neuro-Reflow Rescue 3.0)
+
+A web platform that simulates the research proposal "Neuro-Reflow Rescue 3.0 — Rescue-on-Chip":
+a pressure-stabilized crossover neurovascular microfluidic platform (dual perfusate input,
+switching manifold A/B/C, two neurovascular chips, S0–S4 operating states, 2x2 fluid × vessel crossover,
+two-axis success = flow restored AND BBB preserved). Full spec: `docs/PLATFORM_SPEC.md`.
+Physics/statistics: `docs/SIMULATION_MODEL.md`.
+
+## Stack (do not change without asking)
+- Next.js 15 App Router + TypeScript (strict) + React Server Components
+- Tailwind CSS v4 + shadcn/ui + lucide-react icons + framer-motion for animation
+- Recharts for charts; custom SVG/Canvas for the live chip visualization
+- Prisma 6 ORM + PostgreSQL (Supabase). Schema in `prisma/schema.prisma` is the source of truth
+- Supabase Auth (email magic link) — roles from `User.role`
+- next-intl for Arabic (RTL, default) + English
+- Zod for all input validation; Server Actions for mutations
+- Vitest for unit tests, Playwright for e2e
+
+## Hard rules
+1. The simulation engine lives ONLY in `lib/sim/engine.ts`. It is pure, deterministic (seeded), dependency-free.
+   UI and API code must call it — never re-implement physics in components.
+   If you change engine behaviour, bump `engineVersion` and keep `node lib/sim/engine.check.ts` passing.
+2. Heavy simulations (sweeps, >50 runs) run in a Web Worker (`lib/sim/worker.ts`) or a server route, never block the UI.
+3. Every page shows the footer banner: "Research simulation only — not a medical device, not clinical guidance."
+   Never add language that claims clinical efficacy, treatment recommendations or patent novelty.
+4. Interventions are generic mechanism classes (e.g. "Pericyte-relaxing"), never real drug names or doses.
+5. Blinding: when `experiment.blinded` is true, show `arm.blindCode` instead of `arm.label` until the user
+   with role ADMIN or REVIEWER clicks "Unblind" (write an AuditLog entry).
+6. Preregistration is immutable once locked: store SHA-256 `contentHash`, disable editing, show a lock badge.
+7. All mutations write an `AuditLog` row (action, entity, entityId, payload).
+8. RTL first: use logical Tailwind classes (`ms-`, `me-`, `ps-`, `pe-`, `start-`, `end-`), test both directions.
+9. Numbers: show units always (mbar, µL/min, %, ×10⁻⁶ cm/s). Use `Intl.NumberFormat` per locale.
+10. Accessibility: keyboard reachable, aria labels, chart colours must pass contrast in light and dark.
+
+## Folder layout
+```
+app/[locale]/(dashboard)/            # authenticated area
+  page.tsx                           # Mission Control dashboard
+  lab/page.tsx                       # Live Virtual Lab (digital twin)
+  experiments/                       # list, new (wizard), [id] (results)
+  arena/page.tsx                     # Manifold A/B/C falsification arena
+  library/                           # perfusates, vessels, manifolds, interventions, chips
+  sweep/page.tsx                     # Monte-Carlo & sensitivity
+  readiness/page.tsx                 # evidence & readiness, milestones, budget
+  learn/page.tsx                     # guided tour / explainer
+app/api/                             # route handlers (export CSV/JSON, run batch)
+components/{ui,charts,lab,experiments}/
+lib/{sim,db,auth,i18n,validators}/
+prisma/{schema.prisma,seed.ts}
+messages/{ar,en}.json
+```
+
+## Code style
+- Server Components by default; `"use client"` only for interactive pieces.
+- Data access through `lib/db/*.ts` functions, not Prisma calls scattered in components.
+- Small components (<200 lines). Name files kebab-case, components PascalCase.
+- Write a Vitest test for every pure function you add in `lib/`.

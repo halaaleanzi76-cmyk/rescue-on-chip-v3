@@ -1,0 +1,255 @@
+.anatomical-vascular-view {
+  --av-bg: #08151b;
+  --av-panel: #102129;
+  --av-line: rgba(76, 121, 126, .38);
+  --av-copy: #d5e6e7;
+  --av-muted: #91aaad;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: var(--av-copy);
+  background: #0a181e;
+  border: 1px solid var(--av-line);
+  border-radius: 6px;
+  overflow: hidden;
+  font-family: var(--app-font-sans, "DM Sans", sans-serif);
+}
+
+.anatomical-vascular-view *,
+.anatomical-vascular-view *::before,
+.anatomical-vascular-view *::after { box-sizing: border-box; }
+
+.anatomical-viewport {
+  position: relative;
+  min-height: 420px;
+  height: clamp(390px, 51vw, 570px);
+  background:
+    linear-gradient(rgba(94, 143, 146, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(94, 143, 146, .035) 1px, transparent 1px),
+    #08151b;
+  background-size: 28px 28px;
+}
+
+.anatomical-viewport canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+
+.anatomical-viewport-topline {
+  position: absolute;
+  inset: 12px 13px auto;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.anatomical-view-badge,
+.anatomical-action-cluster { pointer-events: auto; }
+
+.anatomical-view-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid rgba(86, 145, 146, .4);
+  border-radius: 4px;
+  background: rgba(8, 22, 28, .88);
+  color: #afd0d1;
+  font: 9px var(--app-font-mono, "Space Mono", monospace);
+  letter-spacing: .11em;
+}
+
+.anatomical-live-dot {
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background: #d9b26c;
+  box-shadow: 0 0 0 3px rgba(217, 178, 108, .13);
+}
+
+.anatomical-action-cluster { display: flex; align-items: center; gap: 5px; }
+.anatomical-action-cluster button,
+.anatomical-fallback button {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 10px;
+  border: 1px solid rgba(85, 133, 138, .47);
+  border-radius: 4px;
+  background: rgba(10, 27, 33, .91);
+  color: #b5d4d5;
+  font: 10px var(--app-font-mono, "Space Mono", monospace);
+  cursor: pointer;
+  transition: background .16s ease, border-color .16s ease, color .16s ease, transform .16s ease;
+}
+.anatomical-action-cluster button:hover:not(:disabled),
+.anatomical-fallback button:hover { background: #17353b; border-color: #5db9b1; color: #dcf4f0; }
+.anatomical-action-cluster button:active:not(:disabled) { transform: translateY(1px); }
+.anatomical-action-cluster button[aria-pressed="true"] { background: #1b4144; border-color: #64bfb7; color: #a9eee4; }
+.anatomical-action-cluster button:disabled { opacity: .43; cursor: not-allowed; }
+
+.anatomical-viewport-bottom {
+  position: absolute;
+  bottom: 12px;
+  left: 13px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: calc(100% - 26px);
+  border: 1px solid rgba(76, 121, 126, .44);
+  border-radius: 4px;
+  background: rgba(8, 21, 27, .9);
+  color: #a1b9bc;
+  padding: 7px 9px;
+  font-size: 10px;
+}
+.anatomical-bottom-divider { width: 1px; height: 13px; background: #37565d; }
+.anatomical-cell-toggle { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; white-space: nowrap; color: #b5d0d1; }
+.anatomical-cell-toggle input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.anatomical-switch { position: relative; width: 25px; height: 14px; border-radius: 8px; background: #2c454a; transition: background .16s ease; }
+.anatomical-switch::after { content: ""; position: absolute; width: 10px; height: 10px; left: 2px; top: 2px; border-radius: 50%; background: #9bb4b6; transition: transform .16s ease, background .16s ease; }
+.anatomical-cell-toggle input:checked + .anatomical-switch { background: #397e79; }
+.anatomical-cell-toggle input:checked + .anatomical-switch::after { transform: translateX(11px); background: #d1f0e9; }
+.anatomical-cell-toggle input:focus-visible + .anatomical-switch { outline: 2px solid #80ddd3; outline-offset: 3px; }
+.anatomical-lumen-notice {
+  position: absolute;
+  z-index: 2;
+  top: 61px;
+  left: 13px;
+  padding: 7px 9px;
+  border: 1px solid rgba(101, 194, 183, .45);
+  background: rgba(11, 38, 40, .92);
+  color: #a8e1d8;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.anatomical-info-rail { background: linear-gradient(145deg, #102229, #0d1c22); }
+.anatomical-pathway {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 12px 15px;
+  border-bottom: 1px solid rgba(76, 121, 126, .32);
+}
+.anatomical-path-step { display: flex; align-items: center; gap: 6px; color: #bacdce; font: 10px var(--app-font-mono, "Space Mono", monospace); }
+.anatomical-path-step > i { margin: 0 3px; color: #67888b; font-style: normal; font-size: 16px; }
+.anatomical-path-dot { height: 7px; width: 7px; border-radius: 50%; box-shadow: 0 0 0 3px rgba(107, 160, 159, .1); }
+
+.anatomical-info-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(270px, .9fr); gap: 12px; padding: 12px; }
+.anatomical-selection-summary,
+.anatomical-cross-section {
+  min-width: 0;
+  border: 1px solid rgba(72, 112, 119, .34);
+  border-radius: 4px;
+  background: rgba(8, 22, 28, .66);
+  padding: 12px;
+}
+.anatomical-eyebrow { display: block; color: #82aaa9; font: 9px var(--app-font-mono, "Space Mono", monospace); letter-spacing: .11em; text-transform: uppercase; }
+.anatomical-selection-summary strong { display: block; margin-top: 8px; color: #dfebeb; font: 12px var(--app-font-mono, "Space Mono", monospace); overflow-wrap: anywhere; }
+.anatomical-selection-summary > span:last-child { display: block; margin-top: 5px; color: #91aaad; font-size: 10px; line-height: 1.5; }
+.anatomical-cross-head { display: flex; align-items: center; justify-content: space-between; gap: 9px; color: #c5d8d8; font-size: 10px; }
+.anatomical-cross-head > span:last-child { font-family: var(--app-font-mono, "Space Mono", monospace); color: #e0eded; }
+.anatomical-section-empty { display: grid; place-items: center; min-height: 88px; max-width: 260px; margin: 8px auto 4px; color: #8da6a9; font-size: 10px; line-height: 1.5; text-align: center; }
+.anatomical-section-art { display: grid; place-items: center; width: 88px; height: 88px; margin: 11px auto 10px; }
+.anatomical-section-ring {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: 9px solid #8e575b;
+  background: #bc7770;
+  box-shadow: inset 0 0 0 6px #d59682, 0 0 0 1px rgba(229, 187, 155, .24);
+}
+.is-large-vessel .anatomical-section-ring { border-width: 10px; }
+.is-small-vessel .anatomical-section-ring { width: 62px; height: 62px; border-width: 7px; background: #bd8c78; }
+.is-capillary .anatomical-section-ring { width: 52px; height: 52px; border: 5px solid #83b9ae; background: #b7c5a2; box-shadow: inset 0 0 0 3px #d8d1a9; }
+.anatomical-section-inner { width: 31px; height: 31px; border: 2px solid rgba(228, 222, 179, .75); border-radius: 50%; background: radial-gradient(circle, #502d35 0 55%, #a86665 57% 100%); }
+.is-capillary .anatomical-section-inner { width: 20px; height: 20px; border: 1px solid #a6c7b8; background: #32464a; }
+.anatomical-endothelial-mark { display: block; width: 4px; height: 6px; margin: 3px auto; border-radius: 4px; background: #ede6c2; opacity: .9; }
+.anatomical-layer-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 8px; }
+.anatomical-layer-list span { display: flex; align-items: center; gap: 5px; color: #a6babb; font-size: 9px; line-height: 1.35; }
+.anatomical-layer-list i { flex: 0 0 auto; width: 8px; height: 8px; border-radius: 2px; }
+.layer-adventitia { background: #8e575b; }
+.layer-media { background: #d59682; }
+.layer-lumen { background: #753f49; }
+.layer-endothelium { background: #83b9ae; }
+.anatomical-cross-section p { margin: 9px 0 0; color: #789397; font-size: 9px; line-height: 1.45; }
+
+.anatomical-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 15px; padding: 0 14px 14px; }
+.anatomical-legend-item { display: flex; align-items: center; gap: 7px; color: #a8bbbd; font-size: 9px; line-height: 1.45; }
+.anatomical-legend-line { display: block; flex: 0 0 auto; width: 17px; height: 4px; border-radius: 4px; }
+.solved-line { background: #66cfc5; }
+.detail-line { background: repeating-linear-gradient(90deg, #4b9d9a 0 4px, transparent 4px 6px); }
+.anatomical-legend p { grid-column: 1 / -1; margin: 2px 0 0; padding-top: 8px; border-top: 1px solid rgba(76, 121, 126, .28); color: #789195; font-size: 9px; line-height: 1.55; }
+.anatomical-legend code { color: #a7ccca; font-family: var(--app-font-mono, "Space Mono", monospace); }
+
+.anatomical-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  background:
+    linear-gradient(rgba(86, 143, 148, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(86, 143, 148, .035) 1px, transparent 1px),
+    #08151b;
+  background-size: 26px 26px;
+  text-align: center;
+  color: #9cb4b8;
+}
+.anatomical-fallback > svg { color: #d4b16f; }
+.anatomical-fallback strong { color: #d8e7e8; font-size: 13px; }
+.anatomical-fallback span { max-width: 430px; font-size: 11px; line-height: 1.5; }
+.anatomical-fallback button { margin-top: 3px; }
+.anatomical-vascular-view:fullscreen { width: 100vw; height: 100dvh; border-radius: 0; }
+.anatomical-vascular-view:fullscreen .anatomical-viewport { height: min(72dvh, 900px); flex: 1; }
+.anatomical-vascular-view button:focus-visible,
+.anatomical-vascular-view input:focus-visible { outline: 2px solid #80ddd3; outline-offset: 2px; }
+
+@media (max-width: 700px) {
+  .anatomical-viewport { min-height: 380px; height: 68vw; max-height: 500px; }
+  .anatomical-viewport-topline { inset: 9px 9px auto; align-items: flex-start; }
+  .anatomical-view-badge { padding: 7px 8px; font-size: 8px; letter-spacing: .06em; }
+  .anatomical-action-cluster { gap: 4px; }
+  .anatomical-action-cluster button { width: 34px; min-width: 34px; padding: 0; }
+  .anatomical-action-cluster button:first-child { width: auto; padding: 0 8px; font-size: 9px; }
+  .anatomical-button-label { display: none; }
+  .anatomical-viewport-bottom { left: 8px; bottom: 8px; gap: 8px; font-size: 9px; }
+  .anatomical-viewport-bottom > span:first-child { max-width: 125px; line-height: 1.35; }
+  .anatomical-cell-toggle { font-size: 9px; }
+  .anatomical-info-grid { grid-template-columns: minmax(0, 1fr); }
+  .anatomical-pathway { justify-content: flex-start; padding: 11px 10px; gap: 2px; }
+  .anatomical-path-step { gap: 4px; font-size: 9px; }
+  .anatomical-path-step > i { margin: 0 1px; }
+}
+
+@media (max-width: 410px) {
+  .anatomical-viewport { min-height: 360px; }
+  .anatomical-view-badge { max-width: 140px; font-size: 7px; }
+  .anatomical-action-cluster button:first-child { width: 34px; padding: 0; }
+  .anatomical-action-cluster button:first-child { font-size: 0; }
+  .anatomical-viewport-bottom { align-items: flex-start; flex-wrap: wrap; }
+  .anatomical-viewport-bottom > span:first-child { flex-basis: 100%; max-width: none; }
+  .anatomical-bottom-divider { display: none; }
+  .anatomical-legend { grid-template-columns: 1fr; }
+  .anatomical-legend p { grid-column: 1; }
+  .anatomical-path-step { font-size: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anatomical-vascular-view *,
+  .anatomical-vascular-view *::before,
+  .anatomical-vascular-view *::after { transition-duration: .01ms !important; }
+}

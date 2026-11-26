@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Rescue-on-Chip",
+      "type": "shell",
+      "command": "powershell -ExecutionPolicy Bypass -File ${workspaceFolder}\\start.ps1",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Stop Rescue-on-Chip",
+      "type": "shell",
+      "command": "powershell -ExecutionPolicy Bypass -File ${workspaceFolder}\\stop.ps1",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run all scientific + API tests",
+      "type": "shell",
+      "command": "powershell -ExecutionPolicy Bypass -File ${workspaceFolder}\\scripts\\windows\\test-all.ps1",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Backup database",
+      "type": "shell",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe ${workspaceFolder}\\scripts\\windows\\localdb.py backup",
+      "problemMatcher": []
+    }
+  ]
+}

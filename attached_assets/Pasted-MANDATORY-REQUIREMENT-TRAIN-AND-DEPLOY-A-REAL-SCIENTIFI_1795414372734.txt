@@ -1,0 +1,168 @@
+MANDATORY REQUIREMENT — TRAIN AND DEPLOY A REAL SCIENTIFIC AI MODEL
+
+This is a critical, non-negotiable requirement for my Rescue-on-Chip research platform.
+
+I do not want an AI interface, a mock prediction engine, or a training script that has never been executed.
+
+I want you to IMPLEMENT, TRAIN, EVALUATE, SAVE, LOAD, AND DEPLOY an actual machine learning model using real scientific data.
+
+1. REAL SCIENTIFIC TRAINING DATA
+
+Connect to relevant scientific sources:
+
+* PubChem
+* ChEMBL
+* EPA CompTox / ToxCast
+* PubChem BioAssay
+* Other credible, appropriately licensed vascular research datasets
+
+Retrieve real experimental data suitable for vascular-related predictive modeling.
+
+Prioritize endothelial cell viability, permeability, vascular inflammation, or another clearly defined vascular endpoint with sufficient reliable measurements.
+
+Select an endpoint based on actual dataset availability and scientific suitability.
+
+Do not substitute general toxicity data for vascular-specific measurements.
+
+Document the dataset source, endpoint, assay details, sample count, units, and limitations.
+
+2. ACTUALLY TRAIN THE MODEL
+
+Use Python with RDKit, Pandas, NumPy, and scikit-learn.
+
+Implement and EXECUTE the following workflow:
+
+1. Download real training data.
+2. Clean and standardize the dataset.
+3. Validate chemical structures.
+4. Generate molecular fingerprints and descriptors.
+5. Perform leakage-resistant training, validation, and test splitting.
+6. Train an appropriate baseline model.
+7. Train and compare at least one additional model when data and resources permit.
+8. Evaluate on held-out data.
+9. Measure performance and uncertainty.
+10. Save the trained model and its preprocessing pipeline.
+
+Use scientifically appropriate algorithms such as Random Forest, Gradient Boosting, or regularized regression.
+
+Do not automatically use deep learning unless the data and resources justify it.
+
+Do not claim training succeeded unless the training process actually completed.
+
+3. REQUIRED TRAINED MODEL FILES
+
+Generate real, usable output artifacts, including:
+
+* A serialized trained model.
+* Required preprocessing and feature-generation configuration.
+* Dataset manifest and source references.
+* Training logs.
+* Actual evaluation metrics.
+* Model version and configuration.
+* Reproducibility information.
+* A working inference script.
+* Automated inference tests.
+
+Never create placeholder model files or fabricated logs.
+
+4. PREDICT UNSEEN COMPOUNDS
+
+After successful training, integrate the model into the existing platform.
+
+Allow users to enter a new compound using SMILES or another supported molecular representation.
+
+The system must:
+
+1. Validate the submitted structure.
+2. Generate molecular descriptors.
+3. Load the actual trained model.
+4. Generate supported endpoint predictions.
+5. Assess applicability to the training domain.
+6. Display uncertainty and model limitations.
+7. Identify relevant reference compounds.
+8. Allow comparison with available experimental evidence.
+
+If the input is outside the model’s applicability domain, abstain from unreliable predictions.
+
+5. CONNECT AI TO THE 3D LABORATORY
+
+Integrate the trained model with the existing Rescue-on-Chip interface.
+
+Display:
+
+* Molecular structure.
+* Actual model prediction.
+* Endpoint and units.
+* Uncertainty estimates.
+* Supporting evidence.
+* Model version and validation performance.
+* Comparison with known compounds.
+
+Only connect predictions to the Python fluid simulation when there is a documented and scientifically justified mathematical relationship.
+
+Otherwise, display the biological predictions independently.
+
+Never fabricate vascular pressure, flow, or permeability changes.
+
+6. BUILD AN ACTUAL AI TRAINING STUDIO
+
+Create an interactive dashboard showing:
+
+* Dataset source.
+* Number of valid training records.
+* Selected endpoint.
+* Training progress.
+* Actual training logs.
+* Validation scores.
+* Test performance.
+* Model versions.
+* Available trained models.
+* Prediction history.
+* Retraining controls.
+
+These features must work with the actual Python training and inference backend.
+
+Do not display fake training progress or invented accuracy percentages.
+
+7. MANDATORY EXECUTION AND PROOF
+
+Do not consider this task complete merely because the code was generated.
+
+You must attempt to execute the entire training pipeline using a real, suitable dataset.
+
+After execution, provide:
+
+1. The exact dataset used and its source.
+2. The number of training, validation, and test samples.
+3. The endpoint being predicted.
+4. The algorithm actually trained.
+5. The real evaluation metrics.
+6. The saved model artifact path.
+7. The actual training log.
+8. A successful test demonstrating inference using a compound excluded from training.
+9. Evidence that the frontend retrieves predictions from the trained Python model.
+10. A clear explanation of scientific limitations.
+
+If no scientifically suitable vascular dataset is available, or the environment cannot complete training, clearly document the blocker.
+
+Never fabricate a trained model, validation results, or scientific conclusions.
+
+Do not falsely claim that a physicochemical model is a vascular-response model.
+
+If Replit lacks enough computing resources, prepare a reproducible external training workflow and a model import pipeline, but do not report training as completed until it has genuinely run.
+
+8. START EXECUTION
+
+Inspect the existing project and preserve a rollback checkpoint.
+
+Then begin with dataset identification and validation, followed by actual model training.
+
+Do not spend resources on decorative interface changes before establishing a working trained model.
+
+The highest priority is delivering ONE genuinely trained, tested, reproducible vascular-related prediction model supported by real experimental data.
+
+Once that model is successfully validated, integrate it with the existing Python backend and 3D laboratory.
+
+The system must distinguish computational predictions from experimental or clinical validation.
+
+BEGIN IMPLEMENTATION AND TRAINING NOW.

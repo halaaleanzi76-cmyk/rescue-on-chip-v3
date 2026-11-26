@@ -1,0 +1,13 @@
+Trained at UTC: 2026-11-23T09:04:31.563661+00:00
+Source: PubChem BioAssay AID 1288 (https://pubchem.ncbi.nlm.nih.gov/bioassay/1288)
+Dataset SHA-256: ab191dcc466e466f70612faa0dcdfd0a713b0a1826fc1b89d8345d47cb228f0f
+Audited records: 773 (42 active, 731 inactive)
+Split: 616 development / 157 scaffold-held-out test; 10 test actives.
+Selected algorithm by development scaffold CV PR-AUC: random_forest
+Development threshold: 0.178125; test score is not a calibrated probability.
+Test ROC-AUC: 0.699660
+Test PR-AUC / average precision: 0.393030 (test prevalence baseline 0.063694)
+Test Brier score: 0.061708; prevalence baseline Brier: 0.059775
+Test threshold precision/recall/specificity/F1: 0.133333/0.600000/0.734694/0.218182
+Model SHA-256: 012a89edd3eb3d39f333241d82fd1027313b5f45e5d644f7aa14a3da6067dad2
+Result: candidate saved; reliable inference gate FAILED: Not eligible: the single-assay data are strongly imbalanced and selected from a prior primary-screen hit set; the raw, uncalibrated score Brier value did not improve on the prevalence baseline, and the test contains only ten active examples. Keep scores exploratory and abstain from claiming a reliable vascular prediction.

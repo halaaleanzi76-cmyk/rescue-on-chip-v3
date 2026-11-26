@@ -1,0 +1,375 @@
+RESCUE-ON-CHIP — PREMIUM 3D LABORATORY & SECURE RESEARCHER ACCOUNTS
+
+MAJOR EXISTING PROJECT UPGRADE.
+
+Upgrade my current Rescue-on-Chip / Neuro-Reflow Simulator into a premium scientific research platform with highly detailed interactive 3D laboratories and secure, persistent researcher accounts.
+
+Do not rebuild the application from scratch.
+
+Preserve my existing Python physics engine, scientific experiments, trained AI models, database integrations, experiment history, scientific calculations, and reproducibility metadata.
+
+Before editing, inspect the existing project and verify a recoverable checkpoint.
+
+This upgrade has TWO primary objectives.
+
+OBJECTIVE A — PROFESSIONAL 3D SCIENTIFIC LABORATORIES
+
+A1. Replace the simplistic vascular visualization
+
+The current cerebral vascular graph looks like a small collection of thin pipes.
+
+It is not acceptable as the main anatomical visualization.
+
+Retain the computational graph and Python solver, but rebuild the visible vascular scene into a sophisticated interactive anatomical research environment.
+
+Include:
+
+* A realistic-looking feeding artery.
+* Progressively branching arterioles.
+* A dense, connected capillary network.
+* Collecting venules.
+* A draining vein.
+* Smooth, anatomically informed vessel branching.
+* Appropriate vessel-wall thicknesses.
+* Endothelial lining.
+* Arterial wall layers.
+* Venous wall layers.
+* Capillary endothelial structures.
+* Selectable cross-sectional anatomy.
+* Optional conceptual blood-cell visualization.
+
+Do not place veins inside arteries.
+
+Avoid disconnected decorative branches.
+
+Distinguish idealized or visually exaggerated geometry from verified human anatomy.
+
+A2. Professional 3D rendering
+
+Use React Three Fiber, Three.js, and suitable GLTF/GLB models.
+
+For realistic anatomical meshes, use legitimately licensed, properly attributed 3D assets where available, or generate scientifically informed procedural geometry.
+
+Implement:
+
+1. Smooth bifurcations.
+2. Detailed vessel surfaces.
+3. High-quality PBR materials.
+4. Subtle translucency.
+5. Realistic scientific lighting.
+6. Depth and ambient occlusion where performant.
+7. Anatomical cutaway inspection.
+8. Smooth camera movement.
+9. Intraluminal camera navigation.
+10. Vessel selection and highlighting.
+11. Adjustable transparency.
+12. Full-screen scientific visualization.
+13. Mobile touch gestures.
+14. Responsive rendering quality.
+
+The main scene must look substantially more detailed than the current simplified graph.
+
+A3. Two viewing modes
+
+ANATOMICAL MODE:
+
+A highly detailed anatomical representation with branching vessels, interior structures, tissue context, and interactive inspection.
+
+COMPUTATIONAL MODE:
+
+The existing numerical vascular network with physical segment identification and scientific parameter overlays.
+
+Make Anatomical Mode the default.
+
+Maintain a documented mapping from anatomical visual regions to the existing computational graph.
+
+Do not suggest that decorative vessels are directly simulated if they are not part of the solver.
+
+A4. Scientific simulation connection
+
+Preserve the existing Python simulation.
+
+Connect supported vessel-flow results to the visual scene.
+
+Display:
+
+* Flow direction.
+* Calculated pressure.
+* Segment flow rates.
+* Mean velocity.
+* Resistance.
+* Supported shear stress.
+* Before-and-after comparisons.
+* Experiment playback.
+
+All quantitative visualizations must correspond to actual Python outputs.
+
+Do not generate fabricated spatial velocity fields or drug-induced vascular responses.
+
+Clearly label conceptual animations.
+
+A5. Dual laboratory interface
+
+Create a professional split research workspace:
+
+LEFT:
+Existing Rescue-on-Chip microfluidic laboratory.
+
+RIGHT:
+Human Vascular Digital Twin.
+
+Allow users to compare supported simulation results.
+
+On iPhone, implement tab-based navigation between the two laboratories and provide a full-screen viewer.
+
+Do not compress two large 3D scenes into tiny mobile panels.
+
+OBJECTIVE B — SECURE RESEARCHER ACCOUNTS
+
+B1. Authentication architecture
+
+Inspect whether authentication already exists.
+
+If not, integrate Supabase Auth with PostgreSQL, designed to remain portable outside Replit.
+
+Do not introduce duplicate authentication providers.
+
+Implement a complete researcher identity system.
+
+Every user must have an independent account and private research workspace.
+
+B2. Account registration
+
+Create a professional registration page.
+
+Required fields:
+
+* Researcher display name.
+* Email address.
+* Password if password-based registration is enabled.
+* Acceptance of the platform’s terms and research-only notice.
+
+Send an actual confirmation email.
+
+Users must verify ownership of their email address before gaining access to their research workspace.
+
+Never store passwords in ordinary application tables.
+
+B3. Email verification for login
+
+I want REAL email verification, not a fake code displayed on the website.
+
+Support an email one-time password (OTP) login flow.
+
+When a researcher signs in:
+
+1. Enter their registered email.
+2. Request a secure one-time login code.
+3. Send the code to the researcher’s email.
+4. Display a dedicated verification-code screen.
+5. Verify the submitted code through the authentication provider.
+6. Create a secure authenticated session only after successful verification.
+7. Redirect the researcher to their personal dashboard.
+
+Support:
+
+* Expiring single-use codes.
+* Resend-code controls with cooldown.
+* Rate limiting.
+* Invalid-code handling.
+* Expired-code handling.
+* Session expiration.
+* Secure logout.
+* Account recovery.
+
+Do not generate or validate email codes using insecure frontend-only logic.
+
+Do not log OTP codes or expose them to other users.
+
+If email-password and email-OTP login are both offered, clearly separate the supported authentication flows and do not claim that email OTP is a second authentication factor unless that flow is actually implemented and independently enforced.
+
+B4. Real email delivery
+
+Configure a supported SMTP email provider for production email delivery where required.
+
+Use secure environment secrets.
+
+Do not hardcode SMTP passwords, authentication tokens, or service-role credentials.
+
+Create professional branded email templates for:
+
+* Registration confirmation.
+* Login verification.
+* Password recovery where applicable.
+* Account security notifications.
+
+Verify actual email delivery with a permitted test account.
+
+Do not claim delivery is working merely because a send request returned without a visible error.
+
+B5. Personal researcher dashboard
+
+After successful login, create:
+
+MY RESEARCH WORKSPACE
+
+The dashboard must include:
+
+* My Projects.
+* My Experiments.
+* My Simulation Runs.
+* My Vascular Digital Twin Experiments.
+* My AI Predictions.
+* My Compounds.
+* My Comparison Results.
+* My Scientific Reports.
+* Account Settings.
+
+Use a premium scientific visual identity matching the existing platform.
+
+B6. Permanent experiment saving
+
+When a logged-in researcher executes a successful experiment:
+
+1. Identify the authenticated user.
+2. Validate simulation inputs.
+3. Run the real Python scientific engine.
+4. Save the original configuration.
+5. Save the actual calculated results.
+6. Record the execution timestamp.
+7. Record model version.
+8. Record random seed where applicable.
+9. Record reproducibility metadata.
+10. Link the experiment to the authenticated user.
+
+Persist records in PostgreSQL.
+
+Use appropriate private object storage for large result files and scientific exports.
+
+Confirm database persistence before showing “Saved successfully”.
+
+Do not depend on temporary Replit filesystem storage for permanent user research data.
+
+B7. Experiment restoration
+
+Researchers must be able to:
+
+* Open previously saved experiments.
+* Restore original parameters.
+* Inspect previously computed results.
+* Replay supported 3D results.
+* Duplicate experiments.
+* Compare saved simulations.
+* Rename experiment records.
+* Export scientific reports.
+* Delete their own records.
+
+Never silently overwrite previous results.
+
+B8. Strict multi-user privacy
+
+Enable Row Level Security on all private research tables.
+
+Verify that:
+
+User A cannot access User B’s experiments.
+
+User B cannot modify or delete User A’s data.
+
+Unauthenticated users cannot access private research API endpoints.
+
+Verify ownership on the Python backend as well as in PostgreSQL.
+
+Secure file downloads and prevent insecure direct object references.
+
+Do not expose Supabase service-role secrets in browser code.
+
+B9. Mobile and desktop experience
+
+Build:
+
+* Beautiful login page.
+* Registration page.
+* Email-code verification page.
+* Personal dashboard.
+* Saved-experiment explorer.
+* Profile menu.
+* Secure logout.
+
+Use consistent premium dark design with restrained teal and cyan accents.
+
+Optimize everything for desktop and iPhone Safari.
+
+IMPLEMENTATION ORDER
+
+STAGE 0:
+Inspect the current application and verify a recoverable checkpoint.
+
+STAGE 1:
+Build and demonstrate the enhanced anatomical 3D vascular visualization.
+
+STAGE 2:
+Connect supported Python outputs and verify 3D interactions.
+
+STAGE 3:
+Integrate Supabase authentication and create account-registration pages.
+
+STAGE 4:
+Implement actual email confirmation and email OTP login.
+
+STAGE 5:
+Build the persistent research database.
+
+STAGE 6:
+Connect all existing experiment workflows to user-owned saving and restoration.
+
+STAGE 7:
+Implement personal dashboards.
+
+STAGE 8:
+Test authentication security and multi-user data isolation.
+
+STAGE 9:
+Test mobile performance, scientific calculations, and saved-result reproducibility.
+
+Do not skip verification.
+
+Keep the previously trained scientific AI models untouched.
+
+Do not start expensive AI retraining or unrelated projects.
+
+Do not activate paid services without my approval.
+
+REQUIRED ACCEPTANCE TESTS
+
+3D TEST:
+
+The researcher can open Anatomical Mode, inspect a detailed branching vascular network, rotate it, zoom into a vessel, inspect a cross-section, change a supported simulation parameter, and view updated calculated data.
+
+EMAIL TEST:
+
+The researcher signs up with a real email address, receives an actual verification email, completes verification, and accesses the personal workspace.
+
+LOGIN TEST:
+
+The researcher requests an email login code, receives it, enters the correct code, and obtains a valid session. Wrong or expired codes are rejected.
+
+PERSISTENCE TEST:
+
+The researcher runs a real Python simulation, saves the experiment, logs out, logs back in, and retrieves exactly the same scientific results.
+
+PRIVACY TEST:
+
+A second researcher cannot access the first researcher’s private results, including through direct API requests.
+
+PORTABILITY TEST:
+
+Document how to run the application later on Windows using VS Code without depending on Replit-specific authentication or storage.
+
+FINAL DELIVERABLE:
+
+A visually sophisticated, genuinely interactive scientific laboratory with real Python calculations, secure email-verified researcher accounts, and persistent private experiment histories.
+
+Do not claim any feature is completed without implementation and testing evidence.
+
+START WITH STAGE 0 AND STAGE 1. Preserve a stable checkpoint before proceeding to authentication.

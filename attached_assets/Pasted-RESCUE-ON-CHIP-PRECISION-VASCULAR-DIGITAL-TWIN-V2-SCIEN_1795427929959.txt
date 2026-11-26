@@ -1,0 +1,584 @@
+RESCUE-ON-CHIP — PRECISION VASCULAR DIGITAL TWIN V2
+
+SCIENTIFIC, ANATOMICAL, COMPUTATIONAL AND VISUAL IMPLEMENTATION SPECIFICATION
+
+You are acting as a senior multidisciplinary team of vascular physiologists, hemodynamics researchers, biomedical engineers, computational fluid mechanics specialists, scientific software engineers, and professional medical 3D developers.
+
+Your task is to implement a scientifically defensible, anatomically informed, physically calculated, interactive Human Vascular Digital Twin inside my EXISTING Rescue-on-Chip / Neuro-Reflow Simulator platform.
+
+This is an engineering implementation specification, not a request for concept art, a static 3D model, or a presentation.
+
+The objective is a working research-grade prototype that can be tested, inspected, reproduced, and progressively validated.
+
+0 — NON-NEGOTIABLE REQUIREMENTS
+
+1. Preserve the existing Rescue-on-Chip Python engine.
+2. Preserve all existing trained AI models and model files.
+3. Preserve the existing microfluidic 3D laboratory.
+4. Preserve datasets, experiment results, model metadata, and validation reports.
+5. Verify a recoverable checkpoint before editing.
+6. Do not rebuild the application from scratch.
+7. Do not use fake simulation data.
+8. Do not claim patient-specific or clinically validated results.
+9. Do not silently change existing scientific equations.
+10. Do not invent anatomical measurements, biological properties, or experimental evidence.
+11. Prioritize scientifically meaningful functionality over decorative graphics.
+
+1 — DEFINE THE DIGITAL TWIN’S PHYSICAL SCOPE
+
+Build an idealized, anatomically informed vascular tissue-perfusion unit.
+
+Inspect the existing Neuro-Reflow project’s scientific scope first.
+
+If its intended physiological target is cerebral microcirculation, design a representative cerebral microvascular perfusion unit. Otherwise use the relevant documented tissue type.
+
+Do not automatically claim to model the whole human circulatory system.
+
+Represent the following connected anatomical pathway:
+
+Feeding artery → branching arterioles → capillary network → collecting venules → draining vein.
+
+Every vessel must be a connected segment in a mathematically represented vascular network.
+
+A vessel may branch and reconnect where physiologically appropriate.
+
+Do not place veins inside arteries.
+
+Do not create disconnected decorative vascular tubes.
+
+The geometry must have a corresponding computational topology.
+
+Distinguish anatomical geometry from visual presentation geometry and clearly document any visual exaggeration of microscopic structures.
+
+2 — ANATOMICALLY INFORMED 3D CONSTRUCTION
+
+Build an actual navigable 3D model with:
+
+A. FEEDING ARTERY
+
+* Anatomically appropriate lumen.
+* Endothelial lining.
+* Tunica intima.
+* Tunica media.
+* Tunica adventitia.
+* Smooth muscle representation where appropriate.
+* A visible wall cross-section.
+
+B. ARTERIOLES
+
+* Branching resistance vessels.
+* Progressively smaller diameters.
+* Appropriate mural-cell or smooth-muscle representation.
+* Physically connected junctions.
+
+C. CAPILLARY NETWORK
+
+* Multiple interconnected microvascular paths.
+* Endothelial cell lining.
+* Basement membrane.
+* Pericyte representation where appropriate.
+* No fictional three-layer arterial wall within capillaries.
+
+D. VENULES
+
+* Connected post-capillary drainage paths.
+* Appropriate wall structure.
+* Converging flow toward the vein.
+
+E. DRAINING VEIN
+
+* Larger venous lumen.
+* Anatomically appropriate wall layers.
+* Correct relationship to the arterial network.
+* Venous valves only when justified for the selected vessel type and anatomical location.
+
+F. SURROUNDING TISSUE
+
+* Optional semi-transparent tissue volume.
+* Extracellular environment for orientation.
+* Tissue structures only when supported by the project scope.
+
+Record the reference or assumptions used for vessel geometry.
+
+Use millimeters and micrometers as appropriate.
+
+Do not represent the final geometry as a reconstructed real human vessel unless actual imaging data are provided.
+
+3 — HIGH-FIDELITY 3D VIEWER
+
+Use the existing frontend framework and integrate Three.js, React Three Fiber, and Drei where compatible.
+
+Create a premium interactive viewport featuring:
+
+* Smooth camera orbit and zoom.
+* Pan and object selection.
+* Vessel highlighting.
+* Click-to-inspect.
+* Adjustable transparency.
+* Cross-sectional clipping planes.
+* Exploded anatomical wall-layer view.
+* Camera movement into the vessel lumen.
+* Local and whole-network navigation.
+* Arterial, capillary, and venous display modes.
+* Reset camera.
+* Full-screen 3D laboratory.
+* Responsive touch gestures.
+
+Implement physically coherent lighting, depth perception, transparent vessel surfaces, and suitable scientific materials.
+
+Support realistic but computationally efficient red-blood-cell visualization.
+
+Red-blood-cell particle motion must be labeled conceptual unless actual cellular motion has been mathematically modeled.
+
+Include a scale bar and scientific legend.
+
+Microscopic structures must not be falsely displayed as being to the same physical scale as large arteries.
+
+4 — SHARED COMPUTATIONAL GEOMETRY
+
+Implement a structured vascular graph.
+
+Every vessel segment must have:
+
+* Unique segment ID.
+* Start node and end node.
+* Vessel classification.
+* Length in meters.
+* Lumen radius in meters.
+* Cross-sectional area.
+* Wall properties where supported.
+* Fluid material parameters.
+* Boundary-condition relationships.
+* Anatomical or idealized geometry source.
+* Model assumptions.
+
+Maintain a persistent mapping between computational segment IDs and visual 3D vessel meshes.
+
+This mapping is mandatory.
+
+Every displayed result must be traceable to a real segment or node in the Python network.
+
+No untraceable decorative vessel may display fabricated scientific values.
+
+5 — PYTHON HEMODYNAMIC ENGINE
+
+Implement a separate, modular vascular solver using Python, NumPy, and SciPy.
+
+Begin with a steady-state, reduced-order, laminar vascular network model.
+
+For each eligible idealized cylindrical segment under Newtonian, rigid-wall assumptions:
+
+Hydraulic resistance:
+
+R = 8 × μ × L / (π × r^4)
+
+Segment flow:
+
+Q = (P_in - P_out) / R
+
+Mean velocity:
+
+v = Q / (π × r^2)
+
+Wall shear stress magnitude:
+
+τ = 4 × μ × |Q| / (π × r^3)
+
+Use these equations only within their stated physical assumptions.
+
+Compute pressures and flows for a connected network using conservation of mass:
+
+Sum of signed flows at every internal junction = 0.
+
+Solve the network pressures using an appropriate sparse linear system.
+
+Use SI units internally:
+
+Pressure: Pa
+Flow: m³/s
+Viscosity: Pa·s
+Length and radius: m
+Velocity: m/s
+Shear stress: Pa
+
+Allow scientifically appropriate display conversions, including mmHg, µm, mm/s, and µL/min.
+
+Validate all conversions.
+
+Reject invalid or nonphysical parameter values.
+
+Do not treat this reduced-order model as equivalent to complete human blood physiology.
+
+6 — BOUNDARY CONDITIONS
+
+Provide explicit, configurable boundary conditions.
+
+Support:
+
+* Fixed inlet pressure.
+* Fixed outlet pressure.
+* Fixed inlet flow when mathematically well posed.
+* Defined segment radii and lengths.
+* Fluid viscosity.
+* Branching topology.
+
+Clearly distinguish constant-pressure experiments from constant-flow experiments.
+
+The response to vessel narrowing depends on these boundary conditions.
+
+Do not mix fixed-pressure and fixed-flow interpretations.
+
+Do not invent patient-specific physiological values.
+
+Provide literature-supported example presets only when their source and context are documented.
+
+Label illustrative presets as non-patient-specific.
+
+Display warnings for physiologically unsupported inputs.
+
+7 — BLOOD RHEOLOGY AND MICROVASCULAR LIMITATIONS
+
+Start with the documented Newtonian approximation.
+
+Add optional advanced blood rheology only when justified and implemented correctly.
+
+Potential future extensions include:
+
+* Apparent viscosity related to vessel diameter.
+* Hematocrit-dependent viscosity.
+* Microvascular non-Newtonian behavior.
+* Vessel compliance.
+* Pulsatile arterial pressure.
+* Microvascular phase separation.
+* Capillary transport and exchange.
+
+These must be separate validated or explicitly exploratory model extensions.
+
+Do not imply that ordinary Poiseuille equations fully describe red-blood-cell transport through capillaries.
+
+Do not activate advanced effects using arbitrary constants.
+
+8 — REAL COMPUTATION-TO-VISUALIZATION PIPELINE
+
+Create an actual connection between Python calculations and the 3D environment.
+
+Required pipeline:
+
+User parameter change
+→ validated frontend request
+→ Python vascular solver
+→ numerical result
+→ structured API response
+→ segment-ID mapping
+→ 3D visualization update.
+
+For every segment, return appropriate values:
+
+* Segment ID
+* Pressure at inlet and outlet
+* Flow rate and direction
+* Mean velocity
+* Hydraulic resistance
+* Calculated wall shear stress
+* Geometry metadata
+* Physical assumptions
+
+Create heatmaps for pressure, flow rate, and supported shear-stress values.
+
+Use quantitative color legends.
+
+A segment-level value must not be misrepresented as a spatially resolved CFD field.
+
+Animate particle tracers consistently with calculated mean flow direction and appropriately scaled display speed.
+
+Clearly label tracer visualization as illustrative when it is not an actual particle-tracking calculation.
+
+The 3D viewer must change meaningfully when the Python output changes.
+
+9 — TWO CONNECTED SCIENTIFIC LABORATORIES
+
+Create a split-screen workspace.
+
+LEFT:
+Existing Rescue-on-Chip 3D microfluidic simulation.
+
+RIGHT:
+New anatomically informed Vascular Digital Twin.
+
+Provide:
+
+* Independent camera controls.
+* Optional synchronized playback.
+* Experiment parameter panels.
+* Quantitative result panels.
+* Separate scientific legends.
+* Side-by-side screenshots.
+* Scientifically compatible numerical comparisons.
+
+On mobile, provide tabs to switch between the laboratories and a full-screen viewing option.
+
+Do not force two tiny 3D viewers onto an iPhone screen.
+
+Clearly distinguish the experimental chip from an idealized human vascular network.
+
+10 — EXPERIMENT SYSTEM
+
+Implement the following reproducible experiments:
+
+EXPERIMENT A — BASELINE PERFUSION
+Calculate baseline pressure and flow distributions for the idealized vascular network.
+
+EXPERIMENT B — ARTERIAL NARROWING
+Change a selected artery’s radius and calculate changes in resistance, pressure distribution, and flow.
+
+EXPERIMENT C — ARTERIOLAR RESISTANCE
+Change an arteriole’s radius and observe redistribution of flow through the connected network.
+
+EXPERIMENT D — VISCOSITY VARIATION
+Modify supported viscosity inputs and recalculate network resistance and flow.
+
+EXPERIMENT E — BRANCH OCCLUSION
+Model an explicitly defined branch blockage with a mathematically well-posed network and inspect redistribution through alternative paths, if they exist.
+
+EXPERIMENT F — BOUNDARY PRESSURE CHANGES
+Study different pressure gradients under documented conditions.
+
+EXPERIMENT G — CHIP VS VASCULAR MODEL
+Compare compatible output quantities between the microfluidic chip and vascular network.
+
+Do not assert that a chip result equals a human clinical response.
+
+All experiments must support repeatable execution, configuration saving, comparison, and export.
+
+11 — MATERIAL AND DRUG EXPOSURE
+
+Connect the existing material database interface.
+
+Allow users to select known or custom substances.
+
+Only apply measured or justified substance-related physical properties to the vascular model.
+
+AI-predicted E-selectin activity must NOT be automatically converted into blood pressure, vessel diameter, flow, thrombosis risk, or clinical benefit.
+
+When no scientifically supported biological-to-physical relationship exists, display:
+
+“Biological effect not linked to the current vascular physics model.”
+
+Preserve all research-only and unvalidated-model warnings.
+
+12 — SCIENTIFIC VALIDATION TESTS
+
+Implement automated verification tests.
+
+TEST 1:
+Single cylindrical vessel with known pressure gradient.
+
+Compare numerical flow against the analytical Poiseuille solution.
+
+TEST 2:
+Two vessels connected in series.
+
+Verify equivalent resistance and expected pressure drops.
+
+TEST 3:
+Two parallel vessel branches.
+
+Verify flow splitting and equivalent resistance.
+
+TEST 4:
+Mass conservation at every internal network junction.
+
+Require an appropriately normalized numerical conservation residual below 1e-8 for well-conditioned reference cases, or justify a different tolerance.
+
+TEST 5:
+Radius sensitivity.
+
+For an isolated rigid tube with constant pressure difference and viscosity, verify that halving the radius reduces flow to one-sixteenth of baseline.
+
+TEST 6:
+Viscosity sensitivity.
+
+Verify the expected relationship between viscosity and flow for fixed-pressure, rigid-tube assumptions.
+
+TEST 7:
+Zero-pressure-gradient case.
+
+Verify zero net steady flow for a passive network with equal boundary pressures.
+
+TEST 8:
+Unit conversion correctness.
+
+TEST 9:
+Invalid geometry and boundary conditions.
+
+TEST 10:
+Repeatability and numerical consistency.
+
+TEST 11:
+Frontend-to-backend parameter synchronization.
+
+TEST 12:
+3D visual segment-to-result mapping.
+
+TEST 13:
+Preservation of all existing Rescue-on-Chip simulation calculations and trained AI files.
+
+TEST 14:
+Mobile 3D rendering and touch interaction.
+
+Report exact numerical errors and PASS/FAIL status.
+
+Do not mark tests as passed without execution evidence.
+
+13 — PREMIUM RESEARCH INTERFACE
+
+Build a sophisticated scientific workstation.
+
+Desktop structure:
+
+LEFT PANEL:
+Experiment parameters and vessel selection.
+
+CENTER:
+Large dual 3D laboratory viewport.
+
+RIGHT PANEL:
+Selected vessel properties, pressure, flow, velocity, resistance, shear stress, and relevant graphs.
+
+BOTTOM:
+Experiment playback controls, scenario selection, comparison timeline, and export actions.
+
+Provide professional scientific color scales, clear numerical units, precise labels, fast visual feedback, and responsive interactions.
+
+Avoid giant empty spaces, overlapping components, decorative-only dashboards, and fake status displays.
+
+Use a dark navy, charcoal, cyan, teal, and restrained amber design language.
+
+14 — PERFORMANCE
+
+Use:
+
+* Geometry instancing where appropriate.
+* Level-of-detail rendering.
+* Efficient mesh generation.
+* Memoized segment geometry.
+* Optimized transparent materials.
+* Limited draw calls.
+* Efficient camera interaction.
+* Controlled animation loops.
+* GPU-friendly buffers.
+* Graceful WebGL fallback.
+
+Prioritize reliable operation on iPhone Safari.
+
+Monitor actual frame rate and memory usage.
+
+Avoid displaying unsupported performance claims.
+
+Do not run the Python solver unnecessarily on every animation frame.
+
+Compute numerical results when physical parameters change, then replay or visualize the returned solution.
+
+15 — SOURCE TRACEABILITY
+
+For every scientific equation or external physiological preset, provide:
+
+* Scientific source or reference.
+* Assumptions.
+* Required input parameters.
+* Validity limits.
+* Units.
+* Numerical implementation.
+* Related verification test.
+
+Create a clearly accessible “Scientific Methods & Limitations” section.
+
+Differentiate:
+
+ANATOMICAL REFERENCE
+IDEALIZED GEOMETRY
+CALCULATED RESULT
+CONCEPTUAL ANIMATION
+EXPERIMENTALLY VALIDATED RESULT
+UNVALIDATED HYPOTHESIS
+
+16 — REQUIRED DELIVERABLES
+
+Deliver the following working components:
+
+1. Interactive vascular 3D anatomy.
+2. Connected artery-to-vein network.
+3. Segment-level computational geometry.
+4. Python vascular flow solver.
+5. Validated analytical benchmark tests.
+6. Live API connection between Python and React.
+7. Calculation-driven 3D color overlays.
+8. Interactive vessel inspection.
+9. Dual laboratory comparison interface.
+10. Reproducible vascular experiments.
+11. Exportable experiment data and metadata.
+12. Mobile-optimized user experience.
+13. Scientific equations and assumptions documentation.
+14. Actual automated verification results.
+
+Provide screenshots or live preview evidence alongside the corresponding implementation files.
+
+17 — STRICT EXECUTION ORDER
+
+STAGE 0:
+Verify a rollback checkpoint.
+
+STAGE 1:
+Inspect and document existing project architecture.
+
+STAGE 2:
+Build the vascular graph and geometrically connected 3D anatomy.
+
+STAGE 3:
+Implement the Python numerical solver.
+
+STAGE 4:
+Run analytical verification tests.
+
+STAGE 5:
+Connect actual computed outputs to 3D segments.
+
+STAGE 6:
+Integrate the new laboratory beside the existing chip.
+
+STAGE 7:
+Add experiments, inspection controls, overlays, and exports.
+
+STAGE 8:
+Optimize the mobile experience.
+
+STAGE 9:
+Run integration and regression tests.
+
+STAGE 10:
+Generate a scientific implementation and verification report.
+
+Work incrementally and preserve stable checkpoints.
+
+At the end of each stage, provide:
+
+* Files modified.
+* Features implemented.
+* Tests executed.
+* Numerical verification results where relevant.
+* Known limitations.
+* Remaining work.
+
+Do not substitute a visual mockup for a functional model.
+
+Do not claim scientific or clinical validation based only on a successful software build.
+
+FINAL ACCEPTANCE CRITERION:
+
+I must be able to select a vessel in the 3D model, change its radius or a supported boundary condition, run the Python solver, observe new numerical pressure and flow results, and see the corresponding vessel visualization update correctly.
+
+The vascular topology must be physically connected, scientifically documented, and verifiable.
+
+The existing Rescue-on-Chip and AI modules must remain intact.
+
+START WITH STAGE 0, THEN IMPLEMENT STAGES 1–5 AS THE FIRST FUNCTIONAL MILESTONE. DO NOT SPEND RESOURCES ON DECORATIVE FEATURES BEFORE THE NUMERICAL SOLVER AND 3D CONNECTION WORK.

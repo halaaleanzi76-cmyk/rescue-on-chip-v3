@@ -1,0 +1,3 @@
+- [3D label rendering](three-label-rendering.md) — React 19 and Drei HTML labels can trigger nested-root cleanup errors; preserve the verified renderer workaround.
+- [WebGL verification](webgl-verification.md) — a browser harness without WebGL is not evidence of a broken scene; verify actual rendering separately from the fallback.
+- [Cerebral geometry scope](cerebral-geometry-scope.md) — keep vascular coordinates and radii labeled illustrative until a sourced cerebral anatomy dataset is available.

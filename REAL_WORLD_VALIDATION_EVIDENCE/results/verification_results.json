@@ -1,0 +1,287 @@
+{
+ "verdict": "A — mathematical verification",
+ "generated_at_utc": "2026-11-26T18:56:12.182531+00:00",
+ "engine_versions": {
+  "switching": "bench-1.0.2",
+  "vascular": "vascular-poiseuille-network-0.1.0"
+ },
+ "software": {
+  "python": "3.12.10",
+  "numpy": "2.5.5",
+  "scipy": "1.18.1"
+ },
+ "tolerances": {
+  "closed_form_rel": 1e-12,
+  "network_rel": 1e-09,
+  "mass_residual": 1e-09,
+  "scaling_rel": 1e-09,
+  "ode_rel": 0.0001,
+  "ode_abs": 1e-06,
+  "delta_method_rel": 0.15
+ },
+ "checks_total": 24,
+ "checks_passed": 24,
+ "unit_test_suites": {
+  "simulation.test_engine": {
+   "returncode": 0,
+   "summary": [
+    "Ran 10 tests in 1.289s",
+    "OK"
+   ]
+  },
+  "simulation.test_visualization": {
+   "returncode": 0,
+   "summary": [
+    "Ran 8 tests in 0.438s",
+    "OK"
+   ]
+  },
+  "vascular.test_solver": {
+   "returncode": 0,
+   "summary": [
+    "Ran 13 tests in 0.009s",
+    "OK"
+   ]
+  },
+  "vascular.test_api": {
+   "returncode": 0,
+   "summary": [
+    "Ran 5 tests in 0.095s",
+    "OK"
+   ]
+  }
+ },
+ "results": [
+  {
+   "check": "Hagen–Poiseuille flow, 500 random parameter sets",
+   "group": "poiseuille",
+   "metric": "max_rel_err",
+   "value": 2.1995686816444835e-16,
+   "tolerance": 1e-12,
+   "pass": true
+  },
+  {
+   "check": "baseline_flow_ul_min (default run)",
+   "group": "poiseuille",
+   "metric": "rel_err",
+   "value": 0.0,
+   "tolerance": 1e-12,
+   "pass": true,
+   "detail": {
+    "engine": 12.271846303085125,
+    "reference": 12.271846303085125
+   }
+  },
+  {
+   "check": "hydraulic resistance",
+   "group": "poiseuille",
+   "metric": "rel_err",
+   "value": 0.0,
+   "tolerance": 1e-12,
+   "pass": true
+  },
+  {
+   "check": "wall shear = ΔP·r/(2L)",
+   "group": "poiseuille",
+   "metric": "rel_err",
+   "value": 0.0,
+   "tolerance": 1e-12,
+   "pass": true
+  },
+  {
+   "check": "Reynolds number (ρ=1000 kg/m³)",
+   "group": "poiseuille",
+   "metric": "rel_err",
+   "value": 0.0,
+   "tolerance": 1e-12,
+   "pass": true,
+   "detail": {
+    "engine": 0.27126736111111105,
+    "reference": 0.27126736111111105,
+    "regime": "laminar (Re<<2000)"
+   }
+  },
+  {
+   "check": "sensitivity d ln Q / d ln P = 1",
+   "group": "sensitivity",
+   "metric": "abs_err",
+   "value": 0.0,
+   "tolerance": 1e-06,
+   "pass": true,
+   "detail": {
+    "numerical": 1.0,
+    "exact": 1
+   }
+  },
+  {
+   "check": "sensitivity d ln Q / d ln r = 4",
+   "group": "sensitivity",
+   "metric": "abs_err",
+   "value": 1.4921397450962104e-13,
+   "tolerance": 1e-06,
+   "pass": true,
+   "detail": {
+    "numerical": 4.000000000000149,
+    "exact": 4
+   }
+  },
+  {
+   "check": "sensitivity d ln Q / d ln mu = -1",
+   "group": "sensitivity",
+   "metric": "abs_err",
+   "value": 7.616129948928574e-14,
+   "tolerance": 1e-06,
+   "pass": true,
+   "detail": {
+    "numerical": -1.0000000000000762,
+    "exact": -1
+   }
+  },
+  {
+   "check": "sensitivity d ln Q / d ln L = -1",
+   "group": "sensitivity",
+   "metric": "abs_err",
+   "value": 1.871836019518014e-13,
+   "tolerance": 1e-06,
+   "pass": true,
+   "detail": {
+    "numerical": -1.0000000000001872,
+    "exact": -1
+   }
+  },
+  {
+   "check": "washout vs exact exp(−Qt/V), 2712 samples, 3 topologies",
+   "group": "washout",
+   "metric": "max_rel_err(ref>1e-3%)",
+   "value": 4.9820746821648685e-14,
+   "tolerance": 0.0001,
+   "pass": true
+  },
+  {
+   "check": "washout absolute error (all samples)",
+   "group": "washout",
+   "metric": "max_abs_err_pct",
+   "value": 3.552713678800501e-14,
+   "tolerance": 0.001,
+   "pass": true
+  },
+  {
+   "check": "peak deviation equalized = |offset|·e^(−wait/τ)",
+   "group": "transient",
+   "metric": "abs_err_pct",
+   "value": 9.325873406851315e-15,
+   "tolerance": 1e-09,
+   "pass": true,
+   "detail": {
+    "engine": 2.0521249655974794,
+    "expected": 2.05212496559747
+   }
+  },
+  {
+   "check": "peak deviation pressure_controlled = |offset|·e^(−wait/τ)",
+   "group": "transient",
+   "metric": "abs_err_pct",
+   "value": 0.0,
+   "tolerance": 1e-09,
+   "pass": true,
+   "detail": {
+    "engine": 25.0,
+    "expected": 25.0
+   }
+  },
+  {
+   "check": "tracer donor/receiver vs exact expm solution",
+   "group": "tracer",
+   "metric": "max_err(rel, abs<1e-3)",
+   "value": 1.1380942370474705e-07,
+   "tolerance": 0.0001,
+   "pass": true
+  },
+  {
+   "check": "node pressures vs independent dense solver (14 nodes, 18 segments)",
+   "group": "network",
+   "metric": "max_rel_err",
+   "value": 3.4206721072625933e-16,
+   "tolerance": 1e-09,
+   "pass": true
+  },
+  {
+   "check": "junction mass conservation (solver-reported)",
+   "group": "network",
+   "metric": "max_norm_residual",
+   "value": 9.758826052872993e-13,
+   "tolerance": 1e-09,
+   "pass": true
+  },
+  {
+   "check": "global mass balance: outlet flow = inlet flow",
+   "group": "network",
+   "metric": "rel_err",
+   "value": 9.785998972271295e-13,
+   "tolerance": 1e-09,
+   "pass": true
+  },
+  {
+   "check": "linearity: 2×ΔP → 2×Q",
+   "group": "network",
+   "metric": "rel_err",
+   "value": 0.0,
+   "tolerance": 1e-09,
+   "pass": true
+  },
+  {
+   "check": "viscosity: 2×μ → Q/2",
+   "group": "network",
+   "metric": "rel_err",
+   "value": 0.0,
+   "tolerance": 1e-09,
+   "pass": true
+  },
+  {
+   "check": "all radii ×1.1 → Q×1.1⁴",
+   "group": "network",
+   "metric": "rel_err",
+   "value": 1.491874037734808e-12,
+   "tolerance": 1e-09,
+   "pass": true
+  },
+  {
+   "check": "BC consistency: fixed-flow(Q*) recovers p_in",
+   "group": "network",
+   "metric": "rel_err",
+   "value": 1.9599610823206603e-13,
+   "tolerance": 1e-09,
+   "pass": true
+  },
+  {
+   "check": "same seed + config → byte-identical result",
+   "group": "reproducibility",
+   "metric": "identical(1=yes)",
+   "value": 1.0,
+   "tolerance": 1.0,
+   "pass": true
+  },
+  {
+   "check": "different seed → different virtual-chip sample",
+   "group": "reproducibility",
+   "metric": "differs(1=yes)",
+   "value": 1.0,
+   "tolerance": 1.0,
+   "pass": true
+  },
+  {
+   "check": "uncertainty propagation CV_Q ≈ 4·CV_r (n=100, delta method)",
+   "group": "uncertainty",
+   "metric": "rel_diff",
+   "value": 0.08984272108064247,
+   "tolerance": 0.15,
+   "pass": true,
+   "detail": {
+    "cv_monte_carlo": 0.1092188734703229,
+    "cv_first_order": 0.12,
+    "n": 100
+   }
+  }
+ ],
+ "scope_note": "Verification shows the equations are implemented and solved correctly. It is NOT evidence that the model matches physical experiments (B) or patients (C)."
+}

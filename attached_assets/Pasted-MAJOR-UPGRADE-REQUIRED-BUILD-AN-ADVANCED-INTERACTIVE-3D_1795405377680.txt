@@ -1,0 +1,112 @@
+MAJOR UPGRADE REQUIRED — BUILD AN ADVANCED INTERACTIVE 3D SCIENTIFIC LABORATORY.
+
+The application you created is far too basic. It currently looks like a numerical calculator, not a professional scientific simulation platform.
+
+I do NOT want another calculator, basic dashboard, static charts, or a generic website.
+
+I want you to transform the EXISTING application into a visually sophisticated, fully interactive, 3D scientific research laboratory while preserving all existing working Python calculations.
+
+1. REAL-TIME 3D SCIENTIFIC VISUALIZATION
+
+Use Three.js, React Three Fiber, and Drei to create an advanced interactive 3D environment.
+
+Build accurate conceptual 3D models representing the physical experimental setup described in my scientific project.
+
+Depending on the project, visualize the relevant components, such as:
+
+* Microfluidic channels and experimental chambers.
+* Blood vessels and vascular networks.
+* Fluid flow through transparent channels.
+* Pressure and velocity distributions.
+* Biological structures and relevant material interactions.
+* Experimental components, valves, and connections.
+
+Use transparent materials, realistic lighting, depth, scientific color maps, and appropriate spatial geometry.
+
+Users must be able to rotate, zoom, pan, inspect, and explore the experimental model from multiple angles.
+
+No static 3D screenshots. The models must be genuinely interactive.
+
+2. ANIMATED SCIENTIFIC SIMULATIONS
+
+Create a simulation playback system with:
+
+* Start, pause, resume, restart.
+* Simulation timeline and playback speed.
+* Animated fluid motion.
+* Particle tracers where physically justified.
+* Pressure and velocity heatmaps.
+* Interactive cross-sectional views.
+* Before-and-after comparison.
+* Side-by-side experiment comparisons.
+
+All scientific animations must use calculated outputs from the simulation engine.
+
+Never create scientifically misleading visualizations.
+
+If a visualization is illustrative rather than quantitatively derived, label it clearly as “Conceptual visualization”.
+
+3. PYTHON SCIENTIFIC ENGINE
+
+Preserve the existing Python backend and functioning calculations.
+
+Use FastAPI to connect the computational model with the 3D frontend where necessary.
+
+Use NumPy and SciPy for numerical calculations where supported by the underlying scientific model.
+
+Do not replace real Python computations with random values, fake data, or frontend-only animations.
+
+4. PREMIUM SCIENTIFIC INTERFACE
+
+Redesign the application to resemble advanced research and engineering software.
+
+Include:
+
+* A large interactive 3D experiment viewport.
+* A professional dark scientific interface.
+* A left-side experimental configuration panel.
+* A right-side real-time metrics and visualization panel.
+* Animated scientific graphs.
+* Experiment comparison workspace.
+* High-quality scientific illustrations.
+* Professional scientific iconography.
+* A detailed results analysis screen.
+* Exportable reports and reproducible experiment configurations.
+
+Use a visually impressive, sophisticated design with excellent typography, spacing, lighting, and polished interactions.
+
+The 3D visualization must be the CENTERPIECE of the application, not a small decorative widget.
+
+5. FUNCTIONAL SCIENTIFIC INTEGRATION
+
+Changes in experimental parameters should update the simulation calculations and visualization.
+
+Show the relationship between simulation inputs, numerical outputs, and graphical representations.
+
+Preserve original scientific equations and expose model assumptions, units, limitations, and validation status.
+
+Do not claim that simulations have been experimentally or clinically validated unless evidence is available.
+
+6. IMPLEMENT THE UPGRADE NOW
+
+Do not just provide a proposal, screenshots, or an implementation plan.
+
+Modify the existing project files directly.
+
+Priority 1: Build a working, visually compelling, interactive 3D simulation viewer.
+
+Priority 2: Connect it to the existing Python calculation engine.
+
+Priority 3: Build advanced scientific controls, animations, and result visualizations.
+
+Priority 4: Upgrade the entire interface to a premium laboratory design.
+
+Install the required packages, resolve dependency issues, run the application, test the main functionality, and make the 3D visualization accessible in the live preview.
+
+Provide a clear summary of what genuinely works and what still needs development.
+
+FINAL REQUIREMENT:
+
+When I open the application, I should immediately see an impressive interactive 3D scientific environment — NOT a basic numerical calculator.
+
+Build it, implement the code, and test it.
