@@ -60,3 +60,14 @@ test('API: unrelated endpoints are gone', async ({ request }) => {
     expect(r.status(), u).toBe(404);
   }
 });
+
+test('first visit opens in English (LTR); Arabic choice is remembered', async ({ page, consoleErrors }) => {
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await page.getByTestId('button-lang').click();
+  await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+  void consoleErrors;
+});

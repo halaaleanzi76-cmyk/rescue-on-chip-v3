@@ -165,7 +165,7 @@ function interpolate(s: string, vars?: Record<string, string | number>) {
 }
 
 /** Active language for code outside React components (validation, error mapping). Kept in sync by I18nProvider. */
-let currentLang: Lang = 'ar';
+let currentLang: Lang = 'en';
 export function tr(key: MessageKey, vars?: Record<string, string | number>): string {
   return interpolate(messages[currentLang][key] ?? messages.en[key] ?? key, vars);
 }
@@ -176,9 +176,9 @@ export function trd(key: string, fallback = key, vars?: Record<string, string | 
 export function getLang(): Lang { return currentLang; }
 
 function initialLang(): Lang {
-  if (typeof window === 'undefined') return 'ar';
+  if (typeof window === 'undefined') return 'en';
   const saved = window.localStorage.getItem(STORAGE_KEY);
-  return saved === 'en' || saved === 'ar' ? saved : 'ar';
+  return saved === 'en' || saved === 'ar' ? saved : 'en';
 }
 
 type Ctx = {
