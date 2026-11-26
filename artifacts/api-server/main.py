@@ -73,6 +73,10 @@ async def lifespan(app):
     if store.summary()["total_runs"] == 0:
         store.save(default_calculation())
         logger.info("Calculated and saved one clearly labeled default virtual-bench run.")
+    if os.environ.get("WARM_VALIDATION") == "1":
+        # Small hosted instances are slow: execute the validation suite once in the background so the
+        # first visitor gets the (genuinely computed) result without waiting.
+        threading.Thread(target=lambda: validation_run(fresh=False), daemon=True).start()
     yield
 
 
@@ -397,6 +401,22 @@ def sensitivity(parameter: str = Query(...), points: int = Query(7, ge=3, le=11)
                 "note": "Reference configuration with chip variability set to 0 so that only the swept parameter changes.", "rows": rows}
     finally:
         slots.release()
+
+
+# ---------------------------------------------------------------- production: serve the built web app
+STATIC_DIR = Path(os.environ.get("STATIC_DIR", ROOT / "deploy" / "static")).resolve()
+if (STATIC_DIR / "index.html").is_file():
+    from fastapi.responses import HTMLResponse
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    def spa(full_path: str):
+        if full_path.startswith("api/") or full_path == "api":
+            raise HTTPException(404, "Not found")
+        target = (STATIC_DIR / full_path).resolve()
+        if full_path and target.is_file() and STATIC_DIR in target.parents:
+            cache = "public, max-age=31536000, immutable" if full_path.startswith("assets/") else "public, max-age=300"
+            return FileResponse(target, headers={"Cache-Control": cache})
+        return HTMLResponse((STATIC_DIR / "index.html").read_text(encoding="utf-8"), headers={"Cache-Control": "no-cache"})
 
 
 if __name__ == "__main__":

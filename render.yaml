@@ -1,0 +1,37 @@
+# Render Blueprint — free hosting for the Rescue-on-Chip research platform.
+# One web service (FastAPI serves the API and the pre-built web app in deploy/static) + a free PostgreSQL database.
+# Deploy: dashboard.render.com → New → Blueprint → select this repository.
+services:
+  - type: web
+    name: rescue-on-chip
+    runtime: python
+    plan: free
+    region: frankfurt
+    buildCommand: pip install -r requirements-deploy.txt
+    startCommand: python scripts/windows/migrate.py && cd artifacts/api-server && uvicorn main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips='*'
+    healthCheckPath: /api/healthz
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: WARM_VALIDATION
+        value: "1"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rescue-on-chip-db
+          property: connectionString
+      # Public (publishable) Supabase values — the same ones the browser receives from /api/auth/config.
+      - key: SUPABASE_URL
+        value: https://zztmrihkanqxqlvptsac.supabase.co
+      - key: SUPABASE_ANON_KEY
+        value: sb_publishable_krEJJaFqvK4bLMTADGKEIw_soH4Mq18
+      # Entered in the Render dashboard (kept out of the repository).
+      - key: INITIAL_ADMIN_EMAIL
+        sync: false
+
+databases:
+  - name: rescue-on-chip-db
+    plan: free
+    region: frankfurt
+    databaseName: rescue_on_chip
+    user: rescue
